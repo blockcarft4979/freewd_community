@@ -1,4 +1,4 @@
-# Freewd社区 v2.2.4（Freewd Community）
+# Freewd社区 v2.2.5（Freewd Community）
 
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
@@ -7,7 +7,7 @@
 ---
 
 ## 目前已有的功能
-
+- [x] 热更新板块
 - [x] 登录 / 注册账户  
 - [x] 获取帖子列表  
 - [x] 上传帖子  
@@ -21,9 +21,10 @@
 ---
 
 ## 预计未来增加的功能
-
+- [ ] 收藏帖子
+- [ ] 。。。。
 - [ ] ……请输入文本（敬请期待）
 
 ---
 
-**下载地址：** [点此下载](https://wwwk.qyshare.com:2999/s/tbhfof)
+**下载地址：** [点此下载](https://github.com/blockcarft4979/freewd_community/releases/)
