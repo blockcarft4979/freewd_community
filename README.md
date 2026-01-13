@@ -2,8 +2,8 @@
 
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
-> 官网：[Freewd](https://blockcarft.xyz)
-
+> 官网：[Freewd](https://www.blockcarft.xyz)
+> 由于域名的变更，所以2.2.6之前的版本均无法正常使用，请大家更新最新版
 ---
 
 ## 目前已有的功能
