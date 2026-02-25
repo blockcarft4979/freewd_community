@@ -1,8 +1,8 @@
-# Freewd社区 v2.3.7（Freewd Community）
+# Freewd社区 v2.4.1（Freewd Community）
 
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
-> 官网：[Freewd](https://www.blockcarft.xyz)
+> 官网：[Freewd](https://freewd.top)
 > 由于域名的变更，所以2.2.6之前的版本均无法正常使用，请大家更新最新版
 ---
 
@@ -16,8 +16,9 @@
 - [x] 获取评论与回复  
 - [x] 删除帖子  
 - [x] 分享帖子  
-- [x] 匿名贴（需用积分购买匿名卡，价格 20 积分 / 张）
+- [x] 匿名贴（上传匿名帖时将消耗20积分/次）
 - [x] Ai总结（使用Deepseek api对较长帖子内容进行总结）
+- [x] Freewd UID（Freewd社区用户标识）
 ---
 
 ## 预计未来增加的功能
