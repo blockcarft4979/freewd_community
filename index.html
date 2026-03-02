@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Freewd社区 - 共创自由和谐社区</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -138,10 +138,11 @@
             flex: 1;
             max-width: 600px;
             margin-bottom: 3rem;
+            width: 100%;
         }
 
         .hero-title {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
@@ -157,10 +158,10 @@
         }
 
         .hero-description {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
             color: var(--text-secondary);
             margin-bottom: 2.5rem;
-            max-width: 90%;
+            max-width: 100%;
         }
 
         .hero-buttons {
@@ -168,6 +169,7 @@
             flex-wrap: wrap;
             gap: 1rem;
             justify-content: center;
+            width: 100%;
         }
 
         .btn {
@@ -183,6 +185,8 @@
             transition: all 0.3s ease;
             text-decoration: none;
             gap: 0.5rem;
+            width: 100%;
+            max-width: 300px;
         }
 
         .btn-primary {
@@ -216,6 +220,7 @@
             margin: 2rem 0;
             border-left: 4px solid var(--primary-color);
             box-shadow: var(--shadow-md);
+            width: 100%;
         }
 
         .announcement-title {
@@ -240,6 +245,7 @@
             margin: 2rem 0;
             border-left: 4px solid var(--secondary-color);
             box-shadow: var(--shadow-md);
+            width: 100%;
         }
 
         .warning-box h4 {
@@ -255,7 +261,7 @@
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 4vw, 2.5rem);
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
@@ -263,12 +269,13 @@
 
         .section-subtitle {
             text-align: center;
-            font-size: 1.125rem;
+            font-size: clamp(1rem, 2vw, 1.125rem);
             color: var(--text-secondary);
             margin-bottom: 3rem;
-            max-width: 700px;
+            max-width: 100%;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 1rem;
         }
 
         .features-grid {
@@ -286,6 +293,10 @@
             .hero-container {
                 flex-direction: row;
             }
+            
+            .btn {
+                width: auto;
+            }
         }
 
         .feature-card {
@@ -298,6 +309,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            width: 100%;
         }
 
         .feature-card:hover {
@@ -344,6 +356,7 @@
             flex-direction: column;
             align-items: center;
             gap: 3rem;
+            width: 100%;
         }
 
         .gallery-item {
@@ -360,6 +373,7 @@
 
         .single-image {
             margin: 2rem 0;
+            width: 100%;
         }
 
         .single-image img {
@@ -400,6 +414,7 @@
             box-shadow: var(--shadow-md);
             border: 1px solid transparent;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .info-item:hover {
@@ -426,6 +441,7 @@
             justify-content: center;
             gap: 1.5rem;
             margin: 3rem 0;
+            width: 100%;
         }
 
         .btn-download {
@@ -484,6 +500,7 @@
             gap: 1rem;
             margin: 2rem 0;
             align-items: center;
+            width: 100%;
         }
 
         .contact-item {
@@ -491,6 +508,8 @@
             align-items: center;
             gap: 0.75rem;
             color: var(--text-primary);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .contact-item i {
@@ -501,6 +520,7 @@
         .contact-item a {
             color: var(--primary-light);
             text-decoration: none;
+            word-break: break-all;
         }
 
         .contact-item a:hover {
@@ -513,6 +533,7 @@
             padding: 2rem;
             margin: 3rem 0;
             box-shadow: var(--shadow-md);
+            width: 100%;
         }
 
         .function-list h3 {
@@ -524,9 +545,21 @@
 
         .function-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1rem;
             margin-top: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .function-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .function-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .function-item {
@@ -542,6 +575,7 @@
             color: #4ade80;
             margin-right: 0.75rem;
             font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
         .function-item.pending i {
@@ -562,6 +596,11 @@
             }
 
             .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
@@ -598,6 +637,10 @@
             .feature-card,
             .info-item {
                 padding: 1.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
             }
         }
 
@@ -815,7 +858,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025-2026 Freewd社区 · 与Freewd服务器共同成长</p>
+                <p>&copy; 2026 BLOCKCARFT.</p>
             </div>
         </div>
     </footer>
