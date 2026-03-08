@@ -1,4 +1,4 @@
-# Freewd社区 v2.4.1（Freewd Community）
+# Freewd社区 v2.4.4（Freewd Community）
 
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
@@ -19,6 +19,7 @@
 - [x] 匿名贴（上传匿名帖时将消耗20积分/次）
 - [x] Ai总结（使用Deepseek api对较长帖子内容进行总结）
 - [x] Freewd UID（Freewd社区用户标识）
+- [x] 支持Markdown
 ---
 
 ## 预计未来增加的功能
