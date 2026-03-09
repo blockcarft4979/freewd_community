@@ -1,474 +1,538 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freewd 帖子内容预览</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-  rel="stylesheet"
-/>
-<style>
-:root {
-  --primary-color: #4db8ff; /* Minecraft蓝色主题 */
-  --primary-light: #66cfff;
-  --primary-dark: #0077cc;
-  --secondary-color: #f59e0b; /* 橙色作为辅助色 */
-  --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
-  --bg-light: #111;
-  --bg-white: #0f0f0f;
-  --bg-card: rgba(30, 30, 30, 0.9);
-  --border-color: rgba(100, 100, 100, 0.2);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-full: 9999px;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>前往 Freewd 社区 · 自适应版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+  <style>
+    /* ---------- 基础重置 & 变量 ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    :root {
+      --primary: #4db8ff;
+      --primary-light: #66cfff;
+      --primary-dark: #0077cc;
+      --accent: #f59e0b;
+      --text-light: #e0e0e0;
+      --text-muted: #b0b0b0;
+      --bg-deep: #0c0c10;
+      --bg-card: rgba(20, 22, 27, 0.9);
+      --border-light: rgba(120, 130, 150, 0.2);
+      --shadow-card: 0 20px 35px -8px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(75, 130, 200, 0.15);
+      --radius-box: 1.25rem;
+      --radius-btn: 0.75rem;
+      --radius-step: 999px;
+      --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --transition: all 0.2s ease;
+    }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.6;
-  color: var(--text-primary);
-  background-color: var(--bg-light);
-  overflow-x: hidden;
-  padding: 20px;
-  min-height: 100vh;
-}
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-deep);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2.5rem;
-  background: rgba(15, 15, 20, 0.9);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(10px);
-}
+    /* ---------- 卡片容器：移动优先，小屏 padding 适中，大屏优雅居中 ---------- */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-box);
+      box-shadow: var(--shadow-card);
+      padding: 2rem 1.75rem;
+      transition: padding 0.2s;
+    }
 
-.header {
-  padding-bottom: 1.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--border-color);
-  text-align: center;
-}
+    /* 极小屏 (≤360px) 进一步压缩内边距 */
+    @media (max-width: 360px) {
+      body { padding: 8px; }
+      .container { padding: 1.5rem 1rem; }
+    }
 
-.post-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
+    /* 大屏舒适宽度，但保持内容不松散 */
+    @media (min-width: 480px) {
+      .container { padding: 2.5rem 2.2rem; }
+    }
 
-.post-time {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  background: rgba(0, 80, 160, 0.2);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(100, 180, 255, 0.1);
-}
+    @media (min-width: 640px) {
+      .container { padding: 3rem 2.5rem; }
+    }
 
-.message-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-}
+    /* 横屏且高度较小时，减少垂直留白 */
+    @media (max-height: 600px) and (orientation: landscape) {
+      body { align-items: flex-start; padding-top: 24px; }
+      .container { padding: 1.5rem 2rem; }
+    }
 
-.message-title .gradient-text {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: inline-block;
-}
+    /* ---------- 标题与图标 ---------- */
+    .logo {
+      font-size: 3.2rem;
+      line-height: 1;
+      text-align: center;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+      filter: drop-shadow(0 4px 8px rgba(0, 180, 255, 0.25));
+    }
 
-.message-content {
-  padding: 2.5rem;
-  background-color: var(--bg-card);
-  border-radius: var(--radius-lg);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow-md);
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 1rem;
+      word-break: break-word;
+    }
 
-.message-content:hover {
-  border-color: var(--primary-light);
-  box-shadow: var(--shadow-lg);
-}
+    /* 极小屏标题微调 */
+    @media (max-width: 360px) {
+      h1 { font-size: 1.7rem; }
+    }
 
-.message-text {
-  white-space: pre-line;
-  margin-bottom: 1.5rem;
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  word-break: break-word;
-  line-height: 1.7;
-}
+    .gradient-text {
+      background: linear-gradient(145deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
 
-/* 链接样式 */
-.message-text a {
-  color: var(--primary-color);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(77, 184, 255, 0.3);
-  transition: all 0.2s ease;
-  padding: 0 2px;
-  font-weight: 500;
-}
+    /* ---------- 普通提示 & loading ---------- */
+    .message {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0 1.8rem;
+      line-height: 1.6;
+    }
 
-.message-text a:hover {
-  color: var(--primary-light);
-  border-bottom-color: var(--primary-color);
-  background-color: rgba(77, 184, 255, 0.1);
-}
+    .loading {
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: 1.1rem;
+      margin: 1.5rem 0;
+    }
 
-.image-container {
-  margin: 2rem 0;
-  text-align: center;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
+    .loading:after {
+      content: '...';
+      animation: dotPulse 1.8s infinite;
+      display: inline-block;
+      width: 1.8em;
+      text-align: left;
+      letter-spacing: 2px;
+    }
 
-.message-image {
-  max-width: 100%;
-  max-height: 500px;
-  border-radius: var(--radius-lg);
-  transition: transform 0.3s ease;
-  display: block;
-  margin: 0 auto;
-}
+    @keyframes dotPulse {
+      0%, 20% { content: '...'; opacity: 0.6; }
+      40% { content: '.'; opacity: 1; }
+      60% { content: '..'; opacity: 0.9; }
+      80%, 100% { content: '...'; opacity: 0.7; }
+    }
 
-.message-image:hover {
-  transform: scale(1.02);
-}
+    /* ---------- 微信警告卡片 (完全自适应) ---------- */
+    .wechat-warning {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 1.25rem;
+      padding: 1.5rem 1.2rem;
+      margin: 1rem 0 1.8rem;
+      backdrop-filter: blur(4px);
+    }
 
-.loading, .error {
-  padding: 2rem;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-}
+    .wechat-warning h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fbbf24;
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+      border-bottom: 1px dashed rgba(245, 158, 11, 0.3);
+      padding-bottom: 0.5rem;
+    }
 
-.loading:after {
-  content: '...';
-  animation: dots 1.5s steps(4, end) infinite;
-}
+    .wechat-warning h3 i {
+      font-size: 1.4rem;
+    }
 
-@keyframes dots {
-  0%, 20% { content: ''; }
-  40% { content: '.'; }
-  60% { content: '..'; }
-  80%, 100% { content: '...'; }
-}
+    .wechat-warning > p {
+      margin-bottom: 1.5rem;
+      color: #ddd;
+      font-size: 1rem;
+    }
 
-.preview-hint {
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin-top: 2rem;
-  border-top: 1px solid var(--border-color);
-  padding-top: 2rem;
-}
+    /* 步骤列表 ———— 完全弹性，小屏不溢出 */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-.preview-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.875rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, rgba(77, 184, 255, 0.1), rgba(77, 184, 255, 0.05));
-}
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
 
-.preview-link:hover {
-  color: var(--primary-light);
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  background: linear-gradient(135deg, rgba(77, 184, 255, 0.2), rgba(77, 184, 255, 0.1));
-}
+    .step-number {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #111;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 160, 255, 0.4);
+    }
 
-.preview-link i {
-  font-size: 1.2rem;
-}
+    .step-text {
+      flex: 1;
+      min-width: 0;                /* 防止长单词溢出 */
+      word-break: break-word;
+      color: #e0e0e0;
+      font-size: 1rem;
+      line-height: 1.5;
+      padding-top: 2px;            /* 与数字视觉对齐 */
+    }
 
-/* 返回首页链接 */
-.back-home {
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
-}
+    /* 小屏下步骤文字适当变小，但保持可读 */
+    @media (max-width: 400px) {
+      .step-text { font-size: 0.95rem; }
+    }
 
-.back-home a {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+    /* ---------- 操作按钮组 (自适应 stacking) ---------- */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
 
-.back-home a:hover {
-  color: var(--primary-color);
-}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 1rem 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: var(--radius-btn);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: var(--transition);
+      cursor: pointer;
+      background: rgba(30, 35, 40, 0.8);
+      color: var(--primary);
+      border-color: rgba(77, 184, 255, 0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      text-align: center;
+      line-height: 1.2;
+      word-break: break-word;
+    }
 
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-  
-  .container {
-    padding: 1.5rem;
-  }
-  
-  .message-title {
-    font-size: 1.5rem;
-  }
-  
-  .message-content {
-    padding: 1.5rem;
-  }
-  
-  .message-text {
-    font-size: 1rem;
-  }
-  
-  .post-info {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .message-image {
-    max-height: 300px;
-  }
-}
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      border: none;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0, 120, 255, 0.3);
+    }
 
-@media (max-width: 480px) {
-  .container {
-    padding: 1rem;
-  }
-  
-  .message-content {
-    padding: 1rem;
-  }
-  
-  .message-title {
-    font-size: 1.3rem;
-  }
-  
-  .preview-link {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    width: 100%;
-  }
-}
-</style>
+    .btn-primary:hover, .btn-primary:active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      transform: scale(1.02) translateY(-1px);
+      box-shadow: 0 10px 18px rgba(0, 160, 255, 0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(20, 30, 45, 0.7);
+      color: var(--primary-light);
+      border-color: rgba(77, 184, 255, 0.5);
+    }
+
+    .btn-secondary:hover, .btn-secondary:active {
+      background: rgba(40, 60, 85, 0.8);
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    /* 确保触控区域足够 */
+    .btn i {
+      font-size: 1.2rem;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    }
+
+    /* 复制成功微提示 */
+    .btn-secondary:active {
+      transition: none;
+    }
+
+    /* 极小屏下按钮内边距微调 */
+    @media (max-width: 360px) {
+      .btn { padding: 0.85rem 0.75rem; font-size: 1rem; }
+    }
+
+    /* 大屏下按钮稍微精致一点 */
+    @media (min-width: 640px) {
+      .btn { padding: 1rem 1.8rem; }
+    }
+
+    /* ---------- 辅助工具类 (动态显示) ---------- */
+    .hidden {
+      display: none !important;
+    }
+
+    /* 保证字体图标和文本不折断 */
+    .fa,
+    .fas,
+    .far {
+      display: inline-block;
+      text-rendering: auto;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div id="content-container">
-    <div class="loading">正在加载帖子内容</div>
+<div class="container" id="appContainer">
+
+  <!-- 图标区 -->
+  <div class="logo">
+    <i class="fas fa-rocket"></i>
   </div>
-  
-  <div class="back-home">
-    <a href="/index.html">
-      <i class="fas fa-arrow-left"></i> 返回首页
+
+  <!-- 主标题 -->
+  <h1>前往 <span class="gradient-text">Freewd</span> 社区</h1>
+
+  <!-- 微信/QQ 专用警告 (默认隐藏, JS检测后显示) -->
+  <div id="wechat-warning" class="wechat-warning" style="display: none;">
+    <h3>
+      <i class="fas fa-exclamation-triangle"></i> 
+      检测到QQ/微信内打开
+    </h3>
+    <p>由于内置浏览器限制，请按以下步骤用系统浏览器打开：</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <span class="step-text">点击右上角“<strong>···</strong>”或“<strong>⋮</strong>”菜单</span>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <span class="step-text">选择“<strong>在浏览器中打开</strong>”</span>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <span class="step-text">在浏览器中继续访问此页面，即可跳转</span>
+      </div>
+    </div>
+    <!-- 额外提示：仍然提供复制链接按钮 (方便手动) -->
+    <div style="margin-top: 1.5rem; text-align: center;">
+      <button id="copyLinkInside" class="btn btn-secondary" style="display: inline-flex; width: auto; padding: 0.7rem 1.8rem;">
+        <i class="fas fa-copy"></i> 复制链接
+      </button>
+    </div>
+  </div>
+
+  <!-- 正常跳转视图 (默认可见) -->
+  <div id="normal-view">
+    <p class="message">正在为您跳转到 Freewd 社区应用</p>
+    <div class="loading">正在准备跳转</div>
+  </div>
+
+  <!-- 备用按钮组 (跳转失败或微信内显示) 初始隐藏 -->
+  <div class="buttons" id="action-buttons" style="display: none;">
+    <a href="#" id="open-app" class="btn btn-primary">
+      <i class="fas fa-external-link-alt"></i> 打开 Freewd 应用
+    </a>
+    <a href="#" id="copy-link" class="btn btn-secondary">
+      <i class="fas fa-copy"></i> 复制链接
     </a>
   </div>
 </div>
 
-<script>
-window.addEventListener('DOMContentLoaded', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const filename = urlParams.get('filename') || urlParams.get('file');
-  const zone = urlParams.get('zone') || '1';
-  
-  if (!filename) {
-    
-    const appLink = 'freewd://open_post/path?filename=&zone=' + zone;
-    window.location.href = appLink;
-    return;
-  }
-
-  // 构建API URL
-  const apiUrl = 'https://app.blockcarft.xyz/app/api/NewGetPost.php?file=' + encodeURIComponent(filename) + '&zone=' + zone;
-  
-  // 构建应用链接
-  const appLink = 'freewd://open_post/path?file=' + filename + '&zone=' + zone;
-  
-  // 设置一个超时跳转，如果3秒内没有获取到数据，直接跳转到应用
-  const timeoutId = setTimeout(function() {
-    window.location.href = appLink;
-  }, 3000);
-  
-  // 调用API获取帖子数据
-  fetch(apiUrl)
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error('无法加载帖子: ' + response.status);
-      }
-      return response.json();
-    })
-    .then(function(data) {
-      // 清除跳转超时
-      clearTimeout(timeoutId);
-      
-      if (data.error) {
-        // 如果有错误，直接跳转到应用
-        window.location.href = appLink;
-        return;
-      }
-      renderPost(data, appLink);
-    })
-    .catch(function(error) {
-      console.error('Error fetching post:', error);
-      // 清除跳转超时
-      clearTimeout(timeoutId);
-      // 发生错误时直接跳转到应用
-      window.location.href = appLink;
-    });
-  
-  /**
-   * 将文本中的URL转换为可点击的链接
-   */
-  function linkify(text) {
-    if (!text) return '';
-    
-    // URL正则表达式
-    const urlRegex = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    const wwwRegex = /(^|\s)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    const emailRegex = /(\b[\w.!#$%&'*+\/=?^_`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b)/gi;
-    
-    // 替换URL
-    let linkedText = text
-      .replace(urlRegex, function(url) {
-        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
-      })
-      .replace(wwwRegex, function(url, space) {
-        return space + '<a href="http://' + url.trim() + '" target="_blank" rel="noopener noreferrer">' + url.trim() + '</a>';
-      })
-      .replace(emailRegex, function(email) {
-        return '<a href="mailto:' + email + '" target="_blank" rel="noopener noreferrer">' + email + '</a>';
-      });
-    
-    return linkedText;
-  }
-  
-  /**
-   * 安全地渲染HTML，防止XSS攻击
-   */
-  function safeHtml(html) {
-    if (!html) return '';
-    const div = document.createElement('div');
-    div.textContent = html;
-    return div.innerHTML;
-  }
-  
-  /**
-   * 渲染帖子内容
-   */
-  function renderPost(data, appLink) {
-    const container = document.getElementById('content-container');
-    
-    const title = data.title || '无标题';
-    const message = data.message || '内容为空';
-    const imageUrl = data.img || null;
-    const postTime = data.time || '';
-    
-    // 对消息进行链接转换
-    const linkedMessage = linkify(safeHtml(message));
-    
-    // 构建图片HTML
-    let imageHTML = '';
-    if (imageUrl) {
-      imageHTML = '<div class="image-container"><img src="' + imageUrl + '" alt="帖子图片" class="message-image" onerror="this.style.display=\'none\'"></div>';
-    }
-    
-    // 格式化标题，检查是否包含Freewd
-    let formattedTitle = safeHtml(title);
-    if (title.toLowerCase().includes('freewd')) {
-      const parts = title.split('Freewd');
-      formattedTitle = parts[0] + '<span class="gradient-text">Freewd</span>' + (parts[1] || '');
-    }
-    
-    // 构建HTML内容
-    let htmlContent = '<div class="header">';
-    if (postTime) {
-      htmlContent += '<div class="post-time">' + safeHtml(postTime) + '</div>';
-    }
-    htmlContent += '<div class="message-title">' + formattedTitle + '</div></div>';
-    htmlContent += '<div class="message-content">';
-    if (linkedMessage) {
-      htmlContent += '<div class="message-text">' + linkedMessage + '</div>';
-    }
-    htmlContent += imageHTML;
-    htmlContent += '</div>';
-    htmlContent += '<div class="preview-hint"><a class="preview-link" href="' + appLink + '"><i class="fas fa-external-link-alt"></i> 在 Freewd App 中查看完整功能</a></div>';
-    
-    container.innerHTML = htmlContent;
-    
-    // 为跳转链接添加点击效果
-    const link = container.querySelector('.preview-link');
-    if (link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        this.style.transform = 'scale(0.95)';
-        setTimeout(function() {
-          window.location.href = appLink;
-        }, 200);
-      });
-    }
-    
-    // 为所有自动生成的链接添加点击处理
-    const autoLinks = container.querySelectorAll('.message-text a');
-    autoLinks.forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const url = this.getAttribute('href');
-        if (url) {
-          window.open(url, '_blank', 'noopener,noreferrer');
-        }
-      });
-    });
-  }
-});
-</script>
-
+<!-- Font Awesome 6 图标库 (异步不影响布局) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+<!-- 自适应交互逻辑 (保持原有功能 + 增强复制) -->
+<script>
+  (function() {
+    'use strict';
+
+    // 检测 QQ 或 微信
+    function isWechatOrQQ() {
+      const ua = navigator.userAgent.toLowerCase();
+      return ua.includes('micromessenger') || ua.includes('qq/');
+    }
+
+    // 获取 URL 参数 (支持 filename / file / zone)
+    function getJumpParams() {
+      const params = new URLSearchParams(window.location.search);
+      const filename = params.get('filename') || params.get('file') || '';
+      const zone = params.get('zone') || '1';
+      let appUrl = 'freewd://open_post/path';
+      if (filename) {
+        appUrl += `?filename=${encodeURIComponent(filename)}&zone=${zone}`;
+      }
+      return { filename, zone, appUrl };
+    }
+
+    // 复制到剪贴板 (带降级)
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          return false;
+        }
+      } else {
+        // 降级方案
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          const success = document.execCommand('copy');
+          document.body.removeChild(textArea);
+          return success;
+        } catch {
+          document.body.removeChild(textArea);
+          return false;
+        }
+      }
+    }
+
+    // 显示复制成功反馈 (通用)
+    function showCopySuccess(btnElement, originalContent) {
+      const originalHtml = btnElement.innerHTML;
+      btnElement.innerHTML = '<i class="fas fa-check"></i> 已复制';
+      setTimeout(() => {
+        btnElement.innerHTML = originalHtml;
+      }, 2000);
+    }
+
+    // ---------- DOM 加载完成后执行 ----------
+    document.addEventListener('DOMContentLoaded', function() {
+      const { filename, zone, appUrl } = getJumpParams();
+      const inWechat = isWechatOrQQ();
+
+      const normalView = document.getElementById('normal-view');
+      const wechatWarning = document.getElementById('wechat-warning');
+      const actionButtons = document.getElementById('action-buttons');
+      const openAppBtn = document.getElementById('open-app');
+      const copyLinkBtn = document.getElementById('copy-link');
+      const copyLinkInside = document.getElementById('copyLinkInside');  // 微信内的独立复制按钮
+
+      // 设置打开应用链接
+      if (openAppBtn) {
+        openAppBtn.href = appUrl;
+      }
+
+      // 当前页面完整URL (用于复制)
+      const currentUrl = window.location.href;
+
+      // 通用的复制函数
+      async function handleCopy(triggerBtn) {
+        const success = await copyToClipboard(currentUrl);
+        if (success) {
+          showCopySuccess(triggerBtn, triggerBtn.innerHTML);
+        } else {
+          alert('复制失败，请手动选择链接复制');
+        }
+      }
+
+      // 绑定复制按钮 (主视图下方)
+      if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          handleCopy(this);
+        });
+      }
+
+      // 绑定微信内的复制按钮 (如果存在)
+      if (copyLinkInside) {
+        copyLinkInside.addEventListener('click', function(e) {
+          e.preventDefault();
+          handleCopy(this);
+        });
+      }
+
+      // 打开应用按钮 (防默认 + 兜底)
+      if (openAppBtn) {
+        openAppBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          // 尝试跳转
+          window.location.href = appUrl;
+
+          // 如果1.5秒后没有失焦(可能跳转失败), 什么也不做, 按钮已经显示
+          // 但为了体验，可保留现有逻辑
+        });
+      }
+
+      // 根据环境显示不同UI
+      if (inWechat) {
+        // 微信/QQ内置浏览器: 显示警告，隐藏正常视图，显示操作按钮 (让用户复制或在浏览器打开)
+        normalView.style.display = 'none';
+        wechatWarning.style.display = 'block';
+        actionButtons.style.display = 'flex';  // 备用按钮也展示，方便直接复制
+      } else {
+        // 普通浏览器: 显示正常视图，稍后尝试跳转
+        wechatWarning.style.display = 'none';
+        actionButtons.style.display = 'none';
+
+        // 1秒后尝试唤起应用
+        setTimeout(() => {
+          window.location.href = appUrl;
+        }, 1000);
+
+        // 如果3.5秒后页面仍然可见 (跳转失败)，显示操作按钮
+        setTimeout(() => {
+          // 如果 normalView 可见，说明没有跳转成功 (或者用户没有应用)
+          if (normalView.style.display !== 'none') {
+            normalView.style.display = 'none';
+            actionButtons.style.display = 'flex';
+          }
+        }, 4000);
+      }
+
+      // 额外的失焦检测 (跳转应用可能使页面隐藏)
+      window.addEventListener('blur', function() {
+        // 可能成功唤起应用，安静处理即可
+      });
+
+      // 5秒后保险: 如果actionButtons仍未显示但normalView可见，强制显示按钮
+      setTimeout(() => {
+        if (normalView.style.display !== 'none' && actionButtons.style.display === 'none' && !inWechat) {
+          normalView.style.display = 'none';
+          actionButtons.style.display = 'flex';
+        }
+      }, 6000);
+    });
+  })();
+</script>
 </body>
 </html>
