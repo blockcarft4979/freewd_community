@@ -1,8 +1,8 @@
-# Freewd社区 v2.4.4（Freewd Community）
+# Freewd社区 v3.0.0（Freewd Community）
 
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
-> 官网：[Freewd](https://f2.freewd.top)
+> 官网：[Freewd社区](https://f2.freewd.top)
 
 > 由于域名的变更，所以2.2.6之前的版本均无法正常使用，请大家更新最新版
 ---
