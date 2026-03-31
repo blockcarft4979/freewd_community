@@ -1,5 +1,11 @@
 {
     "zone": [
+{
+            "name": "Bug反馈",
+            "description": "点击此处反馈Bug，部分网络需使用加速器",
+            "icon": "img/icons/Bug.png",
+            "link": "https://github.com/blockcarft4979/freewd_community/issues"
+        },
 
         {
             "name": "闲聊吧",
@@ -7,9 +13,10 @@
             "icon": "img/icons/Daily.png",
             "zone": 1
         },
+        
         {
             "name": "匿名吧",
-            "description": "快来看看小幽灵们都说了些什么吧（和联机交友一样超级冷门）",
+            "description": "快来看看小幽灵们都说了些什么吧",
             "icon": "img/icons/Ghost.png",
              "zone": 3
         }
