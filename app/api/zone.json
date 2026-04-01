@@ -1,13 +1,5 @@
 {
     "zone": [
-{
-            "name": "[置顶]Freewd社区抽奖活动",
-            "description": "点击此处抽取积分奖励，大奖是10元巨款！",
-"msg":"祝你好运~",
-            "icon": "img/icons/Reward.png",
-            "link": "https://f2.freewd.top/video/reward.mp4"
-        },
-
         {
             "name": "闲聊吧",
             "description": "吹吹牛、灌水、分享日常都可以哦",
