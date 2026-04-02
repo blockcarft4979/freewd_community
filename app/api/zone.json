@@ -6,6 +6,12 @@
             "icon": "img/icons/Daily.png",
             "zone": 1
         },
+        {
+            "name": "随意吧（测试）",
+            "description": "就随意吧",
+            "icon": "img/icons/Test.png",
+            "zone": 2
+        },
         
         {
             "name": "匿名吧",
