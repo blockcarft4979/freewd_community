@@ -344,7 +344,7 @@
       </div>
       <div class="step">
         <div class="step-number">3</div>
-        <span class="step-text">在浏览器中继续访问此页面，即可跳转</span>
+        <span class="step-text">在浏览器中继续访问此页面，即可自动跳转Freewd应用</span>
       </div>
     </div>
     <!-- 额外提示：仍然提供复制链接按钮 (方便手动) -->
@@ -357,8 +357,8 @@
 
   <!-- 正常跳转视图 (默认可见) -->
   <div id="normal-view">
-    <p class="message">正在为您跳转到 Freewd 社区应用</p>
-    <div class="loading">正在准备跳转</div>
+    <p class="message">正在为您跳转 Freewd 社区应用</p>
+    <div class="loading">正在准备打开应用</div>
   </div>
 
   <!-- 备用按钮组 (跳转失败或微信内显示) 初始隐藏 -->
@@ -375,30 +375,21 @@
 <!-- Font Awesome 6 图标库 (异步不影响布局) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
-<!-- 自适应交互逻辑 (保持原有功能 + 增强复制) -->
+<!-- 自适应交互逻辑：固定跳转URL freewd://open_post/path?filename=xxx.json&zone=1 -->
 <script>
   (function() {
     'use strict';
 
-    // 检测 QQ 或 微信
+    // 固定跳转地址：完全按照需求配置
+    const FIXED_APP_URL = "freewd://open_post/path?filename=xxx.json&zone=1";
+
+    // 检测 QQ 或 微信内置浏览器
     function isWechatOrQQ() {
       const ua = navigator.userAgent.toLowerCase();
       return ua.includes('micromessenger') || ua.includes('qq/');
     }
 
-    // 获取 URL 参数 (支持 filename / file / zone)
-    function getJumpParams() {
-      const params = new URLSearchParams(window.location.search);
-      const filename = params.get('filename') || params.get('file') || '';
-      const zone = params.get('zone') || '1';
-      let appUrl = 'freewd://open_post/path';
-      if (filename) {
-        appUrl += `?filename=${encodeURIComponent(filename)}&zone=${zone}`;
-      }
-      return { filename, zone, appUrl };
-    }
-
-    // 复制到剪贴板 (带降级)
+    // 复制到剪贴板 (带降级兼容)
     async function copyToClipboard(text) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         try {
@@ -408,7 +399,7 @@
           return false;
         }
       } else {
-        // 降级方案
+        // 降级方案 (textarea)
         const textArea = document.createElement('textarea');
         textArea.value = text;
         textArea.style.position = 'fixed';
@@ -426,46 +417,46 @@
       }
     }
 
-    // 显示复制成功反馈 (通用)
-    function showCopySuccess(btnElement, originalContent) {
-      const originalHtml = btnElement.innerHTML;
+    // 显示复制成功反馈
+    function showCopySuccess(btnElement, originalHtml) {
       btnElement.innerHTML = '<i class="fas fa-check"></i> 已复制';
       setTimeout(() => {
         btnElement.innerHTML = originalHtml;
       }, 2000);
     }
 
-    // ---------- DOM 加载完成后执行 ----------
+    // 页面完全加载后执行核心逻辑
     document.addEventListener('DOMContentLoaded', function() {
-      const { filename, zone, appUrl } = getJumpParams();
       const inWechat = isWechatOrQQ();
 
+      // DOM 元素
       const normalView = document.getElementById('normal-view');
       const wechatWarning = document.getElementById('wechat-warning');
       const actionButtons = document.getElementById('action-buttons');
       const openAppBtn = document.getElementById('open-app');
       const copyLinkBtn = document.getElementById('copy-link');
-      const copyLinkInside = document.getElementById('copyLinkInside');  // 微信内的独立复制按钮
+      const copyLinkInside = document.getElementById('copyLinkInside');
 
-      // 设置打开应用链接
+      // 当前页面的完整URL (用于复制分享)
+      const currentPageUrl = window.location.href;
+
+      // 配置“打开应用”按钮的跳转地址 (固定 scheme)
       if (openAppBtn) {
-        openAppBtn.href = appUrl;
+        openAppBtn.href = FIXED_APP_URL;
       }
 
-      // 当前页面完整URL (用于复制)
-      const currentUrl = window.location.href;
-
-      // 通用的复制函数
-      async function handleCopy(triggerBtn) {
-        const success = await copyToClipboard(currentUrl);
+      // 通用复制处理函数 (复制当前页面地址)
+      async function handleCopy(triggerElement) {
+        const originalHtml = triggerElement.innerHTML;
+        const success = await copyToClipboard(currentPageUrl);
         if (success) {
-          showCopySuccess(triggerBtn, triggerBtn.innerHTML);
+          showCopySuccess(triggerElement, originalHtml);
         } else {
-          alert('复制失败，请手动选择链接复制');
+          alert('复制失败，请手动复制链接');
         }
       }
 
-      // 绑定复制按钮 (主视图下方)
+      // 绑定复制按钮 (主视图下方的复制链接)
       if (copyLinkBtn) {
         copyLinkBtn.addEventListener('click', function(e) {
           e.preventDefault();
@@ -473,7 +464,7 @@
         });
       }
 
-      // 绑定微信内的复制按钮 (如果存在)
+      // 绑定微信警告卡片内的复制按钮
       if (copyLinkInside) {
         copyLinkInside.addEventListener('click', function(e) {
           e.preventDefault();
@@ -481,56 +472,55 @@
         });
       }
 
-      // 打开应用按钮 (防默认 + 兜底)
+      // “打开应用”按钮的增强点击：主动唤起scheme
       if (openAppBtn) {
         openAppBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          // 尝试跳转
-          window.location.href = appUrl;
-
-          // 如果1.5秒后没有失焦(可能跳转失败), 什么也不做, 按钮已经显示
-          // 但为了体验，可保留现有逻辑
+          // 直接通过 location 唤起 Freewd 应用
+          window.location.href = FIXED_APP_URL;
         });
       }
 
-      // 根据环境显示不同UI
+      // ----- 根据环境呈现不同界面并执行自动跳转 -----
       if (inWechat) {
-        // 微信/QQ内置浏览器: 显示警告，隐藏正常视图，显示操作按钮 (让用户复制或在浏览器打开)
+        // 微信/QQ内置浏览器：显示友好的指引界面，隐藏自动跳转视图，展示备用操作按钮
         normalView.style.display = 'none';
         wechatWarning.style.display = 'block';
-        actionButtons.style.display = 'flex';  // 备用按钮也展示，方便直接复制
+        actionButtons.style.display = 'flex';   // 提供复制链接及手动打开（虽然微信内无法直接唤起，但复制链接后用户可跳转浏览器）
       } else {
-        // 普通浏览器: 显示正常视图，稍后尝试跳转
+        // 普通浏览器（Safari / Chrome / 系统浏览器等）
         wechatWarning.style.display = 'none';
         actionButtons.style.display = 'none';
+        normalView.style.display = 'block';
 
-        // 1秒后尝试唤起应用
+        // 延时1秒后自动尝试打开固定URL (freewd://)
         setTimeout(() => {
-          window.location.href = appUrl;
+          window.location.href = FIXED_APP_URL;
         }, 1000);
 
-        // 如果3.5秒后页面仍然可见 (跳转失败)，显示操作按钮
+        // 跳转容错: 如果4秒后页面依然停留在当前视图(即没有成功唤起应用或未安装app)，
+        // 则隐藏loading视图并显示备用按钮，让用户手动复制链接或再次尝试打开。
         setTimeout(() => {
-          // 如果 normalView 可见，说明没有跳转成功 (或者用户没有应用)
-          if (normalView.style.display !== 'none') {
+          // 如果 normal-view 仍然可见且未被微信警告覆盖，说明未能成功跳转
+          if (normalView.style.display !== 'none' && actionButtons.style.display === 'none') {
             normalView.style.display = 'none';
             actionButtons.style.display = 'flex';
           }
         }, 4000);
       }
 
-      // 额外的失焦检测 (跳转应用可能使页面隐藏)
-      window.addEventListener('blur', function() {
-        // 可能成功唤起应用，安静处理即可
-      });
-
-      // 5秒后保险: 如果actionButtons仍未显示但normalView可见，强制显示按钮
+      // 额外保险：如果6秒后 actionButtons 仍未显示且 normalView 还在（极少数情况），强制展示备用按钮
       setTimeout(() => {
         if (normalView.style.display !== 'none' && actionButtons.style.display === 'none' && !inWechat) {
           normalView.style.display = 'none';
           actionButtons.style.display = 'flex';
         }
       }, 6000);
+
+      // 监听页面 blur 事件 (部分浏览器唤起第三方应用时触发，无需特殊处理，静默完成即可)
+      window.addEventListener('blur', function() {
+        // 成功唤起应用时无需额外动作，保持后台静默
+      });
     });
   })();
 </script>
