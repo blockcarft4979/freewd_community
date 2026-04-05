@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>三体思维坍缩体 · 超出认知的抽象维度</title>
+    <style>
+        /* 瓦解常规认知的样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Courier New', 'Wingdings', 'Segoe UI Symbol', monospace;
+            cursor: crosshair;
+            position: relative;
+        }
+
+        /* 背景canvas — 降维打击画布 */
+        #chaosCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 漂浮文字容器 — 智子乱码集群 */
+        .floating-texts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .float-word {
+            position: absolute;
+            white-space: nowrap;
+            font-weight: bold;
+            opacity: 0.85;
+            transition: transform 0.05s linear;
+            text-shadow: 0 0 5px currentColor;
+            pointer-events: auto;
+            cursor: grab;
+            mix-blend-mode: difference;
+            backdrop-filter: blur(2px);
+            border-radius: 50%;
+            padding: 4px 12px;
+            background: rgba(0,0,0,0.3);
+            font-size: clamp(14px, 4vw, 28px);
+            will-change: left, top, transform;
+        }
+
+        /* 抽象时钟 — 无表情符号 */
+        .chaos-clock {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            padding: 6px 14px;
+            border-left: 4px solid #ff66cc;
+            color: #aaffdd;
+            font-size: 13px;
+            z-index: 30;
+            font-family: 'Courier New', monospace;
+            pointer-events: none;
+            border-radius: 0 20px 20px 0;
+            transform: skewX(-5deg);
+        }
+
+        .status-bubble {
+            position: fixed;
+            top: 80px;
+            right: 30px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            font-size: 11px;
+            border-radius: 40px;
+            color: #ffcc00;
+            z-index: 30;
+            border: 1px dashed #ff00aa;
+            font-family: monospace;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            text-align: center;
+            max-width: 200px;
+        }
+
+        /* 全局闪烁动画 */
+        @keyframes globalGlitch {
+            0% { filter: hue-rotate(0deg) blur(0px);}
+            25% { filter: hue-rotate(90deg) blur(1px);}
+            50% { filter: hue-rotate(180deg) blur(0px);}
+            75% { filter: hue-rotate(270deg) blur(0.5px);}
+            100% { filter: hue-rotate(360deg) blur(0px);}
+        }
+
+        body.glitch-effect {
+            animation: globalGlitch 0.2s infinite;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="chaosCanvas"></canvas>
+<div class="floating-texts" id="floatingContainer"></div>
+
+<div class="chaos-clock" id="chaosClock">
+    乱纪时: 脱水周期 ██████░░░░
+</div>
+<div class="status-bubble" id="statusBubble">
+    智子监控: 维度呼吸中...
+</div>
+
+<script>
+    (function(){
+        // ---------- 彻底疯狂的抽象思维领域 (无任何表情符号与交互面板) ----------
+        const canvas = document.getElementById('chaosCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        
+        // 内部抽象参数 (随机波动, 无用户控制)
+        let dimensionRate = 47;    
+        let twistIntensity = 63;   
+        let phaseShift = 22;       
+        
+        // 浮动文字数组
+        let floatingWords = [];
+        const wordContainer = document.getElementById('floatingContainer');
+        
+        // 抽象短语库 — 完全去除emoji, 保留纯文字/符号
+        const phraseBank = [
+            "[ 智子二维展开 ]", "[ 三体游戏：乱纪元 ]", "[ 不要回答 不要回答 ]", "[ 思想钢印: 水是干的 ]", 
+            "[ 观测到四维空间碎片 ]", "[ 二向箔已锁定 ]", "[ 你的存在是质子 ]", "[ 强互作用力水滴 ]", 
+            "[ 智子锁死物理定律 ]", "[ 三日凌空 脱水 ]", "[ 飞刃纳米切割 ]", "[ 三体人: 你们是虫子 ]",
+            "[ 宇宙闪烁频率 0x3Body ]", "[ 基因: 乱码中 ]", "[ 请将大脑发射到太空 ]", "[ 降维打击进行中 ]",
+            "[ 黑洞蒸发信息悖论 ]", "[ 智子纠缠态 42% ]", "[ 曲率驱动引擎故障 ]", "[ 黑暗森林: 暴露坐标 ]",
+            "[ 二向箔 二维化 ]", "[ 智子监控 实时坍缩 ]", "[ 维度褶皱 不可逆 ]", "[ 引力波发射 ]"
+        ];
+        
+        function getRandomPhrase() {
+            return phraseBank[Math.floor(Math.random() * phraseBank.length)] + 
+                   (Math.random() > 0.7 ? " <" + Math.floor(Math.random()*999) + ">" : "");
+        }
+        
+        // 鼠标位置用于逃逸逻辑
+        let mouseX = -1000, mouseY = -1000;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        // 浮动文字类
+        class FloatingText {
+            constructor(el, x, y, vx, vy, content, rotSpeed) {
+                this.el = el;
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.rot = Math.random() * 360;
+                this.rotSpeed = rotSpeed || (Math.random() - 0.5) * 2;
+                this.content = content;
+                this.updatePosition();
+                this.el.style.transform = `rotate(${this.rot}deg)`;
+            }
+            
+            updatePosition() {
+                this.el.style.left = this.x + 'px';
+                this.el.style.top = this.y + 'px';
+            }
+            
+            update(deltaTime, mouseAvoidForce = true) {
+                const rect = this.el.getBoundingClientRect();
+                const centerX = this.x + rect.width/2;
+                const centerY = this.y + rect.height/2;
+                let dx = 0, dy = 0;
+                if(mouseAvoidForce && mouseX > 0 && mouseY > 0) {
+                    const distX = centerX - mouseX;
+                    const distY = centerY - mouseY;
+                    const dist = Math.hypot(distX, distY);
+                    if(dist < 130) {
+                        const angle = Math.atan2(distY, distX);
+                        const force = (130 - dist) / 20;
+                        dx += Math.cos(angle) * force * 2.5;
+                        dy += Math.sin(angle) * force * 2.5;
+                    }
+                }
+                const chaosFactor = dimensionRate / 50;
+                this.vx += (Math.random() - 0.5) * 0.6 * chaosFactor + dx * 0.3;
+                this.vy += (Math.random() - 0.5) * 0.6 * chaosFactor + dy * 0.3;
+                let maxSpeed = 3 + twistIntensity/30;
+                this.vx = Math.min(maxSpeed, Math.max(-maxSpeed, this.vx));
+                this.vy = Math.min(maxSpeed, Math.max(-maxSpeed, this.vy));
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                const margin = 30;
+                if(this.x + margin < 0) this.x = width + margin;
+                if(this.x - margin > width) this.x = -margin;
+                if(this.y + margin < 0) this.y = height + margin;
+                if(this.y - margin > height) this.y = -margin;
+                
+                this.rot += this.rotSpeed * (0.5 + phaseShift/100);
+                this.updatePosition();
+                this.el.style.transform = `rotate(${this.rot}deg) scale(${0.8 + Math.sin(Date.now() * 0.003 + this.rot) * 0.2})`;
+                
+                if(Math.random() < 0.005) {
+                    let newText = getRandomPhrase();
+                    this.el.innerText = newText;
+                    this.content = newText;
+                    const hue = (Date.now() + this.x) % 360;
+                    this.el.style.color = `hsl(${hue}, 100%, 65%)`;
+                }
+            }
+        }
+        
+        // 初始化漂浮文字 (无表情)
+        function initFloatingWords(count=15) {
+            wordContainer.innerHTML = '';
+            floatingWords = [];
+            for(let i=0; i<count; i++) {
+                const div = document.createElement('div');
+                div.className = 'float-word';
+                const content = getRandomPhrase();
+                div.innerText = content;
+                const hue = Math.random() * 360;
+                div.style.color = `hsl(${hue}, 85%, 65%)`;
+                div.style.fontSize = `${14 + Math.random() * 24}px`;
+                div.style.background = `rgba(0,0,0,0.5)`;
+                div.style.border = `1px solid hsl(${hue}, 80%, 60%)`;
+                div.style.backdropFilter = `blur(${Math.random()*3+1}px)`;
+                wordContainer.appendChild(div);
+                const x = Math.random() * (window.innerWidth - 150);
+                const y = Math.random() * (window.innerHeight - 80);
+                const vx = (Math.random() - 0.5) * 2.2;
+                const vy = (Math.random() - 0.5) * 2.2;
+                const rotSpeed = (Math.random() - 0.5) * 1.8;
+                const wordObj = new FloatingText(div, x, y, vx, vy, content, rotSpeed);
+                floatingWords.push(wordObj);
+            }
+        }
+        
+        // 重置文字集群 (无按钮调用, 但内部自动随机触发)
+        function resetWordsAuto() {
+            const currentCount = floatingWords.length;
+            if(currentCount > 28) {
+                while(floatingWords.length > 18) {
+                    const rem = floatingWords.pop();
+                    rem.el.remove();
+                }
+            } else if(currentCount < 8) {
+                initFloatingWords(14);
+            } else {
+                for(let w of floatingWords) {
+                    w.content = getRandomPhrase();
+                    w.el.innerText = w.content;
+                    w.vx += (Math.random() - 0.5)*1.2;
+                    w.vy += (Math.random() - 0.5)*1.2;
+                    const newHue = (Date.now() * 0.1) % 360;
+                    w.el.style.color = `hsl(${newHue}, 90%, 65%)`;
+                    w.el.style.borderColor = `hsl(${newHue+40}, 80%, 60%)`;
+                }
+            }
+            document.body.classList.add('glitch-effect');
+            setTimeout(() => document.body.classList.remove('glitch-effect'), 200);
+            updateStatusText("[ 思想钢印重新烙印 ]");
+        }
+        
+        // 随机混沌动作 (内部自发性抽象行为)
+        function randomChaosAction() {
+            const actions = [
+                () => {
+                    document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+                    setTimeout(() => document.body.style.filter = '', 400);
+                    updateStatusText("[ 维度反转 智子尖叫 ]");
+                },
+                () => {
+                    floatingWords.forEach(w => {
+                        w.vx += (Math.random() - 0.5)*8;
+                        w.vy += (Math.random() - 0.5)*8;
+                        w.rotSpeed *= -1;
+                    });
+                    updateStatusText("[ 四维碎片风暴 ]");
+                },
+                () => {
+                    floatingWords.forEach(w => {
+                        w.content = getRandomPhrase() + " <" + Math.floor(Math.random()*100) + ">";
+                        w.el.innerText = w.content;
+                        w.el.style.color = `hsl(${Math.random()*360}, 100%, 65%)`;
+                    });
+                    updateStatusText("[ 智子展开超模因 ]");
+                },
+                () => {
+                    dimensionRate = Math.min(100, Math.max(0, dimensionRate + (Math.random() - 0.5)*30));
+                    twistIntensity = Math.min(100, Math.max(0, twistIntensity + (Math.random() - 0.5)*40));
+                    phaseShift = Math.min(100, Math.max(0, phaseShift + (Math.random() - 0.5)*25));
+                    updateStatusText("[ 二向箔参数异变 ]");
+                },
+                () => {
+                    const newDiv = document.createElement('div');
+                    newDiv.className = 'float-word';
+                    newDiv.innerText = "[ 降维警告 " + Math.floor(Math.random()*999) + " ]";
+                    newDiv.style.color = `hsl(${Date.now()%360}, 100%, 70%)`;
+                    newDiv.style.fontSize = `26px`;
+                    newDiv.style.background = `rgba(255,0,255,0.3)`;
+                    wordContainer.appendChild(newDiv);
+                    const newWord = new FloatingText(newDiv, Math.random()*width, Math.random()*height, 
+                                                      (Math.random()-0.5)*3, (Math.random()-0.5)*3, newDiv.innerText, (Math.random()-0.5)*2);
+                    floatingWords.push(newWord);
+                    updateStatusText("[ 新的智子观测者出现 ]");
+                    if(floatingWords.length > 35) {
+                        let oldest = floatingWords.shift();
+                        oldest.el.remove();
+                    }
+                },
+                () => {
+                    dimensionRate = Math.min(100, dimensionRate + 30);
+                    twistIntensity = Math.min(100, twistIntensity + 40);
+                    phaseShift = Math.min(100, phaseShift + 25);
+                    updateStatusText("[ 三体游戏: 混沌纪元开启 ]");
+                }
+            ];
+            const act = actions[Math.floor(Math.random() * actions.length)];
+            act();
+            document.body.style.animation = 'none';
+            document.body.offsetHeight;
+            document.body.style.animation = 'globalGlitch 0.15s 1';
+            setTimeout(()=>{document.body.style.animation = '';}, 200);
+        }
+        
+        function updateStatusText(msg) {
+            const bubble = document.getElementById('statusBubble');
+            bubble.innerText = msg;
+            if(window.statusTimeout) clearTimeout(window.statusTimeout);
+            window.statusTimeout = setTimeout(() => {
+                bubble.innerText = "智子监控: 维度呼吸中...";
+            }, 1500);
+        }
+        
+        // 乱纪元时钟抽象更新 (无emoji)
+        function updateChaosClock() {
+            const clockDiv = document.getElementById('chaosClock');
+            const weirdUnits = ["脱水周期", "乱纪元日食", "飞刃震动", "智子心跳", "光粒倒计时"];
+            const unit = weirdUnits[Math.floor(Math.random() * weirdUnits.length)];
+            const progress = Math.floor(Math.random() * 100);
+            const barLen = Math.floor(progress / 10);
+            let bar = "█".repeat(barLen) + "░".repeat(10-barLen);
+            clockDiv.innerHTML = `[ ${unit} ]: ${bar} ${progress}% \n 时间膨胀系数: ${(Math.sin(Date.now()/1000)*5+5).toFixed(2)}`;
+        }
+        
+        // ---------- Canvas 背景: 超现实无厘头绘画 (无表情符号) ----------
+        function drawChaosBackground() {
+            if(!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            const bgHue = (Date.now() * 0.02 + phaseShift) % 360;
+            ctx.fillStyle = `hsla(${bgHue}, 70%, 5%, 0.9)`;
+            ctx.fillRect(0, 0, width, height);
+            
+            const shapesCount = Math.floor(15 + dimensionRate * 1.3);
+            const twist = twistIntensity / 50;
+            
+            for(let i=0; i<shapesCount; i++) {
+                const randType = Math.floor(Math.random() * 4);
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                const size = 10 + Math.random() * 80 * (0.5 + twist);
+                const hue = (Date.now() * 0.1 + x * 0.02 + phaseShift * 5) % 360;
+                const sat = 60 + Math.random() * 40;
+                const light = 50 + Math.sin(Date.now() * 0.005 + x) * 30;
+                ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, 0.6)`;
+                ctx.strokeStyle = `hsla(${hue+180}, 80%, 70%, 0.8)`;
+                ctx.lineWidth = 2 + twist;
+                
+                let offsetX = 0, offsetY = 0;
+                if(mouseX > 0 && mouseY > 0) {
+                    offsetX = (mouseX - width/2) / width * 20 * twist;
+                    offsetY = (mouseY - height/2) / height * 20 * twist;
+                }
+                ctx.save();
+                ctx.translate(x + offsetX, y + offsetY);
+                ctx.rotate((Date.now() * 0.003 + i) * twist * 0.5);
+                
+                if(randType === 0) {
+                    const sides = 3 + Math.floor(Math.random() * 6);
+                    ctx.beginPath();
+                    for(let s=0; s<sides; s++) {
+                        let angle = (s / sides) * Math.PI * 2;
+                        let rad = size * (0.5 + Math.sin(angle * 3 + Date.now()*0.01)*0.3);
+                        let px = Math.cos(angle) * rad;
+                        let py = Math.sin(angle) * rad;
+                        if(s===0) ctx.moveTo(px, py);
+                        else ctx.lineTo(px, py);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                } else if(randType === 1) {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, size, size* (0.5+Math.sin(Date.now()*0.01+ i)*0.5), 0, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.stroke();
+                } else if(randType === 2) {
+                    ctx.fillRect(-size/2, -size/2, size, size);
+                } else {
+                    for(let a=0; a<3; a++) {
+                        ctx.beginPath();
+                        ctx.moveTo(0,0);
+                        ctx.lineTo(Math.sin(a)*size*1.2, Math.cos(a*2)*size);
+                        ctx.lineTo(Math.cos(a+1)*size, Math.sin(a+2)*size);
+                        ctx.fill();
+                    }
+                }
+                ctx.restore();
+            }
+            
+            for(let i=0;i<300;i++) {
+                if(Math.random()<0.4) {
+                    ctx.fillStyle = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.3)`;
+                    ctx.fillRect(Math.random()*width, Math.random()*height, 2, 2);
+                }
+            }
+            
+            if(Math.random()<0.05) {
+                ctx.font = `bold ${20 + Math.random()*30}px "Wingdings", monospace`;
+                ctx.fillStyle = `rgba(255,0,255,0.5)`;
+                ctx.fillText("[ X ][ Y ][ Z ]", Math.random()*width, Math.random()*height);
+            }
+        }
+        
+        // 动画主循环
+        let lastTimestamp = 0;
+        let chaosInterval = null;
+        
+        function animate() {
+            const now = Date.now();
+            let delta = Math.min(32, now - lastTimestamp);
+            if(delta < 0) delta = 16;
+            lastTimestamp = now;
+            
+            if(width !== window.innerWidth || height !== window.innerHeight) {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                floatingWords.forEach(w => {
+                    w.x = Math.min(width-50, Math.max(10, w.x));
+                    w.y = Math.min(height-40, Math.max(10, w.y));
+                    w.updatePosition();
+                });
+            }
+            
+            drawChaosBackground();
+            
+            for(let word of floatingWords) {
+                word.update(delta/16, true);
+            }
+            
+            if(Math.random()<0.03) updateChaosClock();
+            
+            const twistDeg = Math.sin(Date.now() * 0.0008) * 0.2 * (twistIntensity/50);
+            document.body.style.transform = `skew(${twistDeg}deg, ${twistDeg*0.5}deg)`;
+            document.body.style.transition = 'transform 0.1s linear';
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // 自动触发随机混沌事件 (无用户面板, 完全自发抽象)
+        function startAutoChaos() {
+            // 每6到15秒随机触发一次混沌动作
+            const scheduleNext = () => {
+                const delay = 6000 + Math.random() * 12000;
+                chaosInterval = setTimeout(() => {
+                    randomChaosAction();
+                    // 同时参数缓慢漂移
+                    dimensionRate = Math.min(100, Math.max(0, dimensionRate + (Math.random() - 0.5) * 6));
+                    twistIntensity = Math.min(100, Math.max(0, twistIntensity + (Math.random() - 0.5) * 8));
+                    phaseShift = Math.min(100, Math.max(0, phaseShift + (Math.random() - 0.5) * 5));
+                    scheduleNext();
+                }, delay);
+            };
+            scheduleNext();
+        }
+        
+        // 自动重置文字群 (每30秒左右)
+        function startAutoReset() {
+            setInterval(() => {
+                if(Math.random() < 0.4) {
+                    resetWordsAuto();
+                }
+            }, 28000);
+        }
+        
+        function init() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initFloatingWords(14);
+            updateChaosClock();
+            startAutoChaos();
+            startAutoReset();
+            animate();
+        }
+        
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        });
+        
+        init();
+    })();
+</script>
+</body>
+</html>
