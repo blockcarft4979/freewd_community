@@ -1,11 +1,11 @@
 {
     "zone": [
  {
-            "name": "什么抽象玩意儿",
-            "description": "很抽象",
-            "icon": "img/icons/Unknown.png",
-            "link": "https://f2.freewd.top/pages/d92d454c-a3c1-4f58-8c38-a236e9f26ba1.html",
-"msg":"此乃何意味？"
+            "name": "社区姬说",
+            "description": "今日很开心给大家看看我的帖子~",
+            "icon": "img/icons/Freewd_icon.png",
+            "link": "freewd://open_post/path?filename=202604060037189552.json&zone=1",
+"msg":"社区姬最新分享"
         },
        
         {
