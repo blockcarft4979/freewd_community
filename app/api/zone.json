@@ -1,5 +1,12 @@
 {
     "zone": [
+ {
+            "name": "神秘区",
+            "description": "很神秘",
+            "icon": "img/icons/Daily.png",
+            "link": "freewd://open_post/path?filename=202603291434528492.json&zone=1"
+        },
+       
         {
             "name": "闲聊吧",
             "description": "吹吹牛、灌水、分享日常都可以哦",
