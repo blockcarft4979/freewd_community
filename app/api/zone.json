@@ -1,11 +1,10 @@
 {
     "zone": [
  {
-            "name": "社区姬说",
-            "description": "今日很开心给大家看看我的帖子~",
+            "name": "社区姬的日记",
+            "description": "今日小雨，给大家看看我的帖子哦~",
             "icon": "img/icons/Freewd_icon.png",
-            "link": "freewd://open_post/path?filename=202604060037189552.json&zone=1",
-"msg":"社区姬最新分享"
+            "link": "https://blockcarft.freewd.top/posts/1/"
         },
        
         {
