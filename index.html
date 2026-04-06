@@ -213,31 +213,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        .announcement-box {
-            background: linear-gradient(135deg, rgba(0, 60, 120, 0.2), rgba(0, 100, 200, 0.1));
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin: 2rem 0;
-            border-left: 4px solid var(--primary-color);
-            box-shadow: var(--shadow-md);
-            width: 100%;
-        }
-
-        .announcement-title {
-            font-size: 1.2rem;
-            color: var(--primary-light);
-            margin-bottom: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .announcement-content {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-            text-align: left;
-        }
-
         .warning-box {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
             border-radius: var(--radius-lg);
@@ -346,93 +321,9 @@
             line-height: 1.7;
         }
 
-        .gallery {
-            padding: 6rem 0;
-            background: linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(20, 20, 30, 0.8) 100%);
-        }
-
-        .gallery-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3rem;
-            width: 100%;
-        }
-
-        .gallery-item {
-            width: 100%;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .gallery-item h3 {
-            color: var(--primary-light);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .single-image {
-            margin: 2rem 0;
-            width: 100%;
-        }
-
-        .single-image img {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            max-height: 500px;
-            object-fit: contain;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            margin: 0 auto;
-            display: block;
-        }
-
         .server-info {
             padding: 4rem 0;
             background-color: var(--bg-white);
-        }
-
-        .info-cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        @media (min-width: 768px) {
-            .info-cards {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .info-item {
-            background-color: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .info-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-light);
-        }
-
-        .info-item h4 {
-            font-size: 1.25rem;
-            color: var(--primary-light);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .info-item p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
         }
 
         .btn-group {
@@ -629,13 +520,11 @@
             }
 
             .features,
-            .gallery,
             .server-info {
                 padding: 4rem 0;
             }
 
-            .feature-card,
-            .info-item {
+            .feature-card {
                 padding: 1.5rem;
             }
             
@@ -655,11 +544,10 @@
             transform: translateY(0);
         }
 
-        /* 临时加载提示样式 */
-        .loading-badge {
-            font-size: 0.75rem;
-            margin-left: 0.5rem;
-            opacity: 0.8;
+        /* 临时加载状态 */
+        .btn-loading {
+            opacity: 0.7;
+            cursor: wait;
         }
     </style>
 </head>
@@ -697,15 +585,16 @@
                     </div>
                 </div>
 
-                <!-- 动态温馨提示框：将从 update.json 读取最新版本信息 -->
+                <!-- 动态温馨提示框 -->
                 <div class="warning-box fade-in" id="dynamicWarningBox">
                     <h4><i class="fas fa-exclamation-triangle"></i> 温馨提示</h4>
                     <p id="warningText">正在检查更新，请稍后...</p>
                 </div>
 
                 <div class="hero-buttons">
-                    <a href="#download" class="btn btn-primary">
-                        <i class="fas fa-download"></i> 下载Freewd社区APP
+                    <!-- 首屏下载按钮：改为直接下载，使用动态链接 -->
+                    <a id="heroDownloadBtn" href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i> 获取下载链接...
                     </a>
                     <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=TUPA9W0spTbA3ba3zbzBIAirJCahdDMe&authKey=JpCwLmkZ1pXDUuCdr5u7c2cwwAiuuwFCByAxpxJWpCYXeeC0IYfZCyh5IBcCCT51&noverify=0&group_code=340707471"
                         class="btn btn-secondary">
@@ -787,8 +676,8 @@
             <p class="section-subtitle fade-in">下载Freewd社区APP，开始你的自由交流之旅</p>
 
             <div class="btn-group">
-                <!-- 下载链接将由 update.json 动态替换 -->
-                <a id="dynamicDownloadBtn" href="#" class="btn btn-download">
+                <!-- 下载区域按钮，同样使用动态链接 -->
+                <a id="sectionDownloadBtn" href="#" class="btn btn-download">
                     <i class="fas fa-download"></i> 获取下载链接...
                 </a>
             </div>
@@ -827,14 +716,14 @@
                 fadeInObserver.observe(element);
             });
 
-            // 平滑滚动
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // 平滑滚动（只保留锚点链接，但首屏下载按钮已改为直接下载，不再需要滚动）
+            document.querySelectorAll('a[href^="#"]:not(.btn-primary)').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
+                        e.preventDefault();
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
@@ -843,23 +732,53 @@
                 });
             });
 
-            // ---------- 核心功能：读取 /app/api/update.json 并更新下载链接 & 温馨提示 ----------
-            const downloadBtn = document.getElementById('dynamicDownloadBtn');
-            const warningBox = document.getElementById('dynamicWarningBox');
+            // ----- 核心：从 /app/api/update.json 获取 download_link 并更新两个下载按钮 -----
+            const heroBtn = document.getElementById('heroDownloadBtn');
+            const sectionBtn = document.getElementById('sectionDownloadBtn');
             const warningTextP = document.getElementById('warningText');
             
-            // 保留原硬编码链接作为降级后备 (3.0.3.2 原链接)
+            // 后备下载链接（原3.0.3.2版本）
             const fallbackDownloadUrl = "https://f2.freewd.top/download/Freewd社区_3.0.3.2.APK";
-            // 后备提示文本 (原始静态信息)
-            const fallbackMsg = "3.0.0重构大部分接口，请大家更新最新版";
+            const fallbackMsg = "3.0.0 重构大部分接口，请大家更新最新版";
             
-            // 显示加载状态
-            if (downloadBtn) {
-                downloadBtn.innerHTML = '<i class="fas fa-download"></i> 检查更新...';
-                downloadBtn.href = "#"; // 暂时无效
+            // 通用更新按钮函数
+            function updateButtons(downloadUrl, versionText = '') {
+                if (!downloadUrl || downloadUrl === '#') {
+                    downloadUrl = fallbackDownloadUrl;
+                }
+                // 更新首屏按钮
+                if (heroBtn) {
+                    heroBtn.href = downloadUrl;
+                    let btnHtml = `<i class="fas fa-download"></i> 下载Freewd社区APP`;
+                    if (versionText) {
+                        btnHtml += ` ${versionText}`;
+                    }
+                    heroBtn.innerHTML = btnHtml;
+                    heroBtn.classList.remove('btn-loading');
+                }
+                // 更新下载区域按钮
+                if (sectionBtn) {
+                    sectionBtn.href = downloadUrl;
+                    let btnHtml = `<i class="fas fa-download"></i> 下载Freewd社区APP`;
+                    if (versionText) {
+                        btnHtml += ` ${versionText}`;
+                    }
+                    sectionBtn.innerHTML = btnHtml;
+                    sectionBtn.classList.remove('btn-loading');
+                }
             }
             
-            // 请求 update.json
+            // 显示加载状态（初始）
+            if (heroBtn) {
+                heroBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 检查更新...';
+                heroBtn.classList.add('btn-loading');
+            }
+            if (sectionBtn) {
+                sectionBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 检查更新...';
+                sectionBtn.classList.add('btn-loading');
+            }
+            
+            // 请求远程配置
             fetch('/app/api/update.json')
                 .then(response => {
                     if (!response.ok) {
@@ -868,89 +787,64 @@
                     return response.json();
                 })
                 .then(data => {
-                    // 成功获取数据
                     console.log('版本信息获取成功:', data);
-                    
-                    // 1. 提取 download_link，并更新下载按钮
                     let downloadLink = data.download_link;
-                    if (downloadLink && typeof downloadLink === 'string' && downloadLink.trim() !== '') {
-                        downloadBtn.href = downloadLink;
-                        // 可选：从链接中提取版本显示在按钮文本上，提升体验
-                        let versionFromLink = '';
-                        // 尝试从链接中匹配类似 Freewd社区_3.0.5.APK 的版本号
-                        const versionMatch = downloadLink.match(/Freewd社区_(\d+\.\d+\.\d+)\.APK/i);
-                        if (versionMatch && versionMatch[1]) {
-                            versionFromLink = ` v${versionMatch[1]}`;
-                        }
-                        downloadBtn.innerHTML = `<i class="fas fa-download"></i> 下载Freewd社区APP${versionFromLink}`;
-                    } else {
-                        // 无效链接则使用降级链接并保留原文本
-                        console.warn('download_link 无效，使用降级链接');
-                        downloadBtn.href = fallbackDownloadUrl;
-                        downloadBtn.innerHTML = '<i class="fas fa-download"></i> 点此下载';
-                    }
-                    
-                    // 2. 处理版本号和更新说明，更新温馨提示框
-                    let versionNum = data.version;     // 例如 305
-                    let updateMsg = data.msg;          // 更新说明
+                    let versionNum = data.version;
+                    let updateMsg = data.msg || '带来更好的体验与修复';
                     let versionDisplay = '';
                     
-                    // 格式化版本号: 305 -> 3.0.5, 300 -> 3.0.0
+                    // 格式化版本号
                     if (versionNum !== undefined && !isNaN(versionNum)) {
                         const major = Math.floor(versionNum / 100);
                         const minor = Math.floor((versionNum % 100) / 10);
                         const patch = versionNum % 10;
                         versionDisplay = `v${major}.${minor}.${patch}`;
-                    } else if (downloadLink) {
-                        // 如果 version 字段异常，尝试从下载链接中提取版本
-                        const linkVersionMatch = downloadLink.match(/(\d+\.\d+\.\d+)/);
-                        if (linkVersionMatch) {
-                            versionDisplay = `v${linkVersionMatch[1]}`;
-                        } else {
-                            versionDisplay = '最新版';
-                        }
-                    } else {
-                        versionDisplay = '最新版';
+                    } else if (downloadLink && typeof downloadLink === 'string') {
+                        const match = downloadLink.match(/(\d+\.\d+\.\d+)/);
+                        if (match) versionDisplay = `v${match[1]}`;
                     }
                     
-                    // 有效更新消息处理
-                    let finalMsg = updateMsg && updateMsg.trim() ? updateMsg : '带来更好的体验与修复';
+                    // 校验下载链接有效性
+                    let finalDownloadUrl = (downloadLink && typeof downloadLink === 'string' && downloadLink.startsWith('http')) 
+                        ? downloadLink 
+                        : fallbackDownloadUrl;
+                    
+                    // 更新两个按钮
+                    updateButtons(finalDownloadUrl, versionDisplay);
+                    
+                    // 更新温馨提示框
                     if (warningTextP) {
-                        warningTextP.innerHTML = `<strong>${versionDisplay}</strong> 现已发布，更新内容：${finalMsg}。请立即下载体验最新版本！`;
-                    }
-                    
-                    // 可选: 额外增加一个流畅的小提示 (保持原有样式)
-                    if (warningBox && !warningBox.querySelector('.update-timestamp')) {
-                        // 完全保留提示框样式，只更新内容即可，无需多余操作
+                        if (versionDisplay) {
+                            warningTextP.innerHTML = `<strong>${versionDisplay}</strong> 现已发布，更新内容：${updateMsg}。请立即下载体验最新版本！`;
+                        } else {
+                            warningTextP.innerHTML = `新版已发布：${updateMsg}。点击上方按钮下载最新APP。`;
+                        }
                     }
                 })
                 .catch(error => {
-                    // 请求失败时的降级处理：保留原下载链接（原硬编码链接），恢复提示框原始信息
-                    console.error('获取 /app/api/update.json 失败，使用后备信息:', error);
-                    if (downloadBtn) {
-                        downloadBtn.href = fallbackDownloadUrl;
-                        downloadBtn.innerHTML = '<i class="fas fa-download"></i> 点此下载';
-                    }
+                    console.error('获取 /app/api/update.json 失败，使用后备链接:', error);
+                    // 降级：使用原有硬编码链接，并恢复提示框原始信息
+                    updateButtons(fallbackDownloadUrl, '');
                     if (warningTextP) {
-                        warningTextP.innerHTML = fallbackMsg + ' (当前获取版本信息失败，请稍后重试)';
+                        warningTextP.innerHTML = fallbackMsg + ' (暂时无法获取版本信息，请稍后重试)';
                     }
                 });
             
-            // 确保额外处理如果 downloadBtn 初始 href 异常，最终都有效
-            // 同时为了极速点击保护，如果请求尚未完成但用户点击，引导重试（因请求很快一般没问题）
-            if (downloadBtn) {
-                // 防止因为加载完成前点击导致无效，增加一个点击时的智能重试（可选）
-                const originalClickHandler = downloadBtn.onclick;
-                downloadBtn.addEventListener('click', function(e) {
-                    if (!downloadBtn.href || downloadBtn.href === '#' || downloadBtn.href === '') {
+            // 为两个下载按钮添加点击时的额外安全检查（防止极少数情况下 href 仍为 #）
+            function addDownloadGuard(btn) {
+                if (!btn) return;
+                btn.addEventListener('click', function(e) {
+                    if (!btn.href || btn.href === '#' || btn.href === '' || btn.href.indexOf('javascript:') === 0) {
                         e.preventDefault();
-                        alert('下载链接正在获取中，请稍后点击，或刷新页面重试。');
+                        alert('下载链接尚未就绪，请稍后点击或刷新页面重试。');
                         return false;
                     }
-                    // 正常跳转
+                    // 如果链接有效，允许跳转下载
                     return true;
                 });
             }
+            addDownloadGuard(heroBtn);
+            addDownloadGuard(sectionBtn);
         });
     </script>
 </body>
