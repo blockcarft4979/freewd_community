@@ -654,6 +654,13 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* 临时加载提示样式 */
+        .loading-badge {
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            opacity: 0.8;
+        }
     </style>
 </head>
 
@@ -690,9 +697,10 @@
                     </div>
                 </div>
 
-                <div class="warning-box fade-in">
+                <!-- 动态温馨提示框：将从 update.json 读取最新版本信息 -->
+                <div class="warning-box fade-in" id="dynamicWarningBox">
                     <h4><i class="fas fa-exclamation-triangle"></i> 温馨提示</h4>
-                    <p>3.0.0重构大部分接口，请大家更新最新版</p>
+                    <p id="warningText">正在检查更新，请稍后...</p>
                 </div>
 
                 <div class="hero-buttons">
@@ -746,54 +754,18 @@
             <div class="function-list fade-in">
                 <h3>完整功能列表</h3>
                 <div class="function-grid">
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>热更新板块</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>登录/注册账户</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>获取帖子列表</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>上传帖子</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>查看图片</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>查看/评论</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>获取评论与回复</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>删除帖子</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>分享帖子</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>匿名贴功能</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>AI内容总结</span>
-                    </div>
-                    <div class="function-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Freewd UID用户标识</span>
-                    </div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>热更新板块</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>登录/注册账户</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>获取帖子列表</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>上传帖子</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>查看图片</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>查看/评论</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>获取评论与回复</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>删除帖子</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>分享帖子</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>匿名贴功能</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>AI内容总结</span></div>
+                    <div class="function-item"><i class="fas fa-check-circle"></i><span>Freewd UID用户标识</span></div>
                 </div>
             </div>
 
@@ -801,18 +773,9 @@
                 <h3>未来功能规划</h3>
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">期待您的宝贵意见~</p>
                 <div class="function-grid">
-                    <div class="function-item pending">
-                        <i class="fas fa-clock"></i>
-                        <span>更多互动功能开发中</span>
-                    </div>
-                    <div class="function-item pending">
-                        <i class="fas fa-clock"></i>
-                        <span>社区积分系统优化</span>
-                    </div>
-                    <div class="function-item pending">
-                        <i class="fas fa-clock"></i>
-                        <span>个性化主题设置</span>
-                    </div>
+                    <div class="function-item pending"><i class="fas fa-clock"></i><span>更多互动功能开发中</span></div>
+                    <div class="function-item pending"><i class="fas fa-clock"></i><span>社区积分系统优化</span></div>
+                    <div class="function-item pending"><i class="fas fa-clock"></i><span>个性化主题设置</span></div>
                 </div>
             </div>
         </div>
@@ -824,9 +787,11 @@
             <p class="section-subtitle fade-in">下载Freewd社区APP，开始你的自由交流之旅</p>
 
             <div class="btn-group">
-                <a href="https://f2.freewd.top/download/Freewd社区_3.0.3.2.APK" class="btn btn-download">
-                    <i class="fas fa-download"></i> 点此下载
+                <!-- 下载链接将由 update.json 动态替换 -->
+                <a id="dynamicDownloadBtn" href="#" class="btn btn-download">
+                    <i class="fas fa-download"></i> 获取下载链接...
                 </a>
+            </div>
         </div>
     </section>
 
@@ -849,8 +814,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // 淡入动画观察器
             const fadeElements = document.querySelectorAll('.fade-in');
-
             const fadeInObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -858,7 +823,6 @@
                     }
                 });
             }, { threshold: 0.1 });
-
             fadeElements.forEach(element => {
                 fadeInObserver.observe(element);
             });
@@ -869,7 +833,6 @@
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
-
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         window.scrollTo({
@@ -879,6 +842,115 @@
                     }
                 });
             });
+
+            // ---------- 核心功能：读取 /app/api/update.json 并更新下载链接 & 温馨提示 ----------
+            const downloadBtn = document.getElementById('dynamicDownloadBtn');
+            const warningBox = document.getElementById('dynamicWarningBox');
+            const warningTextP = document.getElementById('warningText');
+            
+            // 保留原硬编码链接作为降级后备 (3.0.3.2 原链接)
+            const fallbackDownloadUrl = "https://f2.freewd.top/download/Freewd社区_3.0.3.2.APK";
+            // 后备提示文本 (原始静态信息)
+            const fallbackMsg = "3.0.0重构大部分接口，请大家更新最新版";
+            
+            // 显示加载状态
+            if (downloadBtn) {
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> 检查更新...';
+                downloadBtn.href = "#"; // 暂时无效
+            }
+            
+            // 请求 update.json
+            fetch('/app/api/update.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // 成功获取数据
+                    console.log('版本信息获取成功:', data);
+                    
+                    // 1. 提取 download_link，并更新下载按钮
+                    let downloadLink = data.download_link;
+                    if (downloadLink && typeof downloadLink === 'string' && downloadLink.trim() !== '') {
+                        downloadBtn.href = downloadLink;
+                        // 可选：从链接中提取版本显示在按钮文本上，提升体验
+                        let versionFromLink = '';
+                        // 尝试从链接中匹配类似 Freewd社区_3.0.5.APK 的版本号
+                        const versionMatch = downloadLink.match(/Freewd社区_(\d+\.\d+\.\d+)\.APK/i);
+                        if (versionMatch && versionMatch[1]) {
+                            versionFromLink = ` v${versionMatch[1]}`;
+                        }
+                        downloadBtn.innerHTML = `<i class="fas fa-download"></i> 下载Freewd社区APP${versionFromLink}`;
+                    } else {
+                        // 无效链接则使用降级链接并保留原文本
+                        console.warn('download_link 无效，使用降级链接');
+                        downloadBtn.href = fallbackDownloadUrl;
+                        downloadBtn.innerHTML = '<i class="fas fa-download"></i> 点此下载';
+                    }
+                    
+                    // 2. 处理版本号和更新说明，更新温馨提示框
+                    let versionNum = data.version;     // 例如 305
+                    let updateMsg = data.msg;          // 更新说明
+                    let versionDisplay = '';
+                    
+                    // 格式化版本号: 305 -> 3.0.5, 300 -> 3.0.0
+                    if (versionNum !== undefined && !isNaN(versionNum)) {
+                        const major = Math.floor(versionNum / 100);
+                        const minor = Math.floor((versionNum % 100) / 10);
+                        const patch = versionNum % 10;
+                        versionDisplay = `v${major}.${minor}.${patch}`;
+                    } else if (downloadLink) {
+                        // 如果 version 字段异常，尝试从下载链接中提取版本
+                        const linkVersionMatch = downloadLink.match(/(\d+\.\d+\.\d+)/);
+                        if (linkVersionMatch) {
+                            versionDisplay = `v${linkVersionMatch[1]}`;
+                        } else {
+                            versionDisplay = '最新版';
+                        }
+                    } else {
+                        versionDisplay = '最新版';
+                    }
+                    
+                    // 有效更新消息处理
+                    let finalMsg = updateMsg && updateMsg.trim() ? updateMsg : '带来更好的体验与修复';
+                    if (warningTextP) {
+                        warningTextP.innerHTML = `<strong>${versionDisplay}</strong> 现已发布，更新内容：${finalMsg}。请立即下载体验最新版本！`;
+                    }
+                    
+                    // 可选: 额外增加一个流畅的小提示 (保持原有样式)
+                    if (warningBox && !warningBox.querySelector('.update-timestamp')) {
+                        // 完全保留提示框样式，只更新内容即可，无需多余操作
+                    }
+                })
+                .catch(error => {
+                    // 请求失败时的降级处理：保留原下载链接（原硬编码链接），恢复提示框原始信息
+                    console.error('获取 /app/api/update.json 失败，使用后备信息:', error);
+                    if (downloadBtn) {
+                        downloadBtn.href = fallbackDownloadUrl;
+                        downloadBtn.innerHTML = '<i class="fas fa-download"></i> 点此下载';
+                    }
+                    if (warningTextP) {
+                        warningTextP.innerHTML = fallbackMsg + ' (当前获取版本信息失败，请稍后重试)';
+                    }
+                });
+            
+            // 确保额外处理如果 downloadBtn 初始 href 异常，最终都有效
+            // 同时为了极速点击保护，如果请求尚未完成但用户点击，引导重试（因请求很快一般没问题）
+            if (downloadBtn) {
+                // 防止因为加载完成前点击导致无效，增加一个点击时的智能重试（可选）
+                const originalClickHandler = downloadBtn.onclick;
+                downloadBtn.addEventListener('click', function(e) {
+                    if (!downloadBtn.href || downloadBtn.href === '#' || downloadBtn.href === '') {
+                        e.preventDefault();
+                        alert('下载链接正在获取中，请稍后点击，或刷新页面重试。');
+                        return false;
+                    }
+                    // 正常跳转
+                    return true;
+                });
+            }
         });
     </script>
 </body>
