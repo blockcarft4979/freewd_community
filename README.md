@@ -1,4 +1,4 @@
-# Freewd社区 v3.0.4（Freewd Community）
+# Freewd社区 v3.0.5（Freewd Community）
 
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
