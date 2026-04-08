@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
   <style>
-    /* ---------- 基础重置 & 变量 ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -28,7 +27,6 @@
       --shadow-card: 0 20px 35px -8px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(75, 130, 200, 0.15);
       --radius-box: 1.25rem;
       --radius-btn: 0.75rem;
-      --radius-step: 999px;
       --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --transition: all 0.2s ease;
     }
@@ -46,7 +44,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ---------- 卡片容器：移动优先，小屏 padding 适中，大屏优雅居中 ---------- */
     .container {
       width: 100%;
       max-width: 600px;
@@ -61,13 +58,11 @@
       transition: padding 0.2s;
     }
 
-    /* 极小屏 (≤360px) 进一步压缩内边距 */
     @media (max-width: 360px) {
       body { padding: 8px; }
       .container { padding: 1.5rem 1rem; }
     }
 
-    /* 大屏舒适宽度，但保持内容不松散 */
     @media (min-width: 480px) {
       .container { padding: 2.5rem 2.2rem; }
     }
@@ -76,13 +71,11 @@
       .container { padding: 3rem 2.5rem; }
     }
 
-    /* 横屏且高度较小时，减少垂直留白 */
     @media (max-height: 600px) and (orientation: landscape) {
       body { align-items: flex-start; padding-top: 24px; }
       .container { padding: 1.5rem 2rem; }
     }
 
-    /* ---------- 标题与图标 ---------- */
     .logo {
       font-size: 3.2rem;
       line-height: 1;
@@ -101,7 +94,6 @@
       word-break: break-word;
     }
 
-    /* 极小屏标题微调 */
     @media (max-width: 360px) {
       h1 { font-size: 1.7rem; }
     }
@@ -114,7 +106,6 @@
       font-weight: 700;
     }
 
-    /* ---------- 普通提示 & loading ---------- */
     .message {
       font-size: 1.1rem;
       color: var(--text-muted);
@@ -147,7 +138,6 @@
       80%, 100% { content: '...'; opacity: 0.7; }
     }
 
-    /* ---------- 微信警告卡片 (完全自适应) ---------- */
     .wechat-warning {
       background: rgba(245, 158, 11, 0.08);
       border: 1px solid rgba(245, 158, 11, 0.35);
@@ -179,7 +169,6 @@
       font-size: 1rem;
     }
 
-    /* 步骤列表 ———— 完全弹性，小屏不溢出 */
     .steps {
       display: flex;
       flex-direction: column;
@@ -209,20 +198,18 @@
 
     .step-text {
       flex: 1;
-      min-width: 0;                /* 防止长单词溢出 */
+      min-width: 0;
       word-break: break-word;
       color: #e0e0e0;
       font-size: 1rem;
       line-height: 1.5;
-      padding-top: 2px;            /* 与数字视觉对齐 */
+      padding-top: 2px;
     }
 
-    /* 小屏下步骤文字适当变小，但保持可读 */
     @media (max-width: 400px) {
       .step-text { font-size: 0.95rem; }
     }
 
-    /* ---------- 操作按钮组 (自适应 stacking) ---------- */
     .buttons {
       display: flex;
       flex-direction: column;
@@ -280,33 +267,19 @@
       border-color: var(--primary);
     }
 
-    /* 确保触控区域足够 */
     .btn i {
       font-size: 1.2rem;
       filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
     }
 
-    /* 复制成功微提示 */
-    .btn-secondary:active {
-      transition: none;
-    }
-
-    /* 极小屏下按钮内边距微调 */
     @media (max-width: 360px) {
       .btn { padding: 0.85rem 0.75rem; font-size: 1rem; }
     }
 
-    /* 大屏下按钮稍微精致一点 */
     @media (min-width: 640px) {
       .btn { padding: 1rem 1.8rem; }
     }
 
-    /* ---------- 辅助工具类 (动态显示) ---------- */
-    .hidden {
-      display: none !important;
-    }
-
-    /* 保证字体图标和文本不折断 */
     .fa,
     .fas,
     .far {
@@ -318,15 +291,12 @@
 <body>
 <div class="container" id="appContainer">
 
-  <!-- 图标区 -->
   <div class="logo">
     <i class="fas fa-rocket"></i>
   </div>
 
-  <!-- 主标题 -->
   <h1>前往 <span class="gradient-text">Freewd</span> 社区</h1>
 
-  <!-- 微信/QQ 专用警告 (默认隐藏, JS检测后显示) -->
   <div id="wechat-warning" class="wechat-warning" style="display: none;">
     <h3>
       <i class="fas fa-exclamation-triangle"></i> 
@@ -347,7 +317,6 @@
         <span class="step-text">在浏览器中继续访问此页面，即可自动跳转Freewd应用</span>
       </div>
     </div>
-    <!-- 额外提示：仍然提供复制链接按钮 (方便手动) -->
     <div style="margin-top: 1.5rem; text-align: center;">
       <button id="copyLinkInside" class="btn btn-secondary" style="display: inline-flex; width: auto; padding: 0.7rem 1.8rem;">
         <i class="fas fa-copy"></i> 复制链接
@@ -355,13 +324,11 @@
     </div>
   </div>
 
-  <!-- 正常跳转视图 (默认可见) -->
   <div id="normal-view">
     <p class="message">正在为您跳转 Freewd 社区应用</p>
     <div class="loading">正在准备打开应用</div>
   </div>
 
-  <!-- 备用按钮组 (跳转失败或微信内显示) 初始隐藏 -->
   <div class="buttons" id="action-buttons" style="display: none;">
     <a href="#" id="open-app" class="btn btn-primary">
       <i class="fas fa-external-link-alt"></i> 打开 Freewd 应用
@@ -372,24 +339,33 @@
   </div>
 </div>
 
-<!-- Font Awesome 6 图标库 (异步不影响布局) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
-<!-- 自适应交互逻辑：固定跳转URL freewd://open_post/path?filename=xxx.json&zone=1 -->
 <script>
   (function() {
     'use strict';
 
-    // 固定跳转地址：完全按照需求配置
-    const FIXED_APP_URL = "freewd://open_post/path?filename=xxx.json&zone=1";
+    // 从当前页面 URL 参数中动态获取 filename 和 zone
+    function getJumpUrl() {
+      const params = new URLSearchParams(window.location.search);
+      // 优先使用 filename，如果没有则尝试 file，再没有则为空字符串
+      let filename = params.get('filename');
+      if (filename === null || filename === undefined) {
+        filename = params.get('file') || '';
+      }
+      // zone 参数，默认为 '1'
+      const zone = params.get('zone') || '1';
+      
+      // 构造完整的 URL Scheme
+      let url = `freewd://open_post/path?filename=${encodeURIComponent(filename)}&zone=${encodeURIComponent(zone)}`;
+      return url;
+    }
 
-    // 检测 QQ 或 微信内置浏览器
     function isWechatOrQQ() {
       const ua = navigator.userAgent.toLowerCase();
       return ua.includes('micromessenger') || ua.includes('qq/');
     }
 
-    // 复制到剪贴板 (带降级兼容)
     async function copyToClipboard(text) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         try {
@@ -399,7 +375,6 @@
           return false;
         }
       } else {
-        // 降级方案 (textarea)
         const textArea = document.createElement('textarea');
         textArea.value = text;
         textArea.style.position = 'fixed';
@@ -417,7 +392,6 @@
       }
     }
 
-    // 显示复制成功反馈
     function showCopySuccess(btnElement, originalHtml) {
       btnElement.innerHTML = '<i class="fas fa-check"></i> 已复制';
       setTimeout(() => {
@@ -425,11 +399,10 @@
       }, 2000);
     }
 
-    // 页面完全加载后执行核心逻辑
     document.addEventListener('DOMContentLoaded', function() {
       const inWechat = isWechatOrQQ();
+      const appUrl = getJumpUrl();   // 动态生成的跳转地址
 
-      // DOM 元素
       const normalView = document.getElementById('normal-view');
       const wechatWarning = document.getElementById('wechat-warning');
       const actionButtons = document.getElementById('action-buttons');
@@ -437,15 +410,12 @@
       const copyLinkBtn = document.getElementById('copy-link');
       const copyLinkInside = document.getElementById('copyLinkInside');
 
-      // 当前页面的完整URL (用于复制分享)
       const currentPageUrl = window.location.href;
 
-      // 配置“打开应用”按钮的跳转地址 (固定 scheme)
       if (openAppBtn) {
-        openAppBtn.href = FIXED_APP_URL;
+        openAppBtn.href = appUrl;
       }
 
-      // 通用复制处理函数 (复制当前页面地址)
       async function handleCopy(triggerElement) {
         const originalHtml = triggerElement.innerHTML;
         const success = await copyToClipboard(currentPageUrl);
@@ -456,7 +426,6 @@
         }
       }
 
-      // 绑定复制按钮 (主视图下方的复制链接)
       if (copyLinkBtn) {
         copyLinkBtn.addEventListener('click', function(e) {
           e.preventDefault();
@@ -464,7 +433,6 @@
         });
       }
 
-      // 绑定微信警告卡片内的复制按钮
       if (copyLinkInside) {
         copyLinkInside.addEventListener('click', function(e) {
           e.preventDefault();
@@ -472,36 +440,27 @@
         });
       }
 
-      // “打开应用”按钮的增强点击：主动唤起scheme
       if (openAppBtn) {
         openAppBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          // 直接通过 location 唤起 Freewd 应用
-          window.location.href = FIXED_APP_URL;
+          window.location.href = appUrl;
         });
       }
 
-      // ----- 根据环境呈现不同界面并执行自动跳转 -----
       if (inWechat) {
-        // 微信/QQ内置浏览器：显示友好的指引界面，隐藏自动跳转视图，展示备用操作按钮
         normalView.style.display = 'none';
         wechatWarning.style.display = 'block';
-        actionButtons.style.display = 'flex';   // 提供复制链接及手动打开（虽然微信内无法直接唤起，但复制链接后用户可跳转浏览器）
+        actionButtons.style.display = 'flex';
       } else {
-        // 普通浏览器（Safari / Chrome / 系统浏览器等）
         wechatWarning.style.display = 'none';
         actionButtons.style.display = 'none';
         normalView.style.display = 'block';
 
-        // 延时1秒后自动尝试打开固定URL (freewd://)
         setTimeout(() => {
-          window.location.href = FIXED_APP_URL;
+          window.location.href = appUrl;
         }, 1000);
 
-        // 跳转容错: 如果4秒后页面依然停留在当前视图(即没有成功唤起应用或未安装app)，
-        // 则隐藏loading视图并显示备用按钮，让用户手动复制链接或再次尝试打开。
         setTimeout(() => {
-          // 如果 normal-view 仍然可见且未被微信警告覆盖，说明未能成功跳转
           if (normalView.style.display !== 'none' && actionButtons.style.display === 'none') {
             normalView.style.display = 'none';
             actionButtons.style.display = 'flex';
@@ -509,7 +468,6 @@
         }, 4000);
       }
 
-      // 额外保险：如果6秒后 actionButtons 仍未显示且 normalView 还在（极少数情况），强制展示备用按钮
       setTimeout(() => {
         if (normalView.style.display !== 'none' && actionButtons.style.display === 'none' && !inWechat) {
           normalView.style.display = 'none';
@@ -517,10 +475,7 @@
         }
       }, 6000);
 
-      // 监听页面 blur 事件 (部分浏览器唤起第三方应用时触发，无需特殊处理，静默完成即可)
-      window.addEventListener('blur', function() {
-        // 成功唤起应用时无需额外动作，保持后台静默
-      });
+      window.addEventListener('blur', function() {});
     });
   })();
 </script>
