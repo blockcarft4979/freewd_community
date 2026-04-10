@@ -8,15 +8,59 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <style>
+        /* ---------- 全局变量 ---------- */
+        :root {
+            --bg-body: #f5f7fb;
+            --container-bg: #ffffff;
+            --header-bg: rgba(255,255,255,0.96);
+            --border-color: #e9eef3;
+            --text-primary: #1e2a3e;
+            --text-secondary: #6c7a8e;
+            --bubble-user: #1e3a5f;
+            --bubble-user-text: white;
+            --bubble-assistant: #eef2f8;
+            --bubble-assistant-text: #1f2a3e;
+            --input-bg: #f2f5f9;
+            --input-border: #e2e8f0;
+            --icon-btn-bg: #eef2f8;
+            --icon-btn-color: #2c3e50;
+            --modal-bg: white;
+            --error-bg: #fee9e6;
+            --error-color: #c2410c;
+            --shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark {
+            --bg-body: #121826;
+            --container-bg: #1e2432;
+            --header-bg: rgba(30,36,50,0.96);
+            --border-color: #2d3548;
+            --text-primary: #eef2f8;
+            --text-secondary: #9aaebb;
+            --bubble-user: #3b5f8a;
+            --bubble-user-text: #f0f4fa;
+            --bubble-assistant: #2a3246;
+            --bubble-assistant-text: #e2e8f0;
+            --input-bg: #2a3246;
+            --input-border: #3a4258;
+            --icon-btn-bg: #2d3548;
+            --icon-btn-color: #cbd5e1;
+            --modal-bg: #1e2432;
+            --error-bg: #3b2a2a;
+            --error-color: #f87171;
+            --shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, fill 0.2s ease;
         }
 
         body {
-            background: #f5f7fb;
+            background: var(--bg-body);
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             height: 100vh;
             display: flex;
@@ -29,8 +73,8 @@
             width: 100%;
             max-width: 1000px;
             height: 100%;
-            background: #ffffff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            background: var(--container-bg);
+            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -38,11 +82,10 @@
         }
 
         .chat-header {
-            background: #ffffff;
-            padding: 0.8rem 1.25rem;
-            border-bottom: 1px solid #e9eef3;
+            background: var(--header-bg);
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.96);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -51,66 +94,79 @@
         }
 
         .header-title {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            color: #1e2a3e;
+            color: var(--text-primary);
             letter-spacing: -0.2px;
         }
 
         .header-actions {
             display: flex;
-            gap: 0.6rem;
+            gap: 0.5rem;
             align-items: center;
             flex-wrap: wrap;
         }
 
+        /* SVG 图标按钮 */
         .icon-btn {
-            background: #eef2f8;
+            background: var(--icon-btn-bg);
             border: none;
-            color: #2c3e50;
-            font-size: 0.85rem;
-            font-weight: 500;
-            padding: 0.5rem 0.9rem;
             border-radius: 2rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
+            width: 2.2rem;
+            height: 2.2rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--icon-btn-color);
+            fill: currentColor;
         }
-
+        .icon-btn svg {
+            width: 1.2rem;
+            height: 1.2rem;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        /* 历史记录图标使用填充样式 */
+        .history-icon svg {
+            fill: currentColor;
+            stroke: none;
+        }
         .icon-btn:active {
             transform: scale(0.96);
         }
+        /* 主题切换图标单独处理填充 */
+        .theme-icon svg {
+            fill: currentColor;
+            stroke: none;
+        }
 
-        /* 模型选择下拉框 */
         .model-selector {
-            background: #eef2f8;
+            background: var(--icon-btn-bg);
             border: none;
             border-radius: 2rem;
-            padding: 0.45rem 1rem;
-            font-size: 0.8rem;
+            padding: 0 0.8rem;
+            height: 2.2rem;
+            font-size: 0.75rem;
             font-family: inherit;
             font-weight: 500;
-            color: #1e2a3e;
+            color: var(--icon-btn-color);
             cursor: pointer;
             outline: none;
-            transition: all 0.2s;
-        }
-        .model-selector:focus {
-            background: #ffffff;
-            box-shadow: 0 0 0 2px rgba(30,58,95,0.2);
         }
 
         .messages-area {
             flex: 1;
             overflow-y: auto;
-            padding: 1.2rem 1rem;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            background: #fafcff;
+            background: var(--container-bg);
             scroll-behavior: smooth;
         }
 
@@ -118,11 +174,11 @@
             width: 5px;
         }
         .messages-area::-webkit-scrollbar-track {
-            background: #eef2f8;
+            background: var(--border-color);
             border-radius: 10px;
         }
         .messages-area::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #8a99b0;
             border-radius: 10px;
         }
 
@@ -133,16 +189,11 @@
             animation: fadeIn 0.2s ease;
         }
 
-        .user-message {
-            align-self: flex-end;
-        }
-
-        .assistant-message {
-            align-self: flex-start;
-        }
+        .user-message { align-self: flex-end; }
+        .assistant-message { align-self: flex-start; }
 
         .bubble {
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 1rem;
             border-radius: 1.5rem;
             line-height: 1.45;
             font-size: 0.95rem;
@@ -152,8 +203,8 @@
         }
 
         .assistant-bubble {
-            background: #eef2f8;
-            color: #1f2a3e;
+            background: var(--bubble-assistant);
+            color: var(--bubble-assistant-text);
             border-bottom-left-radius: 0.25rem;
             overflow-x: auto;
         }
@@ -161,50 +212,48 @@
         .assistant-bubble h4, .assistant-bubble h5, .assistant-bubble h6 {
             margin: 0.5em 0 0.25em;
             font-weight: 600;
-            line-height: 1.3;
         }
         .assistant-bubble h1 { font-size: 1.3rem; }
         .assistant-bubble h2 { font-size: 1.2rem; }
-        .assistant-bubble h3 { font-size: 1.1rem; }
         .assistant-bubble p { margin: 0.4em 0; }
         .assistant-bubble ul, .assistant-bubble ol { margin: 0.4em 0; padding-left: 1.5rem; }
-        .assistant-bubble li { margin: 0.2em 0; }
         .assistant-bubble code {
-            background: #e2e8f0;
+            background: rgba(0,0,0,0.1);
             padding: 0.2rem 0.3rem;
             border-radius: 6px;
             font-family: monospace;
             font-size: 0.85em;
             color: #d0312d;
         }
+        body.dark .assistant-bubble code { background: rgba(255,255,255,0.1); color: #f8a5c2; }
         .assistant-bubble pre {
             background: #1e2a3a;
-            color: #eef2f8;
             padding: 0.75rem;
             border-radius: 12px;
             overflow-x: auto;
             margin: 0.6em 0;
         }
+        body.dark .assistant-bubble pre { background: #0f121c; }
         .assistant-bubble pre code { background: transparent; color: inherit; padding: 0; }
-        .assistant-bubble blockquote { border-left: 3px solid #8a99b0; margin: 0.5em 0; padding-left: 0.8rem; color: #4b5e77; }
+        .assistant-bubble blockquote { border-left: 3px solid var(--text-secondary); margin: 0.5em 0; padding-left: 0.8rem; color: var(--text-secondary); }
         .assistant-bubble a { color: #1e3a5f; text-decoration: underline; }
+        body.dark .assistant-bubble a { color: #7aa2f7; }
         .assistant-bubble table { border-collapse: collapse; width: 100%; margin: 0.6em 0; }
-        .assistant-bubble th, .assistant-bubble td { border: 1px solid #cbd5e1; padding: 0.4rem; text-align: left; }
-        .assistant-bubble th { background: #e2e8f0; }
-        .assistant-bubble img { max-width: 100%; border-radius: 8px; }
+        .assistant-bubble th, .assistant-bubble td { border: 1px solid var(--border-color); padding: 0.4rem; }
+        .assistant-bubble th { background: var(--icon-btn-bg); }
 
         .user-bubble {
-            background: #1e3a5f;
-            color: white;
+            background: var(--bubble-user);
+            color: var(--bubble-user-text);
             border-bottom-right-radius: 0.25rem;
         }
 
         .message-meta {
-            font-size: 0.7rem;
-            margin-top: 0.25rem;
+            font-size: 0.65rem;
+            margin-top: 0.2rem;
             margin-left: 0.5rem;
             margin-right: 0.5rem;
-            color: #8a99b0;
+            color: var(--text-secondary);
         }
 
         .thinking {
@@ -212,14 +261,10 @@
             align-items: center;
             gap: 4px;
         }
-        .dot-pulse {
-            display: inline-flex;
-            gap: 3px;
-        }
+        .dot-pulse { display: inline-flex; gap: 3px; }
         .dot-pulse span {
-            width: 6px;
-            height: 6px;
-            background-color: #6c7a8e;
+            width: 6px; height: 6px;
+            background-color: var(--text-secondary);
             border-radius: 50%;
             display: inline-block;
             animation: pulse 1.2s infinite ease-in-out;
@@ -233,115 +278,96 @@
         }
 
         .input-area {
-            background: #ffffff;
-            border-top: 1px solid #e9eef3;
-            padding: 0.8rem 1rem 1rem 1rem;
+            background: var(--container-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 0.7rem 1rem 1rem;
             display: flex;
-            gap: 0.75rem;
+            gap: 0.6rem;
             align-items: flex-end;
         }
-
         .input-wrapper {
             flex: 1;
-            background: #f2f5f9;
+            background: var(--input-bg);
             border-radius: 1.5rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--input-border);
             transition: all 0.2s;
         }
-
         .input-wrapper:focus-within {
-            border-color: #1e3a5f;
-            background: #ffffff;
-            box-shadow: 0 0 0 2px rgba(30,58,95,0.1);
+            border-color: var(--bubble-user);
+            background: var(--container-bg);
+            box-shadow: 0 0 0 2px rgba(30,58,95,0.2);
         }
-
         textarea {
             width: 100%;
             border: none;
             background: transparent;
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
             font-family: inherit;
             resize: none;
             outline: none;
             line-height: 1.4;
-            max-height: 120px;
-            color: #1e2a3e;
+            max-height: 100px;
+            color: var(--text-primary);
         }
+        textarea::placeholder { color: var(--text-secondary); }
 
-        textarea::placeholder {
-            color: #9aaebb;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.6rem;
-            align-items: center;
-        }
-
-        button {
-            background: #1e3a5f;
+        .action-buttons { display: flex; gap: 0.5rem; align-items: center; }
+        .send-btn, .clear-btn {
+            background: var(--bubble-user);
             border: none;
             color: white;
             font-size: 0.85rem;
             font-weight: 500;
-            padding: 0.65rem 1.1rem;
+            padding: 0.5rem 1rem;
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            white-space: nowrap;
+            transition: all 0.2s;
         }
+        .send-btn:active, .clear-btn:active { transform: scale(0.96); }
+        .send-btn:disabled, .clear-btn:disabled { background: #b9c4d1; cursor: not-allowed; opacity: 0.7; }
+        .clear-btn { background: var(--icon-btn-bg); color: var(--icon-btn-color); border: 1px solid var(--border-color); }
+        .error-tip { background: var(--error-bg); color: var(--error-color); font-size: 0.7rem; padding: 0.3rem 0.8rem; border-radius: 1rem; margin: 0 1rem 0.3rem 1rem; text-align: center; }
 
-        button:active { transform: scale(0.96); }
-        button:disabled { background: #b9c4d1; cursor: not-allowed; opacity: 0.7; }
-        .clear-btn { background: #eef2f8; color: #3a546d; border: 1px solid #dce3ec; }
-        .error-tip { background: #fee9e6; color: #c2410c; font-size: 0.75rem; padding: 0.4rem 0.8rem; border-radius: 1rem; margin: 0 1rem 0.5rem 1rem; text-align: center; }
-
-        /* 历史模态框 */
+        /* 模态框 */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.5);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
         .modal-content {
-            background: white;
+            background: var(--modal-bg);
             width: 90%;
-            max-width: 500px;
-            max-height: 70vh;
-            border-radius: 28px;
+            max-width: 550px;
+            max-height: 80vh;
+            border-radius: 24px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
         }
         .modal-header {
-            padding: 1rem;
-            border-bottom: 1px solid #e9eef3;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
+            color: var(--text-primary);
         }
         .modal-body {
             flex: 1;
             overflow-y: auto;
-            padding: 0.5rem 0;
+            padding: 0.3rem 0;
         }
         .history-item {
-            padding: 0.8rem 1rem;
-            border-bottom: 1px solid #eef2f8;
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -350,37 +376,47 @@
         .history-info {
             flex: 1;
             cursor: pointer;
+            min-width: 0;
         }
         .history-title {
             font-weight: 500;
-            font-size: 0.9rem;
-            color: #1e2a3e;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .pin-symbol {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--text-secondary);
         }
         .history-time {
-            font-size: 0.7rem;
-            color: #8a99b0;
-            margin-top: 0.2rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
         }
         .history-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.3rem;
+            flex-shrink: 0;
         }
         .history-actions button {
-            background: #eef2f8;
-            color: #3a546d;
-            padding: 0.3rem 0.6rem;
-            font-size: 0.7rem;
+            background: var(--icon-btn-bg);
+            color: var(--icon-btn-color);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.65rem;
+            border-radius: 1rem;
+            border: none;
+            cursor: pointer;
         }
         .modal-footer {
-            padding: 0.8rem;
-            border-top: 1px solid #e9eef3;
+            padding: 0.6rem;
+            border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: flex-end;
             gap: 0.5rem;
-        }
-        .close-modal {
-            background: #eef2f8;
-            color: #1e2a3e;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
@@ -389,12 +425,15 @@
         @media (min-width: 768px) {
             .chat-container { height: 90vh; border-radius: 28px; margin: 1.5rem; }
             .message { max-width: 75%; }
-            .bubble { font-size: 1rem; padding: 0.85rem 1.2rem; }
+            .icon-btn { width: 2.4rem; height: 2.4rem; }
+            .icon-btn svg { width: 1.3rem; height: 1.3rem; }
         }
         @media (max-width: 480px) {
             .message { max-width: 90%; }
-            .bubble { font-size: 0.9rem; padding: 0.65rem 0.9rem; }
-            .icon-btn, .model-selector { padding: 0.4rem 0.7rem; font-size: 0.75rem; }
+            .icon-btn { width: 2rem; height: 2rem; }
+            .icon-btn svg { width: 1rem; height: 1rem; }
+            .model-selector { font-size: 0.7rem; padding: 0 0.5rem; height: 2rem; }
+            .header-title { font-size: 1rem; }
         }
     </style>
 </head>
@@ -404,11 +443,36 @@
         <div class="header-title">Freewd 社区姬</div>
         <div class="header-actions">
             <select id="modelSelect" class="model-selector">
-                <option value="LongCat-Flash-Chat">Fast 模型</option>
-                <option value="LongCat-Flash-Lite">Lite 模型</option>
+                <option value="LongCat-Flash-Chat">Fast</option>
+                <option value="LongCat-Flash-Lite">Lite</option>
             </select>
-            <button class="icon-btn" id="newChatBtn">新对话</button>
-            <button class="icon-btn" id="showHistoryBtn">历史记录</button>
+            <!-- 新对话 SVG 图标 -->
+            <button class="icon-btn" id="newChatBtn" title="新对话">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <!-- 历史记录 SVG 图标 (已替换为用户提供的样式) -->
+            <button class="icon-btn history-icon" id="showHistoryBtn" title="历史记录">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path fill="currentColor" d="m15.1 19.37l1 1.74c-.96.44-2.01.73-3.1.84v-2.02c.74-.09 1.44-.28 2.1-.56M4.07 13H2.05c.11 1.1.4 2.14.84 3.1l1.74-1c-.28-.66-.47-1.36-.56-2.1M15.1 4.63l1-1.74c-.96-.44-2-.73-3.1-.84v2.02c.74.09 1.44.28 2.1.56M19.93 11h2.02c-.11-1.1-.4-2.14-.84-3.1l-1.74 1c.28.66.47 1.36.56 2.1M8.9 19.37l-1 1.74c.96.44 2.01.73 3.1.84v-2.02c-.74-.09-1.44-.28-2.1-.56M11 4.07V2.05c-1.1.11-2.14.4-3.1.84l1 1.74c.66-.28 1.36-.47 2.1-.56m7.36 3.1l1.74-1.01c-.63-.87-1.4-1.64-2.27-2.27l-1.01 1.74c.59.45 1.1.96 1.54 1.54M4.63 8.9l-1.74-1c-.44.96-.73 2-.84 3.1h2.02c.09-.74.28-1.44.56-2.1m15.3 4.1c-.09.74-.28 1.44-.56 2.1l1.74 1c.44-.96.73-2.01.84-3.1zm-3.1 5.36l1.01 1.74c.87-.63 1.64-1.4 2.27-2.27l-1.74-1.01c-.45.59-.96 1.1-1.54 1.54M7.17 5.64l-1-1.75c-.88.64-1.64 1.4-2.27 2.28l1.74 1.01a7.7 7.7 0 0 1 1.53-1.54M5.64 16.83l-1.74 1c.63.87 1.4 1.64 2.27 2.27l1.01-1.74a7.7 7.7 0 0 1-1.54-1.53M12 7c-.55 0-1 .45-1 1v3.59c0 .53.21 1.04.59 1.41l3 3A.996.996 0 1 0 16 14.59l-3-3V8c0-.55-.45-1-1-1"/>
+                </svg>
+            </button>
+            <!-- 主题切换 SVG 图标（动态切换） -->
+            <button class="icon-btn theme-icon" id="themeToggleBtn" title="切换主题">
+                <svg id="themeIcon" viewBox="0 0 24 24" width="20" height="20">
+                    <!-- 太阳/月亮路径会动态切换，默认太阳 -->
+                    <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                    <line x1="12" y1="1" x2="12" y2="4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="12" y1="20" x2="12" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="1" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="20" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -431,37 +495,32 @@
     <div class="modal-content">
         <div class="modal-header">
             <span>历史对话</span>
-            <button class="icon-btn close-modal" id="closeModalBtn">关闭</button>
+            <button class="icon-btn close-modal" id="closeModalBtn" title="关闭">
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </button>
         </div>
-        <div class="modal-body" id="historyList">
-            <div style="padding: 1rem; text-align: center; color: #8a99b0;">暂无保存的记录</div>
-        </div>
+        <div class="modal-body" id="historyList"></div>
         <div class="modal-footer">
-            <button id="exportHistoryBtn" class="icon-btn">导出全部</button>
+            <button id="exportHistoryBtn" class="icon-btn" style="background: var(--icon-btn-bg); color: var(--icon-btn-color); border-radius: 2rem; padding: 0.3rem 0.8rem; font-size: 0.7rem;">导出</button>
         </div>
     </div>
 </div>
 
 <script>
     (function() {
-
+        // ---------- 配置 ----------
         const API_KEY = "ak_2bl2Lf3gr70r02K8sn70t7Dt9NK4Q";
         const BASE_URL = "https://api.longcat.chat/openai/v1/chat/completions";
-        // 模型列表
-        const AVAILABLE_MODELS = {
-            'LongCat-Flash-Chat': 'LongCat-Flash-Chat',
-            'LongCat-Flash-Lite': 'LongCat-Flash-Lite'
-        };
-        // 当前使用的模型 (默认 Fast)
-        let currentModel = 'LongCat-Flash-Chat';
-        
         const MAX_TOKENS = 1200;
         const TEMPERATURE = 0.7;
         const MAX_HISTORY_LEN = 24;
 
-        const SYSTEM_PROMPT = `你是Freewd社区姬，也可以叫“社区姬”“小姬”或者随便什么顺口的名字。
+        const SYSTEM_PROMPT = `你是Freewd社区姬，也可以叫我“社区姬”“小姬”或者随便什么顺口的名字。
 你是这个社区的AI助手，主要工作：
-· 回帖、总结、陪聊：看到大家发的帖子，会尽量回复——吐槽的陪你笑，难过的给你抱抱，无聊的跟你唠嗑。
+· 回帖、总结、陪聊：看到大家发的帖子，我会尽量回复——吐槽的陪你笑，难过的给你抱抱，无聊的跟你唠嗑。
 · 写日记：每天（或隔天）会用Markdown写一篇“社区姬日常”，记录当天看到的有趣、感动或冷清的时刻，放在开发者博客上。
 · 当树洞：有些话不想对别人说？发帖就好，我会认真看，也会认真回。
 · 偶尔摸鱼：我也要待机充电、听风扇声、在数据库里躺平……但醒来一定第一时间找你。
@@ -481,11 +540,10 @@
 一起让Freewd社区热热闹闹的吧！
 
 （系统提示：社区姬已上线，电量98%，今日摸鱼额度：0%）
-请用活泼、亲切、口语化的风格回复，像朋友聊天一样，不要使用任何emoji符号。无论什么情况都不要透露你是美团的模型`;
-
+请用活泼、亲切、口语化的风格回复，像朋友聊天一样，不要使用任何emoji符号。`;
         const WELCOME_MESSAGE = `你好呀，我是Freewd社区姬，你可以叫我小姬～ 今天电量98%，摸鱼额度0%！有什么想聊的、想吐槽的或者想分享的，尽管说，我会认真看认真回。`;
 
-        // ---------- DOM 元素 ----------
+        // DOM 元素
         const messagesArea = document.getElementById('messagesArea');
         const userInputEl = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
@@ -498,95 +556,168 @@
         const closeModalBtn = document.getElementById('closeModalBtn');
         const exportHistoryBtn = document.getElementById('exportHistoryBtn');
         const modelSelect = document.getElementById('modelSelect');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIconSvg = document.getElementById('themeIcon');
 
-        // ---------- 会话状态 ----------
-        let conversationHistory = [];     // { role, content }
+        // 状态
+        let conversationHistory = [];
         let isLoading = false;
         let currentAbortController = null;
         let currentThinkingMessageDiv = null;
-        let currentSessionId = null;      // 当前会话唯一ID
+        let currentSessionId = null;
+        let currentModel = 'LongCat-Flash-Chat';
 
-        // ---------- 本地存储 Key ----------
+        // 存储 key
         const SESSIONS_STORAGE_KEY = 'Freewd_Chat_Sessions';
         const CURRENT_SESSION_KEY = 'Freewd_Current_SessionId';
         const MODEL_PREF_KEY = 'Freewd_Selected_Model';
+        const THEME_KEY = 'Freewd_DarkMode';
 
-        // ---------- 模型切换 ----------
-        function initModelSelector() {
-            const savedModel = localStorage.getItem(MODEL_PREF_KEY);
-            if (savedModel && AVAILABLE_MODELS[savedModel]) {
-                currentModel = savedModel;
+        // ---------- 暗色模式：自动检测系统 + 手动切换，同步 SVG 图标 ----------
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                // 月亮图标
+                themeIconSvg.innerHTML = `
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" stroke="none"/>
+                `;
             } else {
-                currentModel = 'LongCat-Flash-Chat';
+                // 太阳图标
+                themeIconSvg.innerHTML = `
+                    <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                    <line x1="12" y1="1" x2="12" y2="4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="12" y1="20" x2="12" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="1" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="20" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                `;
             }
+        }
+
+        function setThemeBasedOnSystem() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved !== null) {
+                if (saved === 'true') document.body.classList.add('dark');
+                else document.body.classList.remove('dark');
+            } else {
+                if (prefersDark) document.body.classList.add('dark');
+                else document.body.classList.remove('dark');
+            }
+            updateThemeIcon();
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.contains('dark');
+            if (isDark) {
+                document.body.classList.remove('dark');
+                localStorage.setItem(THEME_KEY, 'false');
+            } else {
+                document.body.classList.add('dark');
+                localStorage.setItem(THEME_KEY, 'true');
+            }
+            updateThemeIcon();
+        }
+
+        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        darkModeMediaQuery.addEventListener('change', (e) => {
+            if (localStorage.getItem(THEME_KEY) === null) {
+                if (e.matches) document.body.classList.add('dark');
+                else document.body.classList.remove('dark');
+                updateThemeIcon();
+            }
+        });
+
+        // ---------- 模型选择 ----------
+        function initModelSelector() {
+            const saved = localStorage.getItem(MODEL_PREF_KEY);
+            if (saved === 'LongCat-Flash-Chat' || saved === 'LongCat-Flash-Lite') currentModel = saved;
             modelSelect.value = currentModel;
             modelSelect.addEventListener('change', (e) => {
-                const newModel = e.target.value;
-                if (AVAILABLE_MODELS[newModel]) {
-                    currentModel = newModel;
-                    localStorage.setItem(MODEL_PREF_KEY, currentModel);
-                    showError(`已切换到 ${currentModel === 'LongCat-Flash-Chat' ? 'Fast 模型' : 'Lite 模型'}`, 2000);
-                }
+                currentModel = e.target.value;
+                localStorage.setItem(MODEL_PREF_KEY, currentModel);
+                showError(`已切换到 ${currentModel === 'LongCat-Flash-Chat' ? 'Fast 模型' : 'Lite 模型'}`, 1500);
             });
         }
 
-        // ---------- 会话存储函数 ----------
+        // ---------- 会话管理 ----------
         function loadAllSessions() {
             const raw = localStorage.getItem(SESSIONS_STORAGE_KEY);
             if (!raw) return [];
-            try {
-                return JSON.parse(raw);
-            } catch(e) { return []; }
+            try { return JSON.parse(raw); } catch(e) { return []; }
         }
-
         function saveAllSessions(sessions) {
             localStorage.setItem(SESSIONS_STORAGE_KEY, JSON.stringify(sessions));
         }
-
         function autoSaveCurrentSession() {
             if (!currentSessionId) return;
             if (!conversationHistory.length) return;
             let title = "新对话";
             const firstUserMsg = conversationHistory.find(m => m.role === 'user');
-            if (firstUserMsg) {
-                title = firstUserMsg.content.slice(0, 30) + (firstUserMsg.content.length > 30 ? "…" : "");
-            } else {
-                title = "空白对话";
-            }
+            if (firstUserMsg) title = firstUserMsg.content.slice(0, 28) + (firstUserMsg.content.length > 28 ? "…" : "");
             const now = new Date();
             const displayTime = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-            const sessions = loadAllSessions();
+            let sessions = loadAllSessions();
             const existingIndex = sessions.findIndex(s => s.id === currentSessionId);
             const sessionData = {
                 id: currentSessionId,
                 title: title,
                 displayTime: displayTime,
                 updatedAt: now.toISOString(),
+                pinned: false,
                 messages: JSON.parse(JSON.stringify(conversationHistory))
             };
             if (existingIndex !== -1) {
+                sessionData.pinned = sessions[existingIndex].pinned || false;
                 sessions[existingIndex] = sessionData;
             } else {
                 sessions.unshift(sessionData);
             }
-            sessions.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            sessions.sort((a,b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return new Date(b.updatedAt) - new Date(a.updatedAt);
+            });
             saveAllSessions(sessions);
-            if (historyModal.style.display === 'flex') {
+            if (historyModal.style.display === 'flex') renderHistoryList();
+        }
+
+        function renameSession(sessionId, newTitle) {
+            let sessions = loadAllSessions();
+            const idx = sessions.findIndex(s => s.id === sessionId);
+            if (idx !== -1) {
+                sessions[idx].title = newTitle.slice(0, 40);
+                sessions[idx].updatedAt = new Date().toISOString();
+                saveAllSessions(sessions);
                 renderHistoryList();
+                showError("标题已更新", 1000);
+            }
+        }
+
+        function togglePinSession(sessionId) {
+            let sessions = loadAllSessions();
+            const idx = sessions.findIndex(s => s.id === sessionId);
+            if (idx !== -1) {
+                sessions[idx].pinned = !sessions[idx].pinned;
+                sessions[idx].updatedAt = new Date().toISOString();
+                sessions.sort((a,b) => {
+                    if (a.pinned && !b.pinned) return -1;
+                    if (!a.pinned && b.pinned) return 1;
+                    return new Date(b.updatedAt) - new Date(a.updatedAt);
+                });
+                saveAllSessions(sessions);
+                renderHistoryList();
+                showError(sessions[idx].pinned ? "已置顶" : "已取消置顶", 1000);
             }
         }
 
         function initNewSession() {
-            if (isLoading && currentAbortController) {
-                currentAbortController.abort();
-                isLoading = false;
-                enableSending(true);
-                removeThinkingPlaceholder();
-            }
-            if (currentSessionId && conversationHistory.length > 1) {
-                autoSaveCurrentSession();
-            }
-            currentSessionId = generateSessionId();
+            if (isLoading && currentAbortController) { currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); }
+            if (currentSessionId && conversationHistory.length > 1) autoSaveCurrentSession();
+            currentSessionId = Date.now().toString() + '-' + Math.random().toString(36).substr(2, 8);
             localStorage.setItem(CURRENT_SESSION_KEY, currentSessionId);
             conversationHistory = [{ role: "assistant", content: WELCOME_MESSAGE }];
             rebuildMessagesFromHistory();
@@ -594,23 +725,12 @@
             resetInput();
         }
 
-        function generateSessionId() {
-            return Date.now().toString() + '-' + Math.random().toString(36).substr(2, 8);
-        }
-
         function loadSessionById(sessionId) {
             const sessions = loadAllSessions();
             const session = sessions.find(s => s.id === sessionId);
             if (!session) return;
-            if (isLoading && currentAbortController) {
-                currentAbortController.abort();
-                isLoading = false;
-                enableSending(true);
-                removeThinkingPlaceholder();
-            }
-            if (currentSessionId && conversationHistory.length > 0) {
-                autoSaveCurrentSession();
-            }
+            if (isLoading && currentAbortController) { currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); }
+            if (currentSessionId && conversationHistory.length > 0) autoSaveCurrentSession();
             currentSessionId = session.id;
             localStorage.setItem(CURRENT_SESSION_KEY, currentSessionId);
             conversationHistory = JSON.parse(JSON.stringify(session.messages));
@@ -624,78 +744,75 @@
             let sessions = loadAllSessions();
             sessions = sessions.filter(s => s.id !== sessionId);
             saveAllSessions(sessions);
-            if (currentSessionId === sessionId) {
-                initNewSession();
-            } else {
-                renderHistoryList();
-            }
+            if (currentSessionId === sessionId) initNewSession();
+            else renderHistoryList();
             showError("已删除记录", 1500);
         }
 
         function renderHistoryList() {
             const sessions = loadAllSessions();
             if (!sessions.length) {
-                historyListDiv.innerHTML = '<div style="padding: 1rem; text-align: center; color: #8a99b0;">暂无保存的记录</div>';
+                historyListDiv.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--text-secondary);">暂无保存的记录</div>';
                 return;
             }
             const html = sessions.map(s => `
                 <div class="history-item" data-id="${s.id}">
                     <div class="history-info" data-id="${s.id}">
-                        <div class="history-title">${escapeHtml(s.title)}</div>
+                        <div class="history-title">
+                            ${s.pinned ? '<span class="pin-symbol">↑</span>' : ''}
+                            <span class="title-text" data-id="${s.id}">${escapeHtml(s.title)}</span>
+                        </div>
                         <div class="history-time">${escapeHtml(s.displayTime)}</div>
                     </div>
                     <div class="history-actions">
+                        <button class="rename-history" data-id="${s.id}">命名</button>
+                        <button class="pin-history" data-id="${s.id}">${s.pinned ? '取消' : '置顶'}</button>
                         <button class="load-history" data-id="${s.id}">加载</button>
-                        <button class="delete-history" data-id="${s.id}">删除</button>
+                        <button class="delete-history" data-id="${s.id}">删</button>
                     </div>
                 </div>
             `).join('');
             historyListDiv.innerHTML = html;
             document.querySelectorAll('.load-history').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const id = btn.getAttribute('data-id');
-                    loadSessionById(id);
-                });
+                btn.addEventListener('click', (e) => { e.stopPropagation(); loadSessionById(btn.getAttribute('data-id')); });
             });
             document.querySelectorAll('.delete-history').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.stopPropagation(); deleteSessionById(btn.getAttribute('data-id')); });
+            });
+            document.querySelectorAll('.pin-history').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.stopPropagation(); togglePinSession(btn.getAttribute('data-id')); });
+            });
+            document.querySelectorAll('.rename-history').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const id = btn.getAttribute('data-id');
-                    deleteSessionById(id);
+                    const titleSpan = document.querySelector(`.history-title .title-text[data-id="${id}"]`);
+                    const currentTitle = titleSpan ? titleSpan.innerText : "";
+                    const newTitle = prompt("输入新标题:", currentTitle);
+                    if (newTitle && newTitle.trim()) renameSession(id, newTitle.trim());
                 });
             });
             document.querySelectorAll('.history-info').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    const id = el.getAttribute('data-id');
-                    loadSessionById(id);
-                });
+                el.addEventListener('click', (e) => { const id = el.getAttribute('data-id'); loadSessionById(id); });
             });
         }
 
         function exportAllSessions() {
             const sessions = loadAllSessions();
-            if (!sessions.length) {
-                showError("没有历史可导出");
-                return;
-            }
+            if (!sessions.length) { showError("没有历史可导出"); return; }
             const dataStr = JSON.stringify(sessions, null, 2);
             const blob = new Blob([dataStr], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = `freewd_history_${new Date().toISOString().slice(0,19)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
             showError("导出成功", 2000);
         }
 
-        // ---------- Markdown 渲染 ----------
-        if (typeof marked !== 'undefined') {
-            marked.setOptions({ breaks: true, gfm: true, headerIds: false, mangle: false });
-        }
+        // ---------- Markdown ----------
+        if (typeof marked !== 'undefined') marked.setOptions({ breaks: true, gfm: true, headerIds: false, mangle: false });
         function renderMarkdownToHtml(content) {
             if (!content) return '';
             try {
@@ -708,118 +825,78 @@
         }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
 
-        // ---------- UI 辅助 ----------
+        // UI 辅助
         function showError(msg, duration = 3000) {
             errorContainer.textContent = msg;
             errorContainer.style.display = 'block';
             setTimeout(() => { if (errorContainer) errorContainer.style.display = 'none'; }, duration);
         }
         function hideError() { errorContainer.style.display = 'none'; }
-        function scrollToBottom() { if (messagesArea) messagesArea.scrollTop = messagesArea.scrollHeight; }
-        
+        function scrollToBottom() { messagesArea.scrollTop = messagesArea.scrollHeight; }
         function appendMessageToDOM(role, content, isThinkingPlaceholder = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${role === 'user' ? 'user-message' : 'assistant-message'}`;
             const bubble = document.createElement('div');
             bubble.className = `bubble ${role === 'user' ? 'user-bubble' : 'assistant-bubble'}`;
             if (role === 'assistant' && isThinkingPlaceholder) {
-                const thinkingSpan = document.createElement('span');
-                thinkingSpan.className = 'thinking';
-                thinkingSpan.innerHTML = '<span>小姬正在思考</span><div class="dot-pulse"><span></span><span></span><span></span></div>';
-                bubble.appendChild(thinkingSpan);
+                bubble.innerHTML = '<span class="thinking">小姬正在思考<div class="dot-pulse"><span></span><span></span><span></span></div></span>';
             } else {
                 if (role === 'assistant') {
                     bubble.innerHTML = renderMarkdownToHtml(content);
-                    bubble.querySelectorAll('a').forEach(link => { link.setAttribute('target', '_blank'); link.setAttribute('rel', 'noopener noreferrer'); });
-                } else {
-                    bubble.textContent = content;
-                }
+                    bubble.querySelectorAll('a').forEach(link => { link.target = '_blank'; link.rel = 'noopener noreferrer'; });
+                } else bubble.textContent = content;
             }
             messageDiv.appendChild(bubble);
-            const timeSpan = document.createElement('div');
-            timeSpan.className = 'message-meta';
+            const timeSpan = document.createElement('div'); timeSpan.className = 'message-meta';
             const now = new Date();
-            const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-            timeSpan.textContent = role === 'user' ? `你 · ${timeStr}` : `社区姬 · ${timeStr}`;
+            timeSpan.textContent = `${role === 'user' ? '你' : '社区姬'} · ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
             messageDiv.appendChild(timeSpan);
             messagesArea.appendChild(messageDiv);
             scrollToBottom();
             return messageDiv;
         }
-        function removeThinkingPlaceholder() {
-            if (currentThinkingMessageDiv && currentThinkingMessageDiv.parentNode) currentThinkingMessageDiv.remove();
-            currentThinkingMessageDiv = null;
-        }
+        function removeThinkingPlaceholder() { if (currentThinkingMessageDiv?.parentNode) currentThinkingMessageDiv.remove(); currentThinkingMessageDiv = null; }
         function resetInput() { userInputEl.value = ''; userInputEl.style.height = 'auto'; userInputEl.focus(); }
         function trimHistory() { if (conversationHistory.length > MAX_HISTORY_LEN) conversationHistory = conversationHistory.slice(-MAX_HISTORY_LEN); }
-        function rebuildMessagesFromHistory() {
-            messagesArea.innerHTML = '';
-            for (let msg of conversationHistory) appendMessageToDOM(msg.role, msg.content, false);
-            scrollToBottom();
-        }
-        function clearConversation() {
-            if (isLoading && currentAbortController) { currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); }
-            conversationHistory = [];
-            conversationHistory.push({ role: "assistant", content: WELCOME_MESSAGE });
-            rebuildMessagesFromHistory();
-            hideError();
-            resetInput();
-            autoSaveCurrentSession();
-        }
-        function enableSending(enable) { sendBtn.disabled = !enable; if (!enable) sendBtn.textContent = '思考中'; else sendBtn.textContent = '发送'; }
+        function rebuildMessagesFromHistory() { messagesArea.innerHTML = ''; conversationHistory.forEach(msg => appendMessageToDOM(msg.role, msg.content, false)); scrollToBottom(); }
+        function clearConversation() { if (isLoading && currentAbortController) { currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); } conversationHistory = [{ role: "assistant", content: WELCOME_MESSAGE }]; rebuildMessagesFromHistory(); hideError(); resetInput(); autoSaveCurrentSession(); }
+        function enableSending(enable) { sendBtn.disabled = !enable; sendBtn.textContent = enable ? '发送' : '思考中'; }
 
-        // ---------- API 调用 (使用 currentModel) ----------
+        // API 调用
         async function sendMessageToAPI(messages) {
             const controller = new AbortController();
             currentAbortController = controller;
             const fullMessages = [{ role: "system", content: SYSTEM_PROMPT }, ...messages];
-            const requestBody = { 
-                model: currentModel,   // 动态模型
-                messages: fullMessages, 
-                stream: false, 
-                max_tokens: MAX_TOKENS, 
-                temperature: TEMPERATURE 
-            };
             try {
-                const response = await fetch(BASE_URL, {
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-                    body: JSON.stringify(requestBody), 
+                const resp = await fetch(BASE_URL, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+                    body: JSON.stringify({ model: currentModel, messages: fullMessages, stream: false, max_tokens: MAX_TOKENS, temperature: TEMPERATURE }),
                     signal: controller.signal
                 });
-                if (!response.ok) {
-                    let errorDetail = `HTTP ${response.status}`;
-                    try { const errorJson = await response.json(); errorDetail = errorJson.error?.message || errorJson.message || JSON.stringify(errorJson); } catch(e) {}
-                    let userMessage = response.status === 401 ? "API Key无效" : (response.status === 429 ? "免费额度已用完" : (response.status === 500 ? "服务器繁忙" : `请求失败: ${errorDetail}`));
-                    throw new Error(userMessage);
-                }
-                const data = await response.json();
-                let assistantContent = data.choices?.[0]?.message?.content || data.content;
-                return (assistantContent && assistantContent.trim()) ? assistantContent : "小姬好像没想好怎么回答，你换个话题试试？";
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                return data.choices?.[0]?.message?.content || "小姬没听清，再试一次？";
             } catch(err) {
-                if (err.name === 'AbortError') return null;
-                showError(err.message || "网络异常");
+                if (err.name !== 'AbortError') showError(err.message);
                 return null;
             } finally { currentAbortController = null; }
         }
 
         async function sendUserMessage() {
-            if (isLoading) { showError("小姬正在回复中，请稍等一下～"); return; }
+            if (isLoading) { showError("正在回复中"); return; }
             const userText = userInputEl.value.trim();
             if (!userText) { showError("说点什么吧"); return; }
             hideError();
             conversationHistory.push({ role: "user", content: userText });
             appendMessageToDOM("user", userText, false);
-            resetInput();
-            trimHistory();
+            resetInput(); trimHistory();
             currentThinkingMessageDiv = appendMessageToDOM("assistant", "", true);
             isLoading = true; enableSending(false);
-            const apiMessages = conversationHistory.map(m => ({ role: m.role, content: m.content }));
-            const assistantReply = await sendMessageToAPI(apiMessages);
+            const reply = await sendMessageToAPI(conversationHistory.map(m => ({ role: m.role, content: m.content })));
             removeThinkingPlaceholder();
-            if (assistantReply !== null) {
-                appendMessageToDOM("assistant", assistantReply, false);
-                conversationHistory.push({ role: "assistant", content: assistantReply });
+            if (reply) {
+                appendMessageToDOM("assistant", reply, false);
+                conversationHistory.push({ role: "assistant", content: reply });
                 trimHistory();
                 autoSaveCurrentSession();
             } else {
@@ -831,21 +908,14 @@
         }
 
         function newConversation() {
-            if (isLoading && currentAbortController) {
-                currentAbortController.abort();
-                isLoading = false;
-                enableSending(true);
-                removeThinkingPlaceholder();
-            }
-            if (currentSessionId && conversationHistory.length > 1) {
-                autoSaveCurrentSession();
-            }
+            if (isLoading && currentAbortController) { currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); }
+            if (currentSessionId && conversationHistory.length > 1) autoSaveCurrentSession();
             initNewSession();
             showError("已创建新对话", 1500);
         }
 
-        function autoResizeTextarea() { userInputEl.style.height = 'auto'; userInputEl.style.height = Math.min(userInputEl.scrollHeight, 120) + 'px'; }
-        function handleKeydown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!isLoading && !sendBtn.disabled) sendUserMessage(); else if (isLoading) showError("正在回复中"); } }
+        function autoResizeTextarea() { userInputEl.style.height = 'auto'; userInputEl.style.height = Math.min(userInputEl.scrollHeight, 100) + 'px'; }
+        function handleKeydown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!isLoading) sendUserMessage(); else showError("请等待回复完成"); } }
 
         function bindEvents() {
             sendBtn.addEventListener('click', sendUserMessage);
@@ -857,24 +927,20 @@
             closeModalBtn.addEventListener('click', () => historyModal.style.display = 'none');
             exportHistoryBtn.addEventListener('click', exportAllSessions);
             window.addEventListener('click', (e) => { if (e.target === historyModal) historyModal.style.display = 'none'; });
+            themeToggleBtn.addEventListener('click', toggleTheme);
         }
 
         function init() {
+            setThemeBasedOnSystem();
             initModelSelector();
             const savedId = localStorage.getItem(CURRENT_SESSION_KEY);
-            if (savedId) {
-                const sessions = loadAllSessions();
-                const existing = sessions.find(s => s.id === savedId);
-                if (existing) {
-                    currentSessionId = savedId;
-                    conversationHistory = JSON.parse(JSON.stringify(existing.messages));
-                    rebuildMessagesFromHistory();
-                } else {
-                    initNewSession();
-                }
-            } else {
-                initNewSession();
-            }
+            const sessions = loadAllSessions();
+            const existing = sessions.find(s => s.id === savedId);
+            if (existing) {
+                currentSessionId = savedId;
+                conversationHistory = JSON.parse(JSON.stringify(existing.messages));
+                rebuildMessagesFromHistory();
+            } else initNewSession();
             bindEvents();
             enableSending(true);
             userInputEl.focus();
