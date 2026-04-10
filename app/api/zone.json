@@ -1,5 +1,10 @@
 {
     "zone": [
+ { "name": "Freewd AI姬",
+            "description": "快来和我畅聊吧！",
+            "icon": "img/icons/Freewd_icon.png",
+            "link": "https://f2.freewd.top/pages/freewd-chat"
+        },
  {
             "name": "社区姬的日记",
             "description": "本姬今日新日记~",
