@@ -22,6 +22,7 @@
 - [x] Ai总结（使用Deepseek api对较长帖子内容进行总结）
 - [x] Freewd UID（Freewd社区用户标识）
 - [x] 支持Markdown
+- [x] Freewd AI姬
 ---
 
 ## 预计未来增加的功能
