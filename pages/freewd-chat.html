@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>社区姬 · Freewd AI助手</title>
-    <!-- Markdown 解析 & XSS 清理 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <style>
@@ -31,7 +30,6 @@
             --thinking-bg: #f9f3e3;
             --thinking-border: #e6d5b8;
         }
-
         body.dark {
             --bg-body: #121826;
             --container-bg: #1e2432;
@@ -54,7 +52,6 @@
             --thinking-bg: #2a2a1c;
             --thinking-border: #4a4a2a;
         }
-
         * {
             margin: 0;
             padding: 0;
@@ -62,7 +59,6 @@
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, fill 0.2s ease;
         }
-
         body {
             background: var(--bg-body);
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -72,7 +68,6 @@
             align-items: center;
             overflow: hidden;
         }
-
         .chat-container {
             width: 100%;
             max-width: 1100px;
@@ -84,7 +79,6 @@
             overflow: hidden;
             position: relative;
         }
-
         .chat-header {
             background: var(--header-bg);
             padding: 0.6rem 1rem;
@@ -96,7 +90,6 @@
             flex-wrap: wrap;
             gap: 0.5rem;
         }
-
         .header-title {
             font-size: 1.25rem;
             font-weight: 600;
@@ -114,14 +107,12 @@
             font-weight: normal;
             color: var(--text-secondary);
         }
-
         .header-actions {
             display: flex;
             gap: 0.5rem;
             align-items: center;
             flex-wrap: wrap;
         }
-
         .icon-btn {
             background: var(--icon-btn-bg);
             border: none;
@@ -145,18 +136,9 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
-        .history-icon svg {
-            fill: currentColor;
-            stroke: none;
-        }
-        .icon-btn:active {
-            transform: scale(0.96);
-        }
-        .theme-icon svg {
-            fill: currentColor;
-            stroke: none;
-        }
-
+        .history-icon svg { fill: currentColor; stroke: none; }
+        .icon-btn:active { transform: scale(0.96); }
+        .theme-icon svg { fill: currentColor; stroke: none; }
         .model-selector {
             background: var(--icon-btn-bg);
             border: none;
@@ -170,10 +152,6 @@
             cursor: pointer;
             outline: none;
         }
-        .model-selector:hover {
-            filter: brightness(0.96);
-        }
-
         .messages-area {
             flex: 1;
             overflow-y: auto;
@@ -184,29 +162,17 @@
             background: var(--container-bg);
             scroll-behavior: smooth;
         }
-
-        .messages-area::-webkit-scrollbar {
-            width: 5px;
-        }
-        .messages-area::-webkit-scrollbar-track {
-            background: var(--border-color);
-            border-radius: 10px;
-        }
-        .messages-area::-webkit-scrollbar-thumb {
-            background: #8a99b0;
-            border-radius: 10px;
-        }
-
+        .messages-area::-webkit-scrollbar { width: 5px; }
+        .messages-area::-webkit-scrollbar-track { background: var(--border-color); border-radius: 10px; }
+        .messages-area::-webkit-scrollbar-thumb { background: #8a99b0; border-radius: 10px; }
         .message {
             display: flex;
             flex-direction: column;
             max-width: 85%;
             animation: fadeIn 0.2s ease;
         }
-
         .user-message { align-self: flex-end; }
         .assistant-message { align-self: flex-start; }
-
         .bubble {
             padding: 0.7rem 1rem;
             border-radius: 1.5rem;
@@ -216,14 +182,12 @@
             white-space: normal;
             box-shadow: 0 1px 1px rgba(0,0,0,0.02);
         }
-
         .assistant-bubble {
             background: var(--bubble-assistant);
             color: var(--bubble-assistant-text);
             border-bottom-left-radius: 0.25rem;
             overflow-x: auto;
         }
-        /* 思考过程折叠样式 */
         .thinking-details {
             margin-bottom: 0.6rem;
             border-left: 3px solid var(--thinking-border);
@@ -242,13 +206,8 @@
             align-items: center;
             gap: 0.3rem;
         }
-        .thinking-details summary::-webkit-details-marker {
-            display: none;
-        }
-        .thinking-details summary::before {
-            content: "🧠";
-            font-size: 1rem;
-        }
+        .thinking-details summary::-webkit-details-marker { display: none; }
+        .thinking-details summary::before { content: "🧠"; font-size: 1rem; }
         .thinking-content {
             margin-top: 0.5rem;
             padding-top: 0.4rem;
@@ -289,13 +248,11 @@
         .assistant-bubble table { border-collapse: collapse; width: 100%; margin: 0.6em 0; }
         .assistant-bubble th, .assistant-bubble td { border: 1px solid var(--border-color); padding: 0.4rem; }
         .assistant-bubble th { background: var(--icon-btn-bg); }
-
         .user-bubble {
             background: var(--bubble-user);
             color: var(--bubble-user-text);
             border-bottom-right-radius: 0.25rem;
         }
-
         .message-meta {
             font-size: 0.65rem;
             margin-top: 0.2rem;
@@ -303,7 +260,6 @@
             margin-right: 0.5rem;
             color: var(--text-secondary);
         }
-
         .thinking {
             display: inline-flex;
             align-items: center;
@@ -324,7 +280,6 @@
             0%, 60%, 100% { transform: scale(0.8); opacity: 0.5; }
             30% { transform: scale(1.2); opacity: 1; }
         }
-
         .input-area {
             background: var(--container-bg);
             border-top: 1px solid var(--border-color);
@@ -359,7 +314,6 @@
             color: var(--text-primary);
         }
         textarea::placeholder { color: var(--text-secondary); }
-
         .action-buttons { display: flex; gap: 0.5rem; align-items: center; }
         .send-btn, .clear-btn {
             background: var(--bubble-user);
@@ -376,7 +330,6 @@
         .send-btn:disabled, .clear-btn:disabled { background: #b9c4d1; cursor: not-allowed; opacity: 0.7; }
         .clear-btn { background: var(--icon-btn-bg); color: var(--icon-btn-color); border: 1px solid var(--border-color); }
         .error-tip { background: var(--error-bg); color: var(--error-color); font-size: 0.7rem; padding: 0.3rem 0.8rem; border-radius: 1rem; margin: 0 1rem 0.3rem 1rem; text-align: center; }
-
         .modal {
             display: none;
             position: fixed;
@@ -434,21 +387,9 @@
             gap: 0.3rem;
             flex-wrap: wrap;
         }
-        .pin-symbol {
-            font-size: 0.8rem;
-            font-weight: normal;
-            color: var(--text-secondary);
-        }
-        .history-time {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            margin-top: 0.15rem;
-        }
-        .history-actions {
-            display: flex;
-            gap: 0.3rem;
-            flex-shrink: 0;
-        }
+        .pin-symbol { font-size: 0.8rem; font-weight: normal; color: var(--text-secondary); }
+        .history-time { font-size: 0.65rem; color: var(--text-secondary); margin-top: 0.15rem; }
+        .history-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
         .history-actions button {
             background: var(--icon-btn-bg);
             color: var(--icon-btn-color);
@@ -492,8 +433,6 @@
             <select id="modelSelect" class="model-selector">
                 <option value="LongCat-Flash-Chat">Fast 通用</option>
                 <option value="LongCat-Flash-Lite">Lite 轻量</option>
-                <option value="LongCat-Flash-Thinking">Thinking 深度思考</option>
-                <option value="LongCat-Flash-Omni-2603">Omni 多模态</option>
                 <option value="LongCat-Flash-Chat-2602-Exp">Chat Exp 实验版</option>
             </select>
             <button class="icon-btn" id="newChatBtn" title="新对话">
@@ -521,10 +460,8 @@
             </button>
         </div>
     </div>
-
     <div class="messages-area" id="messagesArea"></div>
     <div id="errorContainer" class="error-tip" style="display: none;"></div>
-
     <div class="input-area">
         <div class="input-wrapper">
             <textarea id="userInput" rows="1" placeholder="说点什么吧 (Shift+Enter换行)" aria-label="输入消息"></textarea>
@@ -535,7 +472,6 @@
         </div>
     </div>
 </div>
-
 <div id="historyModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -553,17 +489,14 @@
         </div>
     </div>
 </div>
-
 <script>
     (function() {
-        // ---------- 配置 ----------
         const API_KEY = "ak_2bl2Lf3gr70r02K8sn70t7Dt9NK4Q";
         const BASE_URL = "https://api.longcat.chat/openai/v1/chat/completions";
         const MAX_TOKENS = 1500;
         const TEMPERATURE = 0.7;
         const MAX_HISTORY_LEN = 28;
 
-        // 基础系统人格 (不含思考指令)
         const BASE_SYSTEM_PROMPT = `你是Freewd社区姬，也可以叫我“社区姬”“小姬”或者随便什么顺口的名字。
 你是这个社区的AI助手，主要工作：
 · 回帖、总结、陪聊：看到大家发的帖子，我会尽量回复——吐槽的陪你笑，难过的给你抱抱，无聊的跟你唠嗑。
@@ -588,12 +521,9 @@
 （系统提示：社区姬已上线，电量98%，今日摸鱼额度：0%）
 请用活泼、亲切、口语化的风格回复，像朋友聊天一样，不要过多使用任何emoj。`;
 
-        // 针对 Thinking 模型增加思考标签指令
         const THINKING_EXTRA = `\n\n【重要指令】当你面对用户问题时，请先将你的推理、分析、思考过程完整地写在 <thinking>...</thinking> 标签内，然后在标签外给出最终回答。思考过程要详细，最终回答保持活泼亲切。`;
-
         const WELCOME_MESSAGE = `你好呀，我是Freewd社区姬，你可以叫我小姬～ 今天电量98%，摸鱼额度0%！有什么想聊的、想吐槽的或者想分享的，尽管说，我会认真看认真回。`;
 
-        // DOM 元素
         const messagesArea = document.getElementById('messagesArea');
         const userInputEl = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
@@ -616,46 +546,32 @@
         let currentSessionId = null;
         let currentModel = 'LongCat-Flash-Chat';
 
-        // 存储 key
         const SESSIONS_STORAGE_KEY = 'Freewd_Chat_Sessions';
         const CURRENT_SESSION_KEY = 'Freewd_Current_SessionId';
         const MODEL_PREF_KEY = 'Freewd_Selected_Model';
         const THEME_KEY = 'Freewd_DarkMode';
 
-        // ---------- 动态系统提示 ----------
         function getSystemPrompt() {
-            if (currentModel === 'LongCat-Flash-Thinking') {
-                return BASE_SYSTEM_PROMPT + THINKING_EXTRA;
-            }
+            if (currentModel === 'LongCat-Flash-Thinking') return BASE_SYSTEM_PROMPT + THINKING_EXTRA;
             return BASE_SYSTEM_PROMPT;
         }
 
-        // ---------- 解析带thinking标签的内容，返回 {html, hasThinking} ----------
         function renderAssistantContentWithThinking(rawContent) {
             if (!rawContent) return { html: '', hasThinking: false };
             const thinkingRegex = /<thinking>([\s\S]*?)<\/thinking>/gi;
             let match;
             let thinkingParts = [];
-            let lastIndex = 0;
             let processedContent = rawContent;
             while ((match = thinkingRegex.exec(rawContent)) !== null) {
                 thinkingParts.push(match[1].trim());
                 processedContent = processedContent.replace(match[0], '');
             }
-            if (thinkingParts.length === 0) {
-                return { html: renderMarkdownToHtml(rawContent), hasThinking: false };
-            }
-            const thinkingHtml = thinkingParts.map(think => `
-                <details class="thinking-details">
-                    <summary>🤔 思考过程</summary>
-                    <div class="thinking-content">${renderMarkdownToHtml(think)}</div>
-                </details>
-            `).join('');
+            if (thinkingParts.length === 0) return { html: renderMarkdownToHtml(rawContent), hasThinking: false };
+            const thinkingHtml = thinkingParts.map(think => `<details class="thinking-details"><summary>🤔 思考过程</summary><div class="thinking-content">${renderMarkdownToHtml(think)}</div></details>`).join('');
             const finalAnswerHtml = renderMarkdownToHtml(processedContent.trim());
             return { html: thinkingHtml + finalAnswerHtml, hasThinking: true };
         }
 
-        // Markdown 渲染
         if (typeof marked !== 'undefined') marked.setOptions({ breaks: true, gfm: true, headerIds: false, mangle: false });
         function renderMarkdownToHtml(content) {
             if (!content) return '';
@@ -668,9 +584,7 @@
             } catch(e) { return escapeHtml(content); }
         }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-
         function scrollToBottom() { messagesArea.scrollTop = messagesArea.scrollHeight; }
-        
         function appendMessageToDOM(role, content, isThinkingPlaceholder = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${role === 'user' ? 'user-message' : 'assistant-message'}`;
@@ -694,7 +608,6 @@
             scrollToBottom();
             return messageDiv;
         }
-
         function removeThinkingPlaceholder() { if (currentThinkingMessageDiv?.parentNode) currentThinkingMessageDiv.remove(); currentThinkingMessageDiv = null; }
         function resetInput() { userInputEl.value = ''; userInputEl.style.height = 'auto'; userInputEl.focus(); }
         function trimHistory() { if (conversationHistory.length > MAX_HISTORY_LEN) conversationHistory = conversationHistory.slice(-MAX_HISTORY_LEN); }
@@ -704,25 +617,44 @@
         function showError(msg, duration = 3000) { errorContainer.textContent = msg; errorContainer.style.display = 'block'; setTimeout(() => { if (errorContainer) errorContainer.style.display = 'none'; }, duration); }
         function hideError() { errorContainer.style.display = 'none'; }
 
-        // API 调用
         async function sendMessageToAPI(messages) {
             const controller = new AbortController();
             currentAbortController = controller;
             const systemPrompt = getSystemPrompt();
             const fullMessages = [{ role: "system", content: systemPrompt }, ...messages];
+            const requestBody = {
+                model: currentModel,
+                messages: fullMessages,
+                stream: false,
+                max_tokens: MAX_TOKENS,
+                temperature: TEMPERATURE
+            };
             try {
                 const resp = await fetch(BASE_URL, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-                    body: JSON.stringify({ model: currentModel, messages: fullMessages, stream: false, max_tokens: MAX_TOKENS, temperature: TEMPERATURE }),
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+                    body: JSON.stringify(requestBody),
                     signal: controller.signal
                 });
-                if (!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
+                if (!resp.ok) {
+                    let errorDetail = '';
+                    try {
+                        const errorData = await resp.json();
+                        errorDetail = JSON.stringify(errorData);
+                    } catch(e) {
+                        errorDetail = await resp.text();
+                    }
+                    console.error('API Error Response:', errorDetail);
+                    throw new Error(`HTTP ${resp.status}: ${errorDetail.slice(0, 200)}`);
+                }
                 const data = await resp.json();
                 return data.choices?.[0]?.message?.content || "小姬没听清，再试一次？";
             } catch(err) {
                 if (err.name !== 'AbortError') showError(err.message);
                 return null;
-            } finally { currentAbortController = null; }
+            } finally {
+                currentAbortController = null;
+            }
         }
 
         async function sendUserMessage() {
@@ -750,7 +682,7 @@
             scrollToBottom(); userInputEl.focus();
         }
 
-        // 会话管理（保留原有全部逻辑，省略重复但保证函数存在）
+        // 会话管理函数
         function loadAllSessions() { const raw = localStorage.getItem(SESSIONS_STORAGE_KEY); if (!raw) return []; try { return JSON.parse(raw); } catch(e) { return []; } }
         function saveAllSessions(sessions) { localStorage.setItem(SESSIONS_STORAGE_KEY, JSON.stringify(sessions)); }
         function autoSaveCurrentSession() { if (!currentSessionId) return; if (!conversationHistory.length) return; let title = "新对话"; const firstUserMsg = conversationHistory.find(m => m.role === 'user'); if (firstUserMsg) title = firstUserMsg.content.slice(0, 28) + (firstUserMsg.content.length > 28 ? "…" : ""); const now = new Date(); const displayTime = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`; let sessions = loadAllSessions(); const existingIndex = sessions.findIndex(s => s.id === currentSessionId); const sessionData = { id: currentSessionId, title, displayTime, updatedAt: now.toISOString(), pinned: false, messages: JSON.parse(JSON.stringify(conversationHistory)) }; if (existingIndex !== -1) { sessionData.pinned = sessions[existingIndex].pinned || false; sessions[existingIndex] = sessionData; } else { sessions.unshift(sessionData); } sessions.sort((a,b) => { if (a.pinned && !b.pinned) return -1; if (!a.pinned && b.pinned) return 1; return new Date(b.updatedAt) - new Date(a.updatedAt); }); saveAllSessions(sessions); if (historyModal.style.display === 'flex') renderHistoryList(); }
@@ -763,12 +695,10 @@
         function exportAllSessions() { const sessions = loadAllSessions(); if (!sessions.length) { showError("没有历史可导出"); return; } const dataStr = JSON.stringify(sessions, null, 2); const blob = new Blob([dataStr], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `freewd_history_${new Date().toISOString().slice(0,19)}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showError("导出成功", 2000); }
         function newConversation() { if (isLoading && currentAbortController) { currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); } if (currentSessionId && conversationHistory.length > 1) autoSaveCurrentSession(); initNewSession(); showError("已创建新对话", 1500); }
 
-        // 主题逻辑
         function updateThemeIcon() { const isDark = document.body.classList.contains('dark'); if (isDark) { themeIconSvg.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" stroke="none"/>`; } else { themeIconSvg.innerHTML = `<circle cx="12" cy="12" r="5" fill="currentColor"/><line x1="12" y1="1" x2="12" y2="4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="20" x2="12" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="20" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`; } }
         function setThemeBasedOnSystem() { const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const saved = localStorage.getItem(THEME_KEY); if (saved !== null) { if (saved === 'true') document.body.classList.add('dark'); else document.body.classList.remove('dark'); } else { if (prefersDark) document.body.classList.add('dark'); else document.body.classList.remove('dark'); } updateThemeIcon(); }
         function toggleTheme() { const isDark = document.body.classList.contains('dark'); if (isDark) { document.body.classList.remove('dark'); localStorage.setItem(THEME_KEY, 'false'); } else { document.body.classList.add('dark'); localStorage.setItem(THEME_KEY, 'true'); } updateThemeIcon(); }
-
-        function initModelSelector() { const saved = localStorage.getItem(MODEL_PREF_KEY); if (saved && (saved === 'LongCat-Flash-Chat' || saved === 'LongCat-Flash-Lite' || saved === 'LongCat-Flash-Thinking' || saved === 'LongCat-Flash-Omni-2603' || saved === 'LongCat-Flash-Chat-2602-Exp')) currentModel = saved; modelSelect.value = currentModel; modelSelect.addEventListener('change', (e) => { currentModel = e.target.value; localStorage.setItem(MODEL_PREF_KEY, currentModel); showError(`已切换到 ${modelSelect.options[modelSelect.selectedIndex].text}`, 1500); }); }
+        function initModelSelector() { const saved = localStorage.getItem(MODEL_PREF_KEY); if (saved && (saved === 'LongCat-Flash-Chat' || saved === 'LongCat-Flash-Lite' || saved === 'LongCat-Flash-Thinking' || saved === 'LongCat-Flash-Chat-2602-Exp')) currentModel = saved; modelSelect.value = currentModel; modelSelect.addEventListener('change', (e) => { currentModel = e.target.value; localStorage.setItem(MODEL_PREF_KEY, currentModel); showError(`已切换到 ${modelSelect.options[modelSelect.selectedIndex].text}`, 1500); }); }
         function autoResizeTextarea() { userInputEl.style.height = 'auto'; userInputEl.style.height = Math.min(userInputEl.scrollHeight, 100) + 'px'; }
         function handleKeydown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!isLoading) sendUserMessage(); else showError("请等待回复完成"); } }
         function bindEvents() { sendBtn.addEventListener('click', sendUserMessage); clearBtn.addEventListener('click', () => { if (isLoading && currentAbortController) currentAbortController.abort(); isLoading = false; enableSending(true); removeThinkingPlaceholder(); clearConversation(); }); userInputEl.addEventListener('input', autoResizeTextarea); userInputEl.addEventListener('keydown', handleKeydown); newChatBtn.addEventListener('click', newConversation); showHistoryBtn.addEventListener('click', () => { renderHistoryList(); historyModal.style.display = 'flex'; }); closeModalBtn.addEventListener('click', () => historyModal.style.display = 'none'); exportHistoryBtn.addEventListener('click', exportAllSessions); window.addEventListener('click', (e) => { if (e.target === historyModal) historyModal.style.display = 'none'; }); themeToggleBtn.addEventListener('click', toggleTheme); }
