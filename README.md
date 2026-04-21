@@ -1,5 +1,6 @@
 # Freewd社区 v3.0.7（Freewd Community）
 
+## Kotlin版本正在火速开发中！敬请期待吧！
 > 一款由 **结绳编程语言** 开发的社区 App  
 > QQ 群：**340707471**  
 > 官网：[Freewd社区](https://f2.freewd.top)
