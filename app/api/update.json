@@ -1,7 +1,7 @@
 {
-    "version": 308,
-    "msg": "3.0.8版本已发布，欢迎下载\n修复部分已知bug",
-    "download_link": "https://f2.freewd.top/download/Freewd%E7%A4%BE%E5%8C%BA_3.0.8.apk",
-    "is_minor": false,
-    "force_update": false
+    "version": 310,
+    "msg": "3.1.0.2版本已发布，欢迎下载\n修复部分已知bug\强烈建议更新！Kotlin测试版本已发布，抢先体验欢迎进QQ群：340707471或前往Github仓库下载：https://github.com/blockcarft4979/FreewdKT",
+    "download_link": "https://f2.freewd.top/download/Freewd%E7%A4%BE%E5%8C%BA_3.1.0.2.APK",
+    "is_minor": true,
+    "force_update": true
 }
