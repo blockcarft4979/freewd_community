@@ -1,0 +1,18 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.freewdkt.bck.debug",
+      "sha256_cert_fingerprints": ["4D:C7:AD:A4:AB:F2:B2:93:18:09:91:31:39:53:D1:CB:B9:33:B2:21:D7:04:97:D9:89:9C:BF:13:19:FA:26:BD"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.freewdkt.bck",
+      "sha256_cert_fingerprints": ["C3:6F:1C:5B:9C:3A:BA:B3:D3:90:FB:AD:BF:2F:B7:0A:8D:D6:79:EA:7C:C4:26:73:29:55:E7:9C:9E:AB:39:4E"]
+    }
+  }
+]
