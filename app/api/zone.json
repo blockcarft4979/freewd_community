@@ -12,12 +12,7 @@
             "icon": "",
             "msg": "啥也没有~"
         },
-        {
-            "name": "随意吧",
-            "description": "就随意吧，真的很随意的那一种~",
-            "icon": "img/icons/UilAnnoyedAlt.png",
-            "zone": 2
-        },
+        
         {
             "name": "匿名吧",
             "description": "快来看看小幽灵们都说了些什么吧",
