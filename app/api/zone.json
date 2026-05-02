@@ -1,34 +1,10 @@
 {
     "zone": [
         {
-            "name": "闲聊吧",
-            "description": "吹吹牛、灌水、分享日常都可以哦",
-            "icon": "img/icons/Daily.png",
-            "zone": 1
-        },
-        {
-            "name": "",
-"description":"点我有惊喜！",
-            "link": "https://docs.qq.com/form/page/DZmFHS25ndnBCZm5Q?u=bdc178ee91664873b0cc4c9d29288d8a#/fill",
-            "icon": ""
-        },
-        
-        {
-            "name": "匿名吧",
-            "description": "快来看看小幽灵们都说了些什么吧",
-            "icon": "img/icons/Ghost.png",
-            "zone": 3
-        },
-        {
-            "name": "Freewd AI姬",
-            "icon": "img/icons/MingcuteAiFill.png",
-            "msg": "Powered By BLOCKCARFT & Meituan",
-            "link": "https://f2.freewd.top/pages/freewd-chat"
-        },
-        {
-            "name": "社区姬的日记",
-            "icon": "img/icons/MingcuteDiaryFill.png",
-            "link": "https://blockcarft.freewd.top/posts/14/"
+            "name": "导出数据",
+            "description": "不想运营了，以后有机会再开吧，点击此处导出您的数据，感谢大家的支持和理解 \nCopyright 2025-2026 Freewd社区",
+            "icon": "img/icons/LineMdFileExportFilled.png",
+            "link": "https://app.freewd.top/app/api/user/export_your_posts.html"
         }
     ]
 }
