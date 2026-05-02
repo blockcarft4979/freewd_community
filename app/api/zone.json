@@ -1,11 +1,10 @@
 {
     "zone": [
         {
-            "name": "导出数据",
-            "description": "不想运营了，以后有机会再开吧，点击此处导出您的数据，感谢大家的支持和理解 \n请从浏览器打开\nCopyright 2025-2026 Freewd社区",
-            "icon": "img/icons/BxExport.png",
-            "link": "https://app.freewd.top/app/api/user/export_your_posts.html",
-            "msg": "若没下载请从浏览器打开"
+            "name": "闲聊分享板块",
+            "description": "随便发点什么，分享日常亦或者吐槽！",
+            "icon": "img/icons/Daily.png",
+            "zone": 1
         }
     ]
 }
