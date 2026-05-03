@@ -5,6 +5,12 @@
             "description": "随便发点什么，分享日常亦或者吐槽！",
             "icon": "img/icons/Daily.png",
             "zone": 1
+        },
+        {
+            "name": "匿名发帖板块",
+            "description": "做小幽灵分享自己的心事吧！\n（发帖一次需要消耗20积分哦~\n并且无法删除，请谨慎发帖！）",
+            "icon": "img/icons/Ghost.png",
+            "zone": 3
         }
     ]
 }
