@@ -3,7 +3,7 @@
 ## Kotlin版本正在火速开发中！敬请期待吧！
 ## [Freewd 社区Kotlin版仓库](https://github.com/blockcarft4979/FreewdKT)
 > 一款由 **结绳编程语言** 开发的社区 App  
-> QQ 群：**340707471**  
+> QQ 群：**1104207891**  
 > 官网：[Freewd社区](https://f2.freewd.top)
 
 > 后端的大部分api都进行了重构，请大家使用3.0.0版本登陆
