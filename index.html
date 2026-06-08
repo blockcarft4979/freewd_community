@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+        <meta name='description' content='Freewd社区官网，作为大家打造的MC社区，从2025年8月13日开始运营至今！欢迎大家前来使用或者提出宝贵的意见' />
     <title>Freewd社区 - 共创自由和谐社区</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,111 +14,94 @@
             box-sizing: border-box;
         }
 
+        /* Material 3 风格令牌，与服务器官网一致 */
         :root {
-            --primary-color: #4db8ff;
-            --primary-light: #66cfff;
-            --primary-dark: #0077cc;
-            --secondary-color: #f59e0b;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --bg-light: #111;
-            --bg-white: #0f0f0f;
-            --bg-card: rgba(30, 30, 30, 0.9);
-            --border-color: rgba(100, 100, 100, 0.2);
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            --radius-full: 9999px;
+            --md-sys-color-primary: #0468C0;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #084c8a;
+            --md-sys-color-surface: #0f0f12;
+            --md-sys-color-surface-variant: #1e1e24;
+            --md-sys-color-on-surface: #e3e3e8;
+            --md-sys-color-on-surface-variant: #b8b8c4;
+            --md-sys-color-outline: #3e3e48;
+            --md-sys-color-secondary: #b0b0c0;
+            --md-sys-color-error: #cf6679;
+            --md-ref-typeface-brand: 'Inter', -apple-system, BlinkMacSystemFont, system-ui;
+            --md-ref-typeface-plain: 'Inter', sans-serif;
+            --md-ref-shape-small: 8px;
+            --md-ref-shape-medium: 16px;
+            --md-ref-shape-large: 28px;
+            --md-ref-shape-extra-large: 36px;
+            --md-ref-elevation-1: 0 1px 3px 1px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+            --md-ref-elevation-2: 0 2px 6px 2px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+            --md-ref-elevation-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.3);
             --navbar-height: 4.5rem;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background-color: var(--bg-light);
-            overflow-x: hidden;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: var(--md-ref-typeface-plain);
+            line-height: 1.5;
             padding-top: var(--navbar-height);
+            scroll-behavior: smooth;
+            background-image: radial-gradient(circle at 10% 20%, rgba(4,104,192,0.08) 0%, rgba(0,0,0,0.9) 100%);
+            background-attachment: fixed;
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 24px;
         }
 
+        /* 导航栏 M3 风格 */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: rgba(15, 15, 20, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 18, 0.85);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
             height: var(--navbar-height);
+            box-shadow: var(--md-ref-elevation-1);
         }
 
         .nav-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
             height: 100%;
+            padding: 0 24px;
         }
 
         .nav-logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
             text-decoration: none;
         }
 
         .logo-img {
-            height: 2.5rem;
-            width: 2.5rem;
-            border-radius: 8px;
-            filter: drop-shadow(0 2px 4px rgba(77, 184, 255, 0.2));
-            object-fit: contain;
+            height: 40px;
+            width: auto;
+            border-radius: 12px;
         }
 
         .logo-text {
             font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            font-weight: 600;
+            background: linear-gradient(135deg, #80caff, #0468C0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.3px;
         }
 
+        /* Hero 区域 */
         .hero {
-            padding: 4rem 0 6rem;
-            background: linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(20, 20, 30, 0.8) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(77, 184, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
-            z-index: 0;
+            padding: 48px 0 80px;
+            background: radial-gradient(circle at 10% 30%, rgba(4,104,192,0.08), transparent 70%);
         }
 
         .hero-container {
@@ -126,309 +110,174 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 1;
             min-height: calc(100vh - var(--navbar-height));
         }
 
         .hero-content {
-            flex: 1;
-            max-width: 600px;
-            margin-bottom: 3rem;
+            max-width: 720px;
             width: 100%;
         }
 
         .hero-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.025em;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, #70b9ff, #0468C0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            display: inline-block;
         }
 
         .hero-description {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            max-width: 100%;
+            font-size: 1.2rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 2rem;
         }
 
-        .hero-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            width: 100%;
-        }
-
+        /* M3 按钮 */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.875rem 2rem;
-            font-size: 1rem;
+            gap: 8px;
+            padding: 10px 24px;
             font-weight: 600;
-            border-radius: var(--radius-md);
-            border: none;
+            font-size: 0.9375rem;
+            border-radius: 999px;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: pointer;
-            transition: all 0.3s ease;
             text-decoration: none;
-            gap: 0.5rem;
-            width: 100%;
-            max-width: 300px;
+            border: none;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            box-shadow: 0 4px 12px rgba(77, 184, 255, 0.3);
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: var(--md-ref-elevation-1);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(77, 184, 255, 0.4);
+            background-color: #0a71d4;
+            box-shadow: var(--md-ref-elevation-2);
+            transform: translateY(-1px);
         }
 
         .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            background-color: transparent;
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-outline);
         }
 
         .btn-secondary:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            background-color: rgba(4,104,192,0.1);
+            border-color: var(--md-sys-color-primary);
         }
 
+        /* 温馨提示框 M3 风格 */
         .warning-box {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
-            border-radius: var(--radius-lg);
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: var(--md-ref-shape-large);
             padding: 1.5rem;
             margin: 2rem 0;
-            border-left: 4px solid var(--secondary-color);
-            box-shadow: var(--shadow-md);
+            border-left: 6px solid var(--md-sys-color-primary);
+            box-shadow: var(--md-ref-elevation-1);
+            text-align: left;
             width: 100%;
         }
 
         .warning-box h4 {
-            color: var(--secondary-color);
+            color: var(--md-sys-color-primary);
             margin-bottom: 0.75rem;
             font-size: 1.1rem;
         }
 
+        /* 特性卡片 */
         .features {
-            padding: 6rem 0;
-            background-color: var(--bg-white);
+            padding: 80px 0;
+            background-color: var(--md-sys-color-surface);
         }
 
         .section-title {
-            text-align: center;
-            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-size: clamp(2rem, 4vw, 2.2rem);
             font-weight: 700;
+            text-align: center;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            background: linear-gradient(145deg, #ffffff, #9ac4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .section-subtitle {
             text-align: center;
-            font-size: clamp(1rem, 2vw, 1.125rem);
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 1rem;
+            color: var(--md-sys-color-on-surface-variant);
+            max-width: 680px;
+            margin: 0 auto 3rem;
+            font-size: 1rem;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        @media (min-width: 768px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero-container {
-                flex-direction: row;
-            }
-            
-            .btn {
-                width: auto;
-            }
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin-top: 20px;
         }
 
         .feature-card {
-            background-color: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
+            background: var(--md-sys-color-surface-variant);
+            border-radius: var(--md-ref-shape-large);
+            padding: 28px;
+            transition: all 0.25s;
+            box-shadow: var(--md-ref-elevation-1);
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-light);
+            transform: translateY(-4px);
+            box-shadow: var(--md-ref-elevation-3);
+            background: #25252d;
         }
 
         .feature-icon {
-            width: 3.5rem;
-            height: 3.5rem;
-            border-radius: var(--radius-lg);
-            background: linear-gradient(135deg, rgba(77, 184, 255, 0.1), rgba(77, 184, 255, 0.05));
+            background: rgba(4,104,192,0.15);
+            width: 56px;
+            height: 56px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .feature-icon i {
-            font-size: 1.75rem;
-            color: var(--primary-color);
+            font-size: 28px;
+            color: var(--md-sys-color-primary);
         }
 
         .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
+            font-size: 1.35rem;
+            margin-bottom: 12px;
         }
 
         .feature-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.5;
         }
 
-        .server-info {
-            padding: 4rem 0;
-            background-color: var(--bg-white);
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 3rem 0;
-            width: 100%;
-        }
-
-        .btn-download {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            width: 100%;
-            max-width: 300px;
-            box-shadow: 0 4px 12px rgba(77, 184, 255, 0.3);
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(77, 184, 255, 0.4);
-        }
-
-        .footer {
-            background-color: var(--text-primary);
-            color: var(--bg-light);
-            padding: 4rem 0 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer p {
-            color: #666;
-            line-height: 1.7;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-            color: #888;
-            font-size: 0.875rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin: 2rem 0;
-            align-items: center;
-            width: 100%;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-primary);
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .contact-item i {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-
-        .contact-item a {
-            color: var(--primary-light);
-            text-decoration: none;
-            word-break: break-all;
-        }
-
-        .contact-item a:hover {
-            text-decoration: underline;
-        }
-
+        /* 功能列表卡片 */
         .function-list {
-            background-color: var(--bg-card);
-            border-radius: var(--radius-lg);
+            background: var(--md-sys-color-surface-variant);
+            border-radius: var(--md-ref-shape-large);
             padding: 2rem;
             margin: 3rem 0;
-            box-shadow: var(--shadow-md);
-            width: 100%;
+            box-shadow: var(--md-ref-elevation-1);
         }
 
         .function-list h3 {
-            color: var(--primary-light);
+            color: var(--md-sys-color-primary);
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
             text-align: center;
@@ -436,107 +285,141 @@
 
         .function-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        @media (min-width: 640px) {
-            .function-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .function-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
         }
 
         .function-item {
             display: flex;
             align-items: center;
+            gap: 0.75rem;
             padding: 0.75rem;
-            color: var(--text-primary);
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-md);
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--md-ref-shape-medium);
+            color: var(--md-sys-color-on-surface);
         }
 
         .function-item i {
             color: #4ade80;
-            margin-right: 0.75rem;
             font-size: 1.1rem;
             flex-shrink: 0;
         }
 
         .function-item.pending i {
-            color: var(--secondary-color);
+            color: var(--md-sys-color-primary);
         }
 
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-description {
-                font-size: 1.125rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .btn-group {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+        /* 下载区域 */
+        .server-info {
+            padding: 64px 0;
+            background: var(--md-sys-color-surface);
         }
 
-        @media (max-width: 640px) {
-            body {
-                padding-top: 4rem;
-            }
-
-            .hero {
-                padding: 2rem 0 4rem;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .btn {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.875rem;
-            }
-
-            .features,
-            .server-info {
-                padding: 4rem 0;
-            }
-
-            .feature-card {
-                padding: 1.5rem;
-            }
-            
-            .container {
-                padding: 0 1rem;
-            }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
         }
 
+        .btn-download {
+            background-color: var(--md-sys-color-primary);
+            color: white;
+            box-shadow: var(--md-ref-elevation-1);
+            border-radius: 999px;
+            padding: 12px 32px;
+            font-size: 1rem;
+        }
+
+        .btn-download:hover {
+            background-color: #0a71d4;
+            transform: translateY(-1px);
+            box-shadow: var(--md-ref-elevation-2);
+        }
+
+        /* 联系方式 */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .contact-item i {
+            color: var(--md-sys-color-primary);
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer 保持原样 */
+        .footer {
+            background-color: #111115;
+            color: #b0b0bc;
+            padding: 48px 0 32px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo .logo-img {
+            height: 40px;
+        }
+
+        .footer-logo .logo-text {
+            font-size: 1.35rem;
+            background: none;
+            color: #cbd5e1;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        .footer p {
+            color: #8f9bb3;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 24px;
+            font-size: 0.8rem;
+            color: #6e7a8e;
+        }
+
+        /* 淡入动画 */
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(16px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
 
         .fade-in.visible {
@@ -544,10 +427,26 @@
             transform: translateY(0);
         }
 
-        /* 临时加载状态 */
-        .btn-loading {
-            opacity: 0.7;
-            cursor: wait;
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-description {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 8px 20px;
+            }
+            .feature-card {
+                padding: 20px;
+            }
+            .function-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -563,11 +462,11 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-container">
+        <div class="container hero-container">
             <div class="hero-content fade-in">
                 <h1 class="hero-title">
-                    <span class="gradient-text">Freewd社区</span>
-                    <br />共创自由和谐社区
+                    <span class="gradient-text">Freewd社区</span><br>
+                    共创自由和谐社区
                 </h1>
                 <p class="hero-description">
                     为Freewd服务器玩家打造的专属交流平台，提供实时社区动态、帖子分享、互动评论等功能，让游戏体验更加丰富
@@ -576,8 +475,7 @@
                 <div class="contact-info fade-in">
                     <div class="contact-item">
                         <i class="fab fa-qq"></i>
-                        <span>QQ 群：<a
-                                href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=TUPA9W0spTbA3ba3zbzBIAirJCahdDMe&authKey=JpCwLmkZ1pXDUuCdr5u7c2cwwAiuuwFCByAxpxJWpCYXeeC0IYfZCyh5IBcCCT51&noverify=0&group_code=340707471"><strong>340707471</strong></a></span>
+                        <span>QQ 群：<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=TUPA9W0spTbA3ba3zbzBIAirJCahdDMe&authKey=JpCwLmkZ1pXDUuCdr5u7c2cwwAiuuwFCByAxpxJWpCYXeeC0IYfZCyh5IBcCCT51&noverify=0&group_code=340707471"><strong>340707471</strong></a></span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-globe"></i>
@@ -585,19 +483,16 @@
                     </div>
                 </div>
 
-                <!-- 动态温馨提示框 -->
                 <div class="warning-box fade-in" id="dynamicWarningBox">
                     <h4><i class="fas fa-exclamation-triangle"></i> 温馨提示</h4>
                     <p id="warningText">正在检查更新，请稍后...</p>
                 </div>
 
-                <div class="hero-buttons">
-                    <!-- 首屏下载按钮：改为直接下载，使用动态链接 -->
+                <div class="hero-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <a id="heroDownloadBtn" href="#" class="btn btn-primary">
                         <i class="fas fa-download"></i> 获取下载链接...
                     </a>
-                    <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=TUPA9W0spTbA3ba3zbzBIAirJCahdDMe&authKey=JpCwLmkZ1pXDUuCdr5u7c2cwwAiuuwFCByAxpxJWpCYXeeC0IYfZCyh5IBcCCT51&noverify=0&group_code=340707471"
-                        class="btn btn-secondary">
+                    <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=TUPA9W0spTbA3ba3zbzBIAirJCahdDMe&authKey=JpCwLmkZ1pXDUuCdr5u7c2cwwAiuuwFCByAxpxJWpCYXeeC0IYfZCyh5IBcCCT51&noverify=0&group_code=340707471" class="btn btn-secondary">
                         <i class="fab fa-qq"></i> 加入QQ群获取最新信息
                     </a>
                 </div>
@@ -611,30 +506,22 @@
             <p class="section-subtitle fade-in">探索Freewd社区的丰富功能，享受更好的交流与互动体验</p>
             <div class="features-grid">
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
                     <h3>实时热更新</h3>
                     <p>实时获取最新社区动态，保持信息同步，不错过任何重要通知与活动</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-user-circle"></i></div>
                     <h3>个人账户系统</h3>
                     <p>创建个人账户，享受个性化社区体验，管理你的互动记录</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
                     <h3>自由交流互动</h3>
                     <p>浏览、发布帖子，查看图片，参与评论与回复，与社区成员深度互动</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
                     <h3>AI智能总结</h3>
                     <p>使用Deepseek API对较长帖子内容进行智能总结，快速获取核心信息</p>
                 </div>
@@ -660,7 +547,7 @@
 
             <div class="function-list fade-in">
                 <h3>未来功能规划</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">期待您的宝贵意见~</p>
+                <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 1.5rem; text-align: center;">期待您的宝贵意见~</p>
                 <div class="function-grid">
                     <div class="function-item pending"><i class="fas fa-clock"></i><span>更多互动功能开发中</span></div>
                     <div class="function-item pending"><i class="fas fa-clock"></i><span>社区积分系统优化</span></div>
@@ -674,9 +561,7 @@
         <div class="container">
             <h2 class="section-title fade-in">应用信息</h2>
             <p class="section-subtitle fade-in">下载Freewd社区APP，开始你的自由交流之旅</p>
-
             <div class="btn-group">
-                <!-- 下载区域按钮，同样使用动态链接 -->
                 <a id="sectionDownloadBtn" href="#" class="btn btn-download">
                     <i class="fas fa-download"></i> 获取下载链接...
                 </a>
@@ -687,113 +572,66 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="/img/index/FreewdIcon.png" alt="Freewd社区" class="logo-img">
-                        <span class="logo-text">Freewd社区</span>
-                    </div>
-                    <p>为Minecraft玩家打造的专属交流平台，共创自由和谐的游戏社区</p>
+                <div class="footer-logo">
+                    <img src="/img/index/FreewdIcon.png" alt="Freewd社区" class="logo-img">
+                    <span class="logo-text">Freewd社区</span>
                 </div>
+                <p>为Minecraft玩家打造的专属交流平台，共创自由和谐的游戏社区</p>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 BLOCKCARFT.</p>
+                <p>&copy; 2025 - 2026 Freewd | BLOCKCARFT.</p>
             </div>
         </div>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // 淡入动画观察器
+            // 淡入动画
             const fadeElements = document.querySelectorAll('.fade-in');
-            const fadeInObserver = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
-            fadeElements.forEach(element => {
-                fadeInObserver.observe(element);
-            });
+            fadeElements.forEach(el => observer.observe(el));
 
-            // 平滑滚动（只保留锚点链接，但首屏下载按钮已改为直接下载，不再需要滚动）
-            document.querySelectorAll('a[href^="#"]:not(.btn-primary)').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        e.preventDefault();
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // ----- 核心：从 /app/api/update.json 获取 download_link 并更新两个下载按钮 -----
+            // 动态下载链接
             const heroBtn = document.getElementById('heroDownloadBtn');
             const sectionBtn = document.getElementById('sectionDownloadBtn');
             const warningTextP = document.getElementById('warningText');
-            
-            // 后备下载链接（原3.0.3.2版本）
             const fallbackDownloadUrl = "https://f2.freewd.top/download/Freewd社区_3.0.3.2.APK";
             const fallbackMsg = "3.0.0 重构大部分接口，请大家更新最新版";
-            
-            // 通用更新按钮函数
+
             function updateButtons(downloadUrl, versionText = '') {
-                if (!downloadUrl || downloadUrl === '#') {
-                    downloadUrl = fallbackDownloadUrl;
-                }
-                // 更新首屏按钮
+                if (!downloadUrl || downloadUrl === '#') downloadUrl = fallbackDownloadUrl;
                 if (heroBtn) {
                     heroBtn.href = downloadUrl;
-                    let btnHtml = `<i class="fas fa-download"></i> 下载Freewd社区APP`;
-                    if (versionText) {
-                        btnHtml += ` ${versionText}`;
-                    }
-                    heroBtn.innerHTML = btnHtml;
+                    heroBtn.innerHTML = `<i class="fas fa-download"></i> 下载Freewd社区APP${versionText ? ' ' + versionText : ''}`;
                     heroBtn.classList.remove('btn-loading');
                 }
-                // 更新下载区域按钮
                 if (sectionBtn) {
                     sectionBtn.href = downloadUrl;
-                    let btnHtml = `<i class="fas fa-download"></i> 下载Freewd社区APP`;
-                    if (versionText) {
-                        btnHtml += ` ${versionText}`;
-                    }
-                    sectionBtn.innerHTML = btnHtml;
+                    sectionBtn.innerHTML = `<i class="fas fa-download"></i> 下载Freewd社区APP${versionText ? ' ' + versionText : ''}`;
                     sectionBtn.classList.remove('btn-loading');
                 }
             }
-            
-            // 显示加载状态（初始）
-            if (heroBtn) {
-                heroBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 检查更新...';
-                heroBtn.classList.add('btn-loading');
-            }
-            if (sectionBtn) {
-                sectionBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 检查更新...';
-                sectionBtn.classList.add('btn-loading');
-            }
-            
-            // 请求远程配置
+
+            if (heroBtn) heroBtn.classList.add('btn-loading');
+            if (sectionBtn) sectionBtn.classList.add('btn-loading');
+
             fetch('/app/api/update.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    return response.json();
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
                 })
                 .then(data => {
-                    console.log('版本信息获取成功:', data);
                     let downloadLink = data.download_link;
                     let versionNum = data.version;
                     let updateMsg = data.msg || '带来更好的体验与修复';
                     let versionDisplay = '';
-                    
-                    // 格式化版本号
                     if (versionNum !== undefined && !isNaN(versionNum)) {
                         const major = Math.floor(versionNum / 100);
                         const minor = Math.floor((versionNum % 100) / 10);
@@ -803,34 +641,18 @@
                         const match = downloadLink.match(/(\d+\.\d+\.\d+)/);
                         if (match) versionDisplay = `v${match[1]}`;
                     }
-                    
-                    // 校验下载链接有效性
-                    let finalDownloadUrl = (downloadLink && typeof downloadLink === 'string' && downloadLink.startsWith('http')) 
-                        ? downloadLink 
-                        : fallbackDownloadUrl;
-                    
-                    // 更新两个按钮
-                    updateButtons(finalDownloadUrl, versionDisplay);
-                    
-                    // 更新温馨提示框
+                    const finalUrl = (downloadLink && typeof downloadLink === 'string' && downloadLink.startsWith('http')) ? downloadLink : fallbackDownloadUrl;
+                    updateButtons(finalUrl, versionDisplay);
                     if (warningTextP) {
-                        if (versionDisplay) {
-                            warningTextP.innerHTML = `<strong>${versionDisplay}</strong> 现已发布，更新内容：${updateMsg}。请立即下载体验最新版本！`;
-                        } else {
-                            warningTextP.innerHTML = `新版已发布：${updateMsg}。点击上方按钮下载最新APP。`;
-                        }
+                        warningTextP.innerHTML = versionDisplay ? `<strong>${versionDisplay}</strong> 现已发布，更新内容：${updateMsg}。请立即下载体验最新版本！` : `新版已发布：${updateMsg}。点击上方按钮下载最新APP。`;
                     }
                 })
-                .catch(error => {
-                    console.error('获取 /app/api/update.json 失败，使用后备链接:', error);
-                    // 降级：使用原有硬编码链接，并恢复提示框原始信息
+                .catch(err => {
+                    console.error('获取版本信息失败', err);
                     updateButtons(fallbackDownloadUrl, '');
-                    if (warningTextP) {
-                        warningTextP.innerHTML = fallbackMsg + ' (暂时无法获取版本信息，请稍后重试)';
-                    }
+                    if (warningTextP) warningTextP.innerHTML = fallbackMsg + ' (暂时无法获取版本信息，请稍后重试)';
                 });
-            
-            // 为两个下载按钮添加点击时的额外安全检查（防止极少数情况下 href 仍为 #）
+
             function addDownloadGuard(btn) {
                 if (!btn) return;
                 btn.addEventListener('click', function(e) {
@@ -839,7 +661,6 @@
                         alert('下载链接尚未就绪，请稍后点击或刷新页面重试。');
                         return false;
                     }
-                    // 如果链接有效，允许跳转下载
                     return true;
                 });
             }
