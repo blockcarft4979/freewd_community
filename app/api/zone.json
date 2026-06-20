@@ -16,8 +16,8 @@
             "name": "Freewd 服务器",
             "description": "使用旧版社区点击此处快速添加Freewd 基岩版服务器！\n官方QQ群：1104207891",
             "icon": "img/icons/Freewd_icon_1.png",
-            "msg": "这只是一个测试服务器，并不能使用😎",
-            "link": "minecraft://?addExternalServer=Freewd|192.168.1.1:1145"
+            "msg": "MC？启动",
+            "link": "minecraft://?addExternalServer=Freewd|server.freewd.top:42683"
         }
     ]
 }
