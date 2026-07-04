@@ -1,23 +1,5 @@
 {
     "zone": [
-        {
-            "name": "闲聊分享板块",
-            "description": "随便发点什么，分享日常亦或者吐槽！",
-            "icon": "img/icons/Daily.png",
-            "zone": 1
-        },
-        {
-            "name": "匿名发帖板块",
-            "description": "做小幽灵分享自己的心事吧！\n（发帖一次需要消耗20积分哦~\n并且无法删除，请谨慎发帖！）",
-            "icon": "img/icons/Ghost.png",
-            "zone": 3
-        },
-        {
-            "name": "Freewd 服务器",
-            "description": "使用旧版社区点击此处快速添加Freewd 基岩版服务器！\n官方QQ群：1104207891",
-            "icon": "img/icons/Freewd_icon_1.png",
-            "msg": "MC？启动",
-            "link": "minecraft://?addExternalServer=Freewd|server.freewd.top:42683"
-        }
+        
     ]
 }
