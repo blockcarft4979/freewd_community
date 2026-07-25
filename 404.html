@@ -3,138 +3,251 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>404 - 页面走丢了</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Freewd社区 - 页面走丢了">
+    <title>404 · Freewd 社区</title>
+    <link rel="icon" type="image/png" href="/img/index/FreewdIcon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ===== Material 3 令牌（与首页完全一致） ===== */
+        :root {
+            --md-sys-color-primary: #0468C0;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #084c8a;
+            --md-sys-color-surface: #0f0f12;
+            --md-sys-color-surface-variant: #1e1e24;
+            --md-sys-color-on-surface: #e3e3e8;
+            --md-sys-color-on-surface-variant: #b8b8c4;
+            --md-sys-color-outline: #3e3e48;
+            --md-sys-color-secondary: #b0b0c0;
+            --md-sys-color-error: #cf6679;
+            --md-ref-typeface-brand: 'Inter', -apple-system, BlinkMacSystemFont, system-ui;
+            --md-ref-typeface-plain: 'Inter', sans-serif;
+            --md-ref-shape-small: 8px;
+            --md-ref-shape-medium: 16px;
+            --md-ref-shape-large: 28px;
+            --md-ref-shape-extra-large: 36px;
+            --md-ref-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --md-ref-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --md-ref-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+            --navbar-height: 4.5rem;
+        }
+
+        /* ===== 全局重置 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-color: #4db8ff;
-            --primary-light: #66cfff;
-            --primary-dark: #0077cc;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --text-tertiary: rgba(255, 255, 255, 0.4);
-            --bg-color: #0f0f0f;
-        }
-
         body {
-            margin: 0;
-            background: var(--bg-color);
-            color: var(--text-primary);
-            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: var(--md-ref-typeface-plain);
+            line-height: 1.5;
+            padding-top: var(--navbar-height);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 1rem;
-            overflow-x: hidden;
+            background-image: radial-gradient(circle at 10% 20%, rgba(4, 104, 192, 0.08) 0%, rgba(0, 0, 0, 0.9) 100%);
+            background-attachment: fixed;
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .content {
+        /* ===== 导航栏（与首页完全一致） ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
             width: 100%;
-            max-width: 600px;
-            padding: 2rem;
+            background: rgba(15, 15, 18, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            height: var(--navbar-height);
+            box-shadow: var(--md-ref-elevation-1);
         }
 
-        h1 {
-            font-size: clamp(4rem, 15vw, 6rem);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            line-height: 1;
-            letter-spacing: -0.025em;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 0 24px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 12px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #80caff, #0468C0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 4px 20px rgba(77, 184, 255, 0.3);
+            letter-spacing: -0.3px;
         }
 
-        .subtitle {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        /* ===== 404 主内容 ===== */
+        .error-section {
+            padding: 40px 0 60px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .error-code {
+            font-size: clamp(5rem, 18vw, 8rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #80caff, #0468C0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 8px 32px rgba(4, 104, 192, 0.25);
+        }
+
+        .error-title {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
             font-weight: 600;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            color: var(--text-primary);
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 0.75rem;
         }
 
-        .message {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            opacity: 0.7;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
+        .error-message {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--md-sys-color-on-surface-variant);
+            max-width: 480px;
+            margin: 0 auto 0.5rem;
         }
 
-        .hint {
-            font-size: clamp(0.8rem, 2vw, 1rem);
-            opacity: 0.4;
-            color: var(--text-tertiary);
-            margin-top: 2rem;
-        }
-
-        .redirect-info {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        .error-hint {
+            font-size: 0.95rem;
+            color: var(--md-sys-color-on-surface-variant);
             opacity: 0.6;
             margin-bottom: 2rem;
-            color: var(--text-secondary);
         }
 
-        .animation-container {
+        /* ===== M3 按钮 ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 24px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            border-radius: 999px;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            font-family: var(--md-ref-typeface-plain);
+        }
+
+        .btn-primary {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: var(--md-ref-elevation-1);
+        }
+
+        .btn-primary:hover {
+            background-color: #0a71d4;
+            box-shadow: var(--md-ref-elevation-2);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-outline);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(4, 104, 192, 0.1);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== 装饰浮动圆环 ===== */
+        .deco-ring {
             position: relative;
-            width: 100%;
-            max-width: 300px;
-            height: 200px;
+            width: 160px;
+            height: 160px;
             margin: 0 auto 2rem;
         }
 
-        .circle {
+        .deco-ring .ring {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.1;
+            opacity: 0.10;
         }
 
-        .circle-1 {
-            width: 150px;
-            height: 150px;
-            top: 25px;
-            left: 25%;
-            background: radial-gradient(circle, var(--primary-color), transparent 70%);
-            animation: float 6s ease-in-out infinite;
+        .deco-ring .ring-1 {
+            width: 140px;
+            height: 140px;
+            top: 10px;
+            left: 10px;
+            background: radial-gradient(circle, #0468C0, transparent 70%);
+            animation: floatRing 6s ease-in-out infinite;
         }
 
-        .circle-2 {
+        .deco-ring .ring-2 {
             width: 100px;
             height: 100px;
-            top: 50px;
-            right: 20%;
-            background: radial-gradient(circle, var(--primary-light), transparent 70%);
-            animation: float 8s ease-in-out infinite reverse;
+            top: 30px;
+            right: 0;
+            background: radial-gradient(circle, #80caff, transparent 70%);
+            animation: floatRing 8s ease-in-out infinite reverse;
         }
 
-        .circle-3 {
-            width: 80px;
-            height: 80px;
-            bottom: 20px;
-            left: 30%;
-            background: radial-gradient(circle, var(--primary-dark), transparent 70%);
-            animation: float 7s ease-in-out infinite 1s;
+        .deco-ring .ring-3 {
+            width: 70px;
+            height: 70px;
+            bottom: 10px;
+            left: 20px;
+            background: radial-gradient(circle, #084c8a, transparent 70%);
+            animation: floatRing 7s ease-in-out infinite 1s;
         }
 
-        @keyframes float {
+        @keyframes floatRing {
 
             0%,
             100% {
@@ -142,245 +255,290 @@
             }
 
             50% {
-                transform: translateY(-20px) scale(1.05);
+                transform: translateY(-16px) scale(1.04);
             }
         }
 
-        .action-buttons {
+        /* ===== Footer（与首页完全一致） ===== */
+        .footer {
+            background-color: #111115;
+            color: #b0b0bc;
+            padding: 48px 0 32px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        .footer-content {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            gap: 0.5rem;
+            gap: 16px;
+            margin-bottom: 32px;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            box-shadow: 0 4px 12px rgba(77, 184, 255, 0.3);
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(77, 184, 255, 0.4);
+        .footer-logo .logo-img {
+            height: 40px;
         }
 
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .footer-logo .logo-text {
+            font-size: 1.35rem;
+            background: none;
+            color: #cbd5e1;
+            -webkit-background-clip: unset;
+            background-clip: unset;
         }
 
-        .btn-secondary:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        .footer p {
+            color: #8f9bb3;
+            font-size: 0.9rem;
         }
 
-        /* 移动端优化 */
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 24px;
+            font-size: 0.8rem;
+            color: #6e7a8e;
+        }
+
+        /* ===== 淡入动画 ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== 响应式 ===== */
         @media (max-width: 768px) {
             .container {
-                padding: 0 1rem;
+                padding: 0 16px;
             }
-
-            .content {
-                padding: 1.5rem;
+            .error-code {
+                font-size: 5rem;
             }
-
-            h1 {
-                font-size: clamp(3rem, 12vw, 4rem);
+            .error-title {
+                font-size: 1.6rem;
             }
-
-            .subtitle {
-                font-size: clamp(1.25rem, 3.5vw, 1.75rem);
-            }
-
-            .message {
-                font-size: clamp(0.9rem, 2.2vw, 1.1rem);
-            }
-
             .action-buttons {
                 flex-direction: column;
                 width: 100%;
+                max-width: 300px;
             }
-
             .btn {
                 width: 100%;
+                justify-content: center;
+            }
+            .deco-ring {
+                width: 120px;
+                height: 120px;
+            }
+            .deco-ring .ring-1 {
+                width: 100px;
+                height: 100px;
+                top: 10px;
+                left: 10px;
+            }
+            .deco-ring .ring-2 {
+                width: 72px;
+                height: 72px;
+                top: 24px;
+                right: 4px;
+            }
+            .deco-ring .ring-3 {
+                width: 52px;
+                height: 52px;
+                bottom: 8px;
+                left: 16px;
             }
         }
 
         @media (max-width: 480px) {
-            .content {
-                padding: 1rem;
+            .error-code {
+                font-size: 3.8rem;
             }
-
-            h1 {
-                font-size: 2.5rem;
+            .error-title {
+                font-size: 1.3rem;
             }
-
-            .subtitle {
-                font-size: 1.1rem;
+            .error-message {
+                font-size: 0.95rem;
             }
-
-            .message {
-                font-size: 0.9rem;
+            .deco-ring {
+                width: 96px;
+                height: 96px;
+                margin-bottom: 1.5rem;
             }
-
-            .animation-container {
-                max-width: 200px;
-                height: 150px;
-            }
-
-            .circle-1 {
-                width: 100px;
-                height: 100px;
-            }
-
-            .circle-2 {
-                width: 70px;
-                height: 70px;
-            }
-
-            .circle-3 {
-                width: 50px;
-                height: 50px;
-            }
-        }
-
-        /* 横屏模式优化 */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .content {
-                max-width: 90%;
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 3rem;
-            }
-
-            .subtitle {
-                font-size: 1.5rem;
-            }
-
-            .animation-container {
-                max-width: 150px;
-                height: 100px;
-            }
-
-            .circle-1 {
+            .deco-ring .ring-1 {
                 width: 80px;
                 height: 80px;
+                top: 8px;
+                left: 8px;
             }
-
-            .circle-2 {
-                width: 60px;
-                height: 60px;
+            .deco-ring .ring-2 {
+                width: 56px;
+                height: 56px;
+                top: 20px;
+                right: 4px;
             }
-
-            .circle-3 {
+            .deco-ring .ring-3 {
                 width: 40px;
                 height: 40px;
+                bottom: 6px;
+                left: 12px;
             }
         }
 
-        /* 深色模式优化 */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #0a0a0a;
+        @media (max-height: 500px) and (orientation: landscape) {
+            .error-section {
+                padding: 20px 0 30px;
             }
-
-            body {
-                background: var(--bg-color);
+            .deco-ring {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 1rem;
+            }
+            .deco-ring .ring-1 {
+                width: 64px;
+                height: 64px;
+                top: 8px;
+                left: 8px;
+            }
+            .deco-ring .ring-2 {
+                width: 44px;
+                height: 44px;
+                top: 18px;
+                right: 4px;
+            }
+            .deco-ring .ring-3 {
+                width: 32px;
+                height: 32px;
+                bottom: 4px;
+                left: 10px;
+            }
+            .error-code {
+                font-size: 3.2rem;
+            }
+            .error-title {
+                font-size: 1.2rem;
+            }
+            .action-buttons {
+                flex-direction: row;
+                gap: 0.75rem;
+            }
+            .btn {
+                width: auto;
+                padding: 6px 18px;
+                font-size: 0.85rem;
             }
         }
 
-        /* 减少动画 */
         @media (prefers-reduced-motion: reduce) {
-            .circle {
+            .deco-ring .ring {
                 animation: none;
+            }
+            .fade-in {
+                transition: none;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="content">
-            <!-- 动画背景 -->
-            <div class="animation-container">
-                <div class="circle circle-1"></div>
-                <div class="circle circle-2"></div>
-                <div class="circle circle-3"></div>
-            </div>
 
-            <!-- 主内容 -->
-            <h1>404</h1>
-            <div class="subtitle">页面好像迷路了…</div>
-            <p class="message">我们找不到您要访问的页面，可能是页面已被移动或暂时不可用。</p>
-            <div class="redirect-info">
-                您可以选择返回首页或上一页
-            </div>
-
-            <!-- 操作按钮 -->
-            <div class="action-buttons">
-                <a href="/" class="btn btn-primary">
-                    <i class="fas fa-home"></i> 返回首页
-                </a>
-                <a href="javascript:history.back()" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> 返回上一页
-                </a>
-            </div>
-
-            <div class="hint">Freewd 社区 © 2025-2026</div>
+    <!-- ===== 导航栏 ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="/img/index/FreewdIcon.png" alt="Freewd社区" class="logo-img">
+                <span class="logo-text">Freewd 社区</span>
+            </a>
         </div>
-    </div>
+    </nav>
+
+    <!-- ===== 404 主内容 ===== -->
+    <section class="error-section">
+        <div class="container">
+            <div class="error-container">
+
+                <div class="deco-ring fade-in">
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="ring ring-3"></div>
+                </div>
+
+                <div class="error-code fade-in">404</div>
+                <h2 class="error-title fade-in">页面好像迷路了…</h2>
+                <p class="error-message fade-in">
+                    我们找不到您要访问的页面，可能是链接已失效或内容已被移动。
+                </p>
+                <p class="error-hint fade-in">
+                    您可以选择返回首页或回到上一页
+                </p>
+
+                <div class="action-buttons fade-in">
+                    <a href="/" class="btn btn-primary">
+                        <i class="fas fa-home"></i> 返回首页
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> 返回上一页
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer（与首页完全一致） ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/img/index/FreewdIcon.png" alt="Freewd社区" class="logo-img">
+                    <span class="logo-text">Freewd社区</span>
+                </div>
+                <p>为Minecraft玩家打造的专属交流平台，共创自由和谐的游戏社区</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 - 2026 Freewd | BLOCKCARFT.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // 检测设备类型
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            // 如果检测到移动设备，可以添加特定处理
-            if (isMobile) {
-                document.body.classList.add('mobile-device');
-            }
-
-            // 平滑滚动
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
+            }, { threshold: 0.15 });
+            fadeElements.forEach(el => observer.observe(el));
+
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.97)';
+                }, { passive: true });
+                btn.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                }, { passive: true });
             });
         });
     </script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516"
-        integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg=="
-        data-cf-beacon='{"version":"2024.11.0","token":"8779cc83874f49bb8ed5bab09ae31cb1","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
-        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
