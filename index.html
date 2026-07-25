@@ -4,105 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-        <meta name='description' content='Freewd社区官网，作为大家打造的MC社区，从2025年8月13日开始运营至今！欢迎大家前来使用或者提出宝贵的意见' />
+    <meta name='description' content='Freewd社区官网，作为大家打造的MC社区，从2025年8月13日开始运营至今！欢迎大家前来使用或者提出宝贵的意见' />
     <title>Freewd 社区 - 共创自由和谐社区</title>
-<link rel="icon" type="image/png" href="/img/index/FreewdIcon.png">
+    <link rel="icon" type="image/png" href="/img/index/FreewdIcon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" href="/css/common.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Material 3 风格令牌，与服务器官网一致 */
-        :root {
-            --md-sys-color-primary: #0468C0;
-            --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #084c8a;
-            --md-sys-color-surface: #0f0f12;
-            --md-sys-color-surface-variant: #1e1e24;
-            --md-sys-color-on-surface: #e3e3e8;
-            --md-sys-color-on-surface-variant: #b8b8c4;
-            --md-sys-color-outline: #3e3e48;
-            --md-sys-color-secondary: #b0b0c0;
-            --md-sys-color-error: #cf6679;
-            --md-ref-typeface-brand: 'Inter', -apple-system, BlinkMacSystemFont, system-ui;
-            --md-ref-typeface-plain: 'Inter', sans-serif;
-            --md-ref-shape-small: 8px;
-            --md-ref-shape-medium: 16px;
-            --md-ref-shape-large: 28px;
-            --md-ref-shape-extra-large: 36px;
-            --md-ref-elevation-1: 0 1px 3px 1px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
-            --md-ref-elevation-2: 0 2px 6px 2px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
-            --md-ref-elevation-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.3);
-            --navbar-height: 4.5rem;
-        }
-
-        body {
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-            font-family: var(--md-ref-typeface-plain);
-            line-height: 1.5;
-            padding-top: var(--navbar-height);
-            scroll-behavior: smooth;
-            background-image: radial-gradient(circle at 10% 20%, rgba(4,104,192,0.08) 0%, rgba(0,0,0,0.9) 100%);
-            background-attachment: fixed;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* 导航栏 M3 风格 */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 15, 18, 0.85);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            height: var(--navbar-height);
-            box-shadow: var(--md-ref-elevation-1);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 0 24px;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            height: 40px;
-            width: auto;
-            border-radius: 12px;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #80caff, #0468C0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
-        }
-
-        /* Hero 区域 */
+        /* ===== index.html 独有样式 ===== */
         .hero {
             padding: 48px 0 80px;
-            background: radial-gradient(circle at 10% 30%, rgba(4,104,192,0.08), transparent 70%);
+            background: radial-gradient(circle at 10% 30%, rgba(4, 104, 192, 0.08), transparent 70%);
         }
 
         .hero-container {
@@ -139,46 +51,6 @@
             margin-bottom: 2rem;
         }
 
-        /* M3 按钮 */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 24px;
-            font-weight: 600;
-            font-size: 0.9375rem;
-            border-radius: 999px;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            cursor: pointer;
-            text-decoration: none;
-            border: none;
-        }
-
-        .btn-primary {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            box-shadow: var(--md-ref-elevation-1);
-        }
-
-        .btn-primary:hover {
-            background-color: #0a71d4;
-            box-shadow: var(--md-ref-elevation-2);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--md-sys-color-on-surface);
-            border: 1px solid var(--md-sys-color-outline);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(4,104,192,0.1);
-            border-color: var(--md-sys-color-primary);
-        }
-
-        /* 温馨提示框 M3 风格 */
         .warning-box {
             background-color: var(--md-sys-color-surface-variant);
             border-radius: var(--md-ref-shape-large);
@@ -196,7 +68,6 @@
             font-size: 1.1rem;
         }
 
-        /* 特性卡片 */
         .features {
             padding: 80px 0;
             background-color: var(--md-sys-color-surface);
@@ -243,7 +114,7 @@
         }
 
         .feature-icon {
-            background: rgba(4,104,192,0.15);
+            background: rgba(4, 104, 192, 0.15);
             width: 56px;
             height: 56px;
             border-radius: 20px;
@@ -268,7 +139,6 @@
             line-height: 1.5;
         }
 
-        /* 功能列表卡片 */
         .function-list {
             background: var(--md-sys-color-surface-variant);
             border-radius: var(--md-ref-shape-large);
@@ -295,7 +165,7 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.75rem;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: var(--md-ref-shape-medium);
             color: var(--md-sys-color-on-surface);
         }
@@ -310,7 +180,6 @@
             color: var(--md-sys-color-primary);
         }
 
-        /* 下载区域 */
         .server-info {
             padding: 64px 0;
             background: var(--md-sys-color-surface);
@@ -337,7 +206,6 @@
             box-shadow: var(--md-ref-elevation-2);
         }
 
-        /* 联系方式 */
         .contact-info {
             display: flex;
             flex-direction: column;
@@ -368,71 +236,7 @@
             text-decoration: underline;
         }
 
-        /* Footer 保持原样 */
-        .footer {
-            background-color: #111115;
-            color: #b0b0bc;
-            padding: 48px 0 32px;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .footer-logo .logo-img {
-            height: 40px;
-        }
-
-        .footer-logo .logo-text {
-            font-size: 1.35rem;
-            background: none;
-            color: #cbd5e1;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-        }
-
-        .footer p {
-            color: #8f9bb3;
-            font-size: 0.9rem;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding-top: 24px;
-            font-size: 0.8rem;
-            color: #6e7a8e;
-        }
-
-        /* 淡入动画 */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* 响应式 */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
             .hero-title {
                 font-size: 2.2rem;
             }
@@ -586,7 +390,7 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // 淡入动画
             const fadeElements = document.querySelectorAll('.fade-in');
             const observer = new IntersectionObserver((entries) => {
