@@ -1,5 +1,6 @@
 {
     "zone": [
-        {"icon":"", "zone":4,"description":"测试板块，正式版将会删除此板块数据"}
+        {"icon":"", "zone":4,"description":"测试板块，正式版将会删除此板块数据"},
+{"icon":"", "name":"发帖区","zone":1,"description":"日常发帖区"}
     ]
 }
