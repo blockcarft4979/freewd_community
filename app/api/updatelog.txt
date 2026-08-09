@@ -1,12 +1,12 @@
-写在前面
-
 曾经有无数次想放弃但是因为您们才让我坚持下来
 路很长，慢慢来
-Freewd 社区感谢有您~
+Freewd 社区 因爱而生~
 
 本社区于 2025年8月13日 成立
 
 ---
+新版社区 Compose 版已发布，请见官网
+https://community.freewd.top
 
 截至目前 Freewd 社区已更新超过 100 个版本！
 此更新日志仅记录重要版本更新日志
@@ -111,35 +111,4 @@ Freewd 社区感谢有您~
 
 ---
 
-## 目前已有的功能
-- [x] 热更新板块
-- [x] 登录 / 注册账户  
-- [x] 获取帖子列表  
-- [x] 上传帖子  
-- [x] 查看图片  
-- [x] 查看 / 评论  
-- [x] 获取评论与回复  
-- [x] 删除帖子  
-- [x] 分享帖子  
-- [x] 匿名贴（上传匿名帖时将消耗20积分/次）
-- [x] Ai总结（使用Deepseek api对较长帖子内容进行总结）
-- [x] Freewd UID（Freewd社区用户标识）
-- [x] 支持Markdown
-- [x] Freewd AI姬
-- [x] 适配新版安卓的预见式返回动画
----
-
-## 预计未来增加的功能
-- [ ] 个人中心
-- [ ] 收藏帖子
-- [ ] 。。。。
-- [ ] ……请输入文本（敬请期待）
-
----
-
 © 2025-2026 Freewd 社区 · 由 BLOCKCARFT 开发
-
-GitHub 仓库：
-https://github.com/blockcarft4979/freewd_community/releases
-BLOCKCARFT's BLOG：
-https://blockcarft.freewd.top
